@@ -1,0 +1,6 @@
+<!-- res/drawable/red_team_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/changebutton"
+    android:shape="rectangle">
+    <solid android:color="@color/redTeam" />
+</shape>

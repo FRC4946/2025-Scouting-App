@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/setupTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:text="Setup"
+        android:textStyle="bold"
+        android:textColor="@color/iconColor"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
+    <EditText
+        android:id="@+id/scoutName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:ems="30"
+        android:textColor="@color/iconColor"
+        android:hint="Scout name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/matchNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="30"
+        android:hint="Match number"
+        android:inputType="number"
+        android:textColor="@color/iconColor"
+        android:textSize="35sp"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/teamNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/iconColor"
+        android:layout_marginTop="10dp"
+        android:textSize="35sp"
+        android:ems="30"
+        android:hint="Team number"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/exitbutton"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:text="send"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/iconColor"
+        android:textSize="40sp"
+        android:layout_height="100dp"/>
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/iconColor"
+        android:textAlignment="center"
+        android:text="NEXT" />
+
+
+
+
+
+
+
+
+
+</LinearLayout>

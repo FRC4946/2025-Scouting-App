@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="match_parent"
+    android:id="@+id/teleop_popup_amp">
+        <TextView
+            android:layout_width="400dp"
+            android:layout_height="100dp"
+            android:textAlignment="center"
+            android:text="Teleop"
+            android:textSize="70dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="-15dp"/>
+
+
+        <Button
+            android:id="@+id/speakerScored"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="-482.5dp"
+            android:layout_marginTop="255dp"
+            android:textSize="50sp"
+            android:background="@drawable/img_1"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="-200dp"
+            android:layout_marginTop="75dp"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:text="Speaker"/>
+
+        <Button
+            android:id="@+id/ampScored"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="255dp"
+            android:text="0"
+            android:textSize="50sp"
+            android:background="@drawable/img_1"/>
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="-200dp"
+            android:layout_marginTop="75dp"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:text="Amp"/>
+
+        <Button
+            android:id="@+id/missed"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="255dp"
+            android:textSize="50sp"
+            android:text="0"
+            android:background="@drawable/img_1"/>
+
+
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="-200dp"
+            android:layout_marginTop="75dp"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:text="Missed"/>
+
+        <CheckBox
+            android:id="@+id/deleteMode"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="100dp"
+            android:text="Delete Mode"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/teleop1ExitButton"
+            android:layout_width="280dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="-260dp"
+            android:layout_marginTop="250dp"
+            android:text="EXIT"
+            android:textAlignment="center"
+            android:textSize="50sp" />
+
+</LinearLayout>

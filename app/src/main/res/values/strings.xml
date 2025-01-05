@@ -1,0 +1,15 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TestThingy" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.TestThingy" parent="Base.Theme.TestThingy" />
+
+    <string name="app_name" />
+    <string name="exit_match">EXIT MATCH</string> <!-- Corrected closing tag placement -->
+</resources>
+
+
+

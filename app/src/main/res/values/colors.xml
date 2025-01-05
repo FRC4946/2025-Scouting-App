@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#acacac</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#AC0004</color>
+    <color name="accent_material_dark_1">#AD0000</color>
+    <color name="redTeam">#E73C37</color>
+    <color name="blueTeam">#657ED4</color>
+    <color name="greenColor">#008000</color>
+    <color name="orangeColor">#FFC36E</color>
+    <color name="purpleColor">#E8AAFD</color>
+    <color name="navyBlue">#040F3C</color>
+    <color name="shelfColor">#A5A5A5</color>
+    <color name="iconColor">#DADADA</color>
+    <color name="buttonSelectedColor">#666666</color>
+    <color name="buttonNotSelectedColor">#414141</color>
+    <color name="coneColor">#E5C524</color>
+    <color name="cubeColor">#A700C6</color>
+</resources>
