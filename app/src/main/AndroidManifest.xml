@@ -35,14 +35,8 @@
             android:exported="true">
         </activity>
         <activity android:name=".MatchActivity"/>
-        <activity android:name=".InvertedTeleopActivity"/>
-        <activity android:name=".TeleopActivity"/>
         <activity android:name=".Auto"/>
-        <activity android:name=".TeleopPopup"/>
         <activity android:name=".SendMessageActivity"/>
-        <activity android:name=".TeleopPopupAmp"/>
-        <activity android:name=".DefencePopup"/>
-        <activity android:name=".Credits"/>
     </application>
 
 </manifest>
