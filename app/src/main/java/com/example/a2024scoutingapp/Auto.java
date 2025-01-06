@@ -21,14 +21,7 @@ public class Auto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.auto);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-        speakerScored = findViewById(R.id.speakerScoredAuto);
-        ampScored = findViewById(R.id.ampScoredAuto);
-        missed = findViewById(R.id.missedAuto);
-        deleteMode = findViewById(R.id.deleteModeAuto);
-//        crossedLine = findViewById(R.id.autoTraversal);
-        m_exit = findViewById(R.id.exitButtonAuto);
         missed.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoMissed)));;
         speakerScored.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoSpeaker)));;
         ampScored.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoAmp)));;

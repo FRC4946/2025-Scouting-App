@@ -76,15 +76,6 @@ public class SendMessageActivity extends AppCompatActivity {
         // all of the errors here are from no send screen
         setContentView(R.layout.send);
 
-        Button creditsButton = findViewById(R.id.credits_open);
-
-        creditsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SendMessageActivity.this, Credits.class);
-                startActivity(intent);
-            }
-        });
 
         System.out.println(getApplicationInfo().dataDir);
         existingFiles = new File(getApplicationInfo().dataDir + "/Logs").listFiles();
