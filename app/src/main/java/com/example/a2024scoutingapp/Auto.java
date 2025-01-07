@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,49 +16,74 @@ import java.util.Locale;
 public class Auto extends AppCompatActivity {
     // TODO: redo like most of this
     private ScoutingForm m_currentForm;
-    private Button m_auto, speakerScored, ampScored, missed, m_exit;
-    private CheckBox deleteMode, crossedLine;
+    private Button m_exit, autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet;
+    private ToggleButton deleteMode, disabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.Auto);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-        missed.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoMissed)));;
-        speakerScored.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoSpeaker)));;
-        ampScored.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoAmp)));;
 
-        speakerScored.setOnClickListener(new View.OnClickListener() {
+        autoL4.setText("L4 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL4Coral)));;
+        autoL4 = findViewById(R.id.autoL4Coral);
+        autoL3.setText("L3 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL3Coral)));;
+        autoL3 = findViewById(R.id.autoL3Coral);
+        autoL2.setText("L2 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL2Coral)));;
+        autoL2 = findViewById(R.id.autoL2Coral);
+        autoL1.setText("L1 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL1Coral)));;
+        autoL1 = findViewById(R.id.autoL1Coral);
+        autoNet = findViewById(R.id.autoNet);
+        autoNet.setText("Algae Net" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoNet)));;
+        autoProcessor = findViewById(R.id.autoProcessor);
+        autoProcessor.setText("Algae Processor" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
+        disabled = findViewById(R.id.disabled);
+        deleteMode = findViewById(R.id.deleteMode);
+
+
+
+        autoL4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (deleteMode.isChecked()) {
-                    m_currentForm.autoSpeaker = Math.max(m_currentForm.autoSpeaker - 1, 0);
+                    m_currentForm.autoL4Coral = Math.max(m_currentForm.autoL4Coral - 1, 0);
                 } else {
-                    m_currentForm.autoSpeaker++;
+                    m_currentForm.autoL4Coral++;
                 }
-                speakerScored.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoSpeaker)));;
+                autoL4.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL4Coral)));;
             }
         });
-        missed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean AddPoints = deleteMode.isChecked();
-                if (AddPoints) {
-                    m_currentForm.autoMissed = Math.max(m_currentForm.autoMissed - 1, 0);
-                } else {
-                    m_currentForm.autoMissed++;
-                }
-                missed.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoMissed)));;
-            }
-        });
-        ampScored.setOnClickListener(new View.OnClickListener() {
+        autoL3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (deleteMode.isChecked()) {
-                    m_currentForm.autoAmp = Math.max(m_currentForm.autoAmp - 1, 0);
+                    m_currentForm.autoL3Coral = Math.max(m_currentForm.autoL3Coral - 1, 0);
                 } else {
-                    m_currentForm.autoAmp++;
+                    m_currentForm.autoL3Coral++;
                 }
-                ampScored.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoAmp)));;
+                autoL3.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL3Coral)));;
+            }
+        });
+        autoL2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteMode.isChecked()) {
+                    m_currentForm.autoL2Coral = Math.max(m_currentForm.autoL2Coral - 1, 0);
+                } else {
+                    m_currentForm.autoL2Coral++;
+                }
+                autoL2.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL2Coral)));;
+            }
+        });
+        autoL1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteMode.isChecked()) {
+                    m_currentForm.autoL1Coral = Math.max(m_currentForm.autoL1Coral - 1, 0);
+                } else {
+                    m_currentForm.autoL1Coral++;
+                }
+                autoL1.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL1Coral)));;
             }
         });
         m_exit.setOnClickListener(new View.OnClickListener() {
