@@ -14,7 +14,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/img"
-        android:label="2024 scouting app"
+        android:label="2025 scouting app"
         android:roundIcon="@drawable/img"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
