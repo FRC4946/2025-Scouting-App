@@ -85,7 +85,11 @@
             android:textSize="30dp"
             android:textAlignment="center"
             />
-
+<Space
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1.3"
+    />
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -96,25 +100,33 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.23"
+            android:layout_weight="1.25"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/teleopProcessor"
-            android:text="Algae processed: 0"
-            /
+            android:text="Algae processed: 0"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.3"/>
+            android:layout_weight="1.25"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.23"
+            android:text="General"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.26"
             android:text="Disabled"
-            android:textSize = "30dp"
+            android:textSize = "25dp"
             android:textAlignment="center"/>
         <ToggleButton
             android:layout_width="match_parent"
@@ -127,14 +139,15 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.23"
+            android:layout_weight="1.29"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.26"
             android:text="Delete mode"
-            android:textSize= "28dp"
+            android:textSize= "25dp"
+            android:textAlignment="center"
             />
         <ToggleButton
             android:layout_width="match_parent"
