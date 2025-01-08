@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1.25"
+                android:text="Coral"
+                android:textSize="23dp"
+                android:textAlignment="center"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="L4"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="L3"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="L2"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="L1"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1.25"
+                android:text="Algae"
+                android:textSize="23dp"
+                android:textAlignment="center"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Net"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Processor"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Delete mode"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Disabled"
+                android:textSize="27dp"
+                android:layout_height="match_parent"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_weight="6">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:text="Teleop"
+        android:textSize="27dp"
+        android:layout_height="match_parent"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:text="Auto"
+        android:textSize="27dp"
+        android:layout_height="match_parent"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:text="Save"
+        android:textSize="27dp"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
+
+</LinearLayout>
