@@ -63,6 +63,7 @@
             android:layout_width="match_parent"
             android:padding="30dp"
             android:text="Blue alliance"
+            android:id="@+id/blue"
             android:textSize="25dp"
             android:background="@drawable/redbutton"
             android:layout_height="match_parent"
@@ -72,6 +73,7 @@
             android:padding="30dp"
             android:background="@drawable/bluebutton"
             android:textSize="25dp"
+            android:id="@+id/red"
             android:text="Red alliance"
             android:layout_height="match_parent"
             android:layout_weight="1"/>

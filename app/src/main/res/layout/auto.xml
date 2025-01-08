@@ -28,22 +28,26 @@
                 android:layout_weight="1"
                 android:text="L4"
                 android:textSize="27dp"
+                android:id="@+id/autoL4Coral"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L3"
                 android:textSize="27dp"
+                android:id="@+id/autoL3Coral"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L2"
                 android:textSize="27dp"
+                android:id="@+id/autoL2Coral"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/autoL1Coral"
                 android:text="L1"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
@@ -68,6 +72,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/autoNet"
                 android:text="Net"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
@@ -76,18 +81,21 @@
                 android:layout_weight="1"
                 android:text="Processor"
                 android:textSize="27dp"
+                android:id="@+id/autoProcessor"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Delete mode"
                 android:textSize="27dp"
+                android:id="@+id/delete"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Disabled"
                 android:textSize="27dp"
+                android:id="@+id/disabled"
                 android:layout_height="match_parent"/>
 
 
@@ -99,32 +107,34 @@
 
 
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:layout_weight="6">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="6">
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="Teleop"
-        android:textSize="27dp"
-        android:layout_height="match_parent"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="Auto"
-        android:textSize="27dp"
-        android:layout_height="match_parent"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="Save"
-        android:textSize="27dp"
-        android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="teleop"
+            android:id="@+id/teleop"
+            android:textSize="27dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="Auto"
+            android:textSize="27dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="Save"
+            android:textSize="27dp"
+            android:id="@+id/send"
+            android:layout_height="match_parent"/>
 
-</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

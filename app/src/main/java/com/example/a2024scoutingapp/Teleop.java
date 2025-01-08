@@ -17,14 +17,21 @@ public class Teleop extends AppCompatActivity {
     // TODO: redo like most of this
     private ScoutingForm m_currentForm;
     private Button m_exit, teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send;
-    private ToggleButton deleteMode, disabled;
+    private CheckBox deleteMode, disabled;
+    private Button[] Buttons = {teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teleop);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-
+            for (int i = 0; i < Buttons.length; i++){
+                if (m_currentForm.team == Constants.Team.RED){
+                Buttons[i].setBackgroundColor(getResources().getColor(R.color.redTeam));
+            } else {
+                Buttons[i].setBackgroundColor(getResources().getColor(R.color.blueTeam));
+            }
+        }
         teleopL4.setText("L4 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));;
         teleopL4 = findViewById(R.id.teleopL4Coral);
         teleopL3.setText("L3 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));;
@@ -40,7 +47,7 @@ public class Teleop extends AppCompatActivity {
         auto = findViewById(R.id.auto);
         send = findViewById(R.id.send);
         disabled = findViewById(R.id.disabled);
-        deleteMode = findViewById(R.id.deleteMode);
+        deleteMode = findViewById(R.id.delete);
 
 
 

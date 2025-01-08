@@ -16,4 +16,5 @@
     <color name="buttonNotSelectedColor">#414141</color>
     <color name="coneColor">#E5C524</color>
     <color name="cubeColor">#A700C6</color>
+    <color name="team">000000</color>
 </resources>
