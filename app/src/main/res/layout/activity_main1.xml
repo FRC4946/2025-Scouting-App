@@ -65,13 +65,13 @@
             android:text="Blue alliance"
             android:id="@+id/blue"
             android:textSize="25dp"
-            android:background="@drawable/redbutton"
+            android:background="@drawable/bluebutton"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
         <Button
             android:layout_width="match_parent"
             android:padding="30dp"
-            android:background="@drawable/bluebutton"
+            android:background="@drawable/redbutton"
             android:textSize="25dp"
             android:id="@+id/red"
             android:text="Red alliance"
