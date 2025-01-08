@@ -3,157 +3,157 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_weight="1"
-        >
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
             android:text="Coral"
-            android:textSize="30dp"
             android:textAlignment="center"
-            />
+            android:textSize="30dp" />
+
         <Button
-            android:id = "@+id/teleopL4Coral"
-            android:text="L4 Coral: 0"
+            android:id="@+id/teleopL4Coral"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            />
+            android:text="L4 Coral: 0" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.26"
-            />
-       <Button
-            android:id = "@+id/teleopL3Coral"
-            android:text="L3 Coral: 0"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.26"
-            />
+            android:layout_weight="1.26" />
+
         <Button
-            android:id = "@+id/teleopL2Coral"
-            android:text="L2 Coral: 0"
+            android:id="@+id/teleopL3Coral"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            />
+            android:text="L3 Coral: 0" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.26"
-            />
+            android:layout_weight="1.26" />
+
         <Button
-            android:id = "@+id/teleopL1Coral"
-            android:text="L1 Coral: 0"
+            android:id="@+id/teleopL2Coral"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            />
+            android:text="L2 Coral: 0" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.26"
-            />
-        
+            android:layout_weight="1.26" />
+
+        <Button
+            android:id="@+id/teleopL1Coral"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="L1 Coral: 0" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.26" />
+
     </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.3"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_weight="1"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.25"
             android:text="Algae"
-            android:textSize="30dp"
             android:textAlignment="center"
-            />
-<Space
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1.3"
-    />
-        <Button
+            android:textSize="30dp" />
+
+        <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.3" />
+
+        <Button
             android:id="@+id/teleopNet"
-            android:text="Algae Net: 0"
-            />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.25"
-            />
-        <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/teleopProcessor"
-            android:text="Algae processed: 0"/>
+            android:text="Algae Net: 0" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.25"
-            />
+            android:layout_weight="1.25" />
+
+        <Button
+            android:id="@+id/teleopProcessor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Algae processed: 0" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.25" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.23"
             android:text="General"
-            android:textSize="30dp"
             android:textAlignment="center"
-            />
+            android:textSize="30dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.26"
             android:text="Disabled"
-            android:textSize = "25dp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
         <ToggleButton
+            android:id="@+id/disabled"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
-            android:text="DISABLED"
-            android:id="@+id/disabled"
-            />
+            android:text="DISABLED" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.29"
-            />
+            android:layout_weight="1.29" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.26"
             android:text="Delete mode"
-            android:textSize= "25dp"
             android:textAlignment="center"
-            />
+            android:textSize="25dp" />
+
         <ToggleButton
+            android:id="@+id/deleteMode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight = "1.25"
-            android:id="@+id/deleteMode"
-            />
+            android:layout_weight="1.25" />
     </LinearLayout>
 </LinearLayout>
