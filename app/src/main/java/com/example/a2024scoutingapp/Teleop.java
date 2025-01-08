@@ -16,7 +16,7 @@ import java.util.Locale;
 public class Teleop extends AppCompatActivity {
     // TODO: redo like most of this
     private ScoutingForm m_currentForm;
-    private Button m_exit, teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet;
+    private Button m_exit, teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send;
     private ToggleButton deleteMode, disabled;
 
     @Override
@@ -37,6 +37,8 @@ public class Teleop extends AppCompatActivity {
         teleopNet.setText("Algae Net" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));;
         teleopProcessor = findViewById(R.id.teleopProcessor);
         teleopProcessor.setText("Algae Processor" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
+        auto = findViewById(R.id.auto);
+        send = findViewById(R.id.send);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.deleteMode);
 
@@ -90,6 +92,22 @@ public class Teleop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Teleop.this, MatchActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Teleop.this, Auto.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Teleop.this, SendMessageActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }
