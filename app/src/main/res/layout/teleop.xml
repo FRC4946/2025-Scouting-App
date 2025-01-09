@@ -26,7 +26,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/autoL4Coral"
+                android:id="@+id/teleopL4Coral"
                 android:text="L4"
                 android:layout_margin="10dp"
                 android:textSize="27dp"
@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:text="L3"
                 android:layout_margin="10dp"
-                android:id="@+id/autoL3Coral"
+                android:id="@+id/teleopL3Coral"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="L2"
                 android:layout_margin="10dp"
-                android:id="@+id/autoL2Coral"
+                android:id="@+id/teleopL2Coral"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
@@ -52,7 +52,7 @@
                 android:layout_weight="1"
                 android:text="L1"
                 android:layout_margin="10dp"
-                android:id="@+id/autoL1Coral"
+                android:id="@+id/teleopL1Coral"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
 
@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:text="Net"
                 android:layout_margin="10dp"
-                android:id="@+id/autoNet"
+                android:id="@+id/teleopNet"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
@@ -87,7 +87,7 @@
                 android:text="Processor"
                 android:layout_margin="10dp"
                 android:textSize="27dp"
-                android:id="@+id/autoProcessor"
+                android:id="@+id/teleopProcessor"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
