@@ -27,17 +27,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="14"
+            android:layout_weight="10"
             android:layout_height="match_parent">
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:id="@+id/DeleteButton"
+            android:text="Delete"
             android:layout_margin="5dp"
             android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:text="Load"
                 android:id="@+id/LoadButton"
                 android:layout_margin="5dp"
                 android:layout_height="match_parent"/>

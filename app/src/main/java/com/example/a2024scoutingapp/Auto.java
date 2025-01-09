@@ -128,7 +128,8 @@ public class Auto extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Auto.this, MainActivity.class);
+                m_currentForm.disabled = disabled.isChecked();
+                        Intent intent = new Intent(Auto.this, MainActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 ActivityCompat.requestPermissions(Auto.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.WRITE_LOG_REQUEST);
                 startActivity(intent);
