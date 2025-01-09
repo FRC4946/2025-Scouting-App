@@ -18,7 +18,7 @@ import java.util.Locale;
 public class Teleop extends AppCompatActivity {
     // TODO: redo like most of this
     private ScoutingForm m_currentForm;
-    private Button  teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send;
+    private Button  teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit;
     private CheckBox deleteMode, disabled;
 
     @Override
@@ -38,8 +38,9 @@ public class Teleop extends AppCompatActivity {
         teleopNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));;
         teleopProcessor = findViewById(R.id.teleopProcessor);
         teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
+        exit = findViewById(R.id.exitbutton2);
         auto = findViewById(R.id.auto);
-        send = findViewById(R.id.send);
+        send = findViewById(R.id.exitbutton);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
@@ -132,6 +133,7 @@ public class Teleop extends AppCompatActivity {
                 Intent intent = new Intent(Teleop.this, MainActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 ActivityCompat.requestPermissions(Teleop.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.WRITE_LOG_REQUEST);
+                System.out.println("Saved");
                 startActivity(intent);
             }
         });

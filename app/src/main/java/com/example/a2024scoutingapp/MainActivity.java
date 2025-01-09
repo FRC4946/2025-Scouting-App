@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-
         Intent intent = getIntent();
         m_loadName = intent.getStringExtra(intent.EXTRA_TEXT);
         if (intent.hasExtra("SCOUTING_FORM")) {
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Load.class);
+                Intent intent = new Intent(MainActivity.this, LoadActivity.class);
                 startActivity(intent);
             }
        });

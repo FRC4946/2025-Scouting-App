@@ -18,7 +18,7 @@ import java.util.Locale;
 public class Auto extends AppCompatActivity {
     // TODO: redo like most of this
     private ScoutingForm m_currentForm;
-    private Button  autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, teleop, send;
+    private Button  autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, teleop, send, exit;
     private CheckBox deleteMode, disabled;
 
     @Override
@@ -39,7 +39,8 @@ public class Auto extends AppCompatActivity {
         autoProcessor = findViewById(R.id.autoProcessor);
         autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
         teleop = findViewById(R.id.teleop);
-        send = findViewById(R.id.send);
+        send = findViewById(R.id.exitbutton);
+        exit = findViewById(R.id.exitbutton2);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
@@ -133,6 +134,14 @@ public class Auto extends AppCompatActivity {
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 ActivityCompat.requestPermissions(Auto.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.WRITE_LOG_REQUEST);
                 startActivity(intent);
+            }
+        });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
+                Intent intent = new Intent(Auto.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);startActivity(intent);
             }
         });
     }
