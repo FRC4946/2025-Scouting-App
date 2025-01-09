@@ -26,29 +26,33 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/autoL4Coral"
                 android:text="L4"
+                android:layout_margin="10dp"
                 android:textSize="27dp"
-                android:id="@+id/teleopL4Coral"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L3"
+                android:layout_margin="10dp"
+                android:id="@+id/autoL3Coral"
                 android:textSize="27dp"
-                android:id="@+id/teleopL3Coral"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L2"
+                android:layout_margin="10dp"
+                android:id="@+id/autoL2Coral"
                 android:textSize="27dp"
-                android:id="@+id/teleopL2Coral"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/teleopL1Coral"
                 android:text="L1"
+                android:layout_margin="10dp"
+                android:id="@+id/autoL1Coral"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
 
@@ -72,30 +76,34 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/teleopNet"
                 android:text="Net"
+                android:layout_margin="10dp"
+                android:id="@+id/autoNet"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Processor"
+                android:layout_margin="10dp"
                 android:textSize="27dp"
-                android:id="@+id/teleopProcessor"
+                android:id="@+id/autoProcessor"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Delete mode"
-                android:textSize="27dp"
+                android:layout_margin="10dp"
                 android:id="@+id/delete"
+                android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Disabled"
-                android:textSize="27dp"
+                android:layout_margin="10dp"
                 android:id="@+id/disabled"
+                android:textSize="27dp"
                 android:layout_height="match_parent"/>
 
 
@@ -117,22 +125,25 @@
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="Teleop"
-            android:textSize="27dp"
+            android:text="Auto"
+            android:id="@+id/auto"
+            android:layout_margin="10dp"
+            android:textSize="26dp"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="Auto"
-            android:id="@+id/auto"
-            android:textSize="27dp"
+            android:text="Teleop"
+            android:layout_margin="10dp"
+            android:textSize="26dp"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:text="Save"
-            android:textSize="27dp"
             android:id="@+id/send"
+            android:layout_margin="10dp"
+            android:textSize="26dp"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
