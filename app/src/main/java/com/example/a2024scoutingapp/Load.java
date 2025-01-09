@@ -107,7 +107,7 @@ public class Load  extends AppCompatActivity {
 
                 if (existingFiles.length > 0) {
                     Log.i("A", "Requesting permissions");
-                    ActivityCompat.requestPermissions(LoadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    ActivityCompat.requestPermissions(Load.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             Constants.DELETE_LOG_REQUEST);
                 } else {
                     Log.i("A", "No files found");

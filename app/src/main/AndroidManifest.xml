@@ -31,6 +31,7 @@
         </activity>
         <activity android:name=".Teleop"/>
         <activity android:name=".Auto"/>
+        <activity android:name=".Load"/>
         <activity android:name=".SendMessageActivity"/>
     </application>
 
