@@ -1,4 +1,4 @@
-package com.example.a2024scoutingapp;
+/* package com.example.a2024scoutingapp;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -135,3 +135,5 @@ public class MatchActivity extends AppCompatActivity {
         }
     }
 }
+
+ */

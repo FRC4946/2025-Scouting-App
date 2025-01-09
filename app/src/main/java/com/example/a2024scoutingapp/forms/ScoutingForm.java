@@ -20,9 +20,9 @@ public class ScoutingForm implements Serializable {
     public int autoL2Coral = 0;
     public int autoL1Coral = 0;
     public int autoProcessor = 0;
-    public int autoVet = 0;
+    public int autoNet = 0;
     public int teleopProcessor = 0;
-    public int teleopVet = 0;
+    public int teleopNet = 0;
 
     public String scoutName = "";
 
@@ -48,13 +48,13 @@ public class ScoutingForm implements Serializable {
                 + autoL3Coral + ","
                 + autoL4Coral + ","
                 + autoProcessor + ","
-                + autoVet + ","
+                + autoNet + ","
                 + teleopL1Coral + ","
                 + teleopL2Coral + ","
                 + teleopL3Coral + ","
                 +teleopL4Coral + ","
                 + teleopProcessor + ","
-                + teleopVet + ",";
+                + teleopNet + ",";
     }
 
     public static ScoutingForm fromString(String s) {
@@ -73,13 +73,13 @@ public class ScoutingForm implements Serializable {
         ret.autoL3Coral = Integer.parseInt(arr[7]);
         ret.autoL4Coral = Integer.parseInt(arr[8]);
         ret.autoProcessor = Integer.parseInt(arr[9]);
-        ret.autoVet = Integer.parseInt(arr[10]);
+        ret.autoNet = Integer.parseInt(arr[10]);
         ret.teleopL1Coral = Integer.parseInt(arr[11]);
         ret.teleopL2Coral = Integer.parseInt(arr[12]);
         ret.teleopL3Coral = Integer.parseInt(arr[13]);
         ret.teleopL4Coral = Integer.parseInt(arr[14]);
         ret.teleopProcessor = Integer.parseInt(arr[15]);
-        ret.teleopVet = Integer.parseInt(arr[16]);
+        ret.teleopNet = Integer.parseInt(arr[16]);
         ret.matchStarted = true;
         ret.matchOver = true;
         return ret;

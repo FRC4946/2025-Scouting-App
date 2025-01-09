@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm = new ScoutingForm();
     private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
-    private Button m_sendButton, m_nextButton;
+    private Button m_sendButton, m_nextButton, red, blue;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         m_currentForm = new ScoutingForm();
 
+        red = findViewById(R.id.red);
+        blue = findViewById(R.id.blue);
 
 //yes
         m_nextButton.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 m_currentForm.scoutName = m_scoutName.getText().toString();
                 m_currentForm.matchNumber = Integer.parseInt(m_matchNumber.getText().toString());
                 m_currentForm.teamNumber = Integer.parseInt(m_teamNumber.getText().toString());
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                Intent intent = new Intent(MainActivity.this, Auto.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }
@@ -60,6 +62,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SendMessageActivity.class);
                 startActivity(intent);
+            }
+        });
+        red.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.team = Constants.Team.RED;
+            }
+        });
+        blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.team = Constants.Team.BLUE;
             }
         });
     }
