@@ -26,6 +26,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:text="L4"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
@@ -33,18 +34,21 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L3"
+                android:padding="10dp"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L2"
+                android:padding="10dp"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="L1"
+                android:padding="10dp"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
 
@@ -69,6 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Net"
+                android:padding="10dp"
                 android:textSize="27dp"
                 android:layout_height="match_parent"/>
             <Button
@@ -76,18 +81,21 @@
                 android:layout_weight="1"
                 android:text="Processor"
                 android:textSize="27dp"
+                android:padding="10dp"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Delete mode"
                 android:textSize="27dp"
+                android:padding="10dp"
                 android:layout_height="match_parent"/>
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Disabled"
                 android:textSize="27dp"
+                android:padding="10dp"
                 android:layout_height="match_parent"/>
 
 
@@ -111,17 +119,20 @@
         android:layout_weight="1"
         android:text="Teleop"
         android:textSize="27dp"
+        android:padding="10dp"
         android:layout_height="match_parent"/>
     <Button
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:text="Auto"
         android:textSize="27dp"
+        android:padding="10dp"
         android:layout_height="match_parent"/>
     <Button
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:text="Save"
+        android:padding="10dp"
         android:textSize="27dp"
         android:layout_height="match_parent"/>
 
