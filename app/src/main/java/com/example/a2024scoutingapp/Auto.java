@@ -44,9 +44,9 @@ public class Auto extends AppCompatActivity {
         Button[] Buttons = {autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet};
         for (int i = 0; i < Buttons.length; i++){
             if (m_currentForm.team == Constants.Team.RED){
-                Buttons[i].setBackgroundColor(getResources().getColor(R.color.redTeam));
+                Buttons[i].setBackgroundResource(R.drawable.redbutton);
             } else {
-                Buttons[i].setBackgroundColor(getResources().getColor(R.color.blueTeam));
+                Buttons[i].setBackgroundResource(R.drawable.bluebutton);
             }
         }
         autoL4.setOnClickListener(new View.OnClickListener() {
