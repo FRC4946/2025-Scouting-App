@@ -48,16 +48,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/iconColor"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="35sp"
         android:ems="30"
         android:hint="Team number"
         android:inputType="number" />
 </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="2.4"
         android:orientation="horizontal">
         <Button
             android:layout_width="match_parent"
@@ -66,7 +67,7 @@
             android:id="@+id/blue"
             android:textSize="25dp"
             android:background="@drawable/bluebutton"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <Button
             android:layout_width="match_parent"
@@ -75,12 +76,12 @@
             android:textSize="25dp"
             android:id="@+id/red"
             android:text="Red alliance"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_weight="2"
+    android:layout_weight="2.3"
     android:orientation="vertical"
     android:layout_height="match_parent">
     <Button
@@ -92,13 +93,13 @@
         android:textAlignment="center"
         android:textColor="@color/iconColor"
         android:textSize="40sp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_height="match_parent"/>
     <Button
         android:id="@+id/nextButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_marginTop="5dp"
         android:background="@color/colorPrimaryDark"
         android:textSize="40sp"

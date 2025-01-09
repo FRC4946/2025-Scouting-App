@@ -30,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Teleop"/>
         <activity android:name=".Auto"/>
         <activity android:name=".SendMessageActivity"/>
     </application>

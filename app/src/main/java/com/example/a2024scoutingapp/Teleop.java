@@ -16,41 +16,39 @@ import java.util.Locale;
 public class Teleop extends AppCompatActivity {
     // TODO: redo like most of this
     private ScoutingForm m_currentForm;
-    private Button m_exit, teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send;
+    private Button  teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send;
     private CheckBox deleteMode, disabled;
-    private Button[] Buttons = {teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teleop);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-            for (int i = 0; i < Buttons.length; i++){
-                if (m_currentForm.team == Constants.Team.RED){
+        teleopL4 = findViewById(R.id.teleopL4Coral);
+        teleopL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));;
+        teleopL3 = findViewById(R.id.teleopL3Coral);
+        teleopL3.setText("L3 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));;
+        teleopL2 = findViewById(R.id.teleopL2Coral);
+        teleopL2.setText("L2 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL2Coral)));;
+        teleopL1 = findViewById(R.id.teleopL1Coral);
+        teleopL1.setText("L1 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL1Coral)));;
+        teleopNet = findViewById(R.id.teleopNet);
+        teleopNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));;
+        teleopProcessor = findViewById(R.id.teleopProcessor);
+        teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
+        auto = findViewById(R.id.auto);
+        send = findViewById(R.id.send);
+        disabled = findViewById(R.id.disabled);
+        deleteMode = findViewById(R.id.delete);
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        Button[] Buttons = {teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet};
+        for (int i = 0; i < Buttons.length; i++){
+            if (m_currentForm.team == Constants.Team.RED){
                 Buttons[i].setBackgroundColor(getResources().getColor(R.color.redTeam));
             } else {
                 Buttons[i].setBackgroundColor(getResources().getColor(R.color.blueTeam));
             }
         }
-        teleopL4.setText("L4 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));;
-        teleopL4 = findViewById(R.id.teleopL4Coral);
-        teleopL3.setText("L3 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));;
-        teleopL3 = findViewById(R.id.teleopL3Coral);
-        teleopL2.setText("L2 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL2Coral)));;
-        teleopL2 = findViewById(R.id.teleopL2Coral);
-        teleopL1.setText("L1 Coral" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL1Coral)));;
-        teleopL1 = findViewById(R.id.teleopL1Coral);
-        teleopNet = findViewById(R.id.teleopNet);
-        teleopNet.setText("Algae Net" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));;
-        teleopProcessor = findViewById(R.id.teleopProcessor);
-        teleopProcessor.setText("Algae Processor" + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
-        auto = findViewById(R.id.auto);
-        send = findViewById(R.id.send);
-        disabled = findViewById(R.id.disabled);
-        deleteMode = findViewById(R.id.delete);
-
-
-
         teleopL4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +57,7 @@ public class Teleop extends AppCompatActivity {
                 } else {
                     m_currentForm.teleopL4Coral++;
                 }
-                teleopL4.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));;
+                teleopL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));;
             }
         });        
         teleopL3.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +68,7 @@ public class Teleop extends AppCompatActivity {
                 } else {
                     m_currentForm.teleopL3Coral++;
                 }
-                teleopL3.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));;
+                teleopL3.setText("L3 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));;
             }
         });
         teleopL2.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +79,7 @@ public class Teleop extends AppCompatActivity {
                 } else {
                     m_currentForm.teleopL2Coral++;
                 }
-                teleopL2.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL2Coral)));;
+                teleopL2.setText("L2 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL2Coral)));;
             }
         });
         teleopL1.setOnClickListener(new View.OnClickListener() {
@@ -92,15 +90,29 @@ public class Teleop extends AppCompatActivity {
                 } else {
                     m_currentForm.teleopL1Coral++;
                 }
-                teleopL1.setText(String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL1Coral)));;
+                teleopL1.setText("L1 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL1Coral)));;
             }
         });
-        m_exit.setOnClickListener(new View.OnClickListener() {
+        teleopNet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Teleop.this, MatchActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
+                if (deleteMode.isChecked()) {
+                    m_currentForm.teleopNet = Math.max(m_currentForm.teleopNet - 1, 0);
+                } else {
+                    m_currentForm.teleopNet++;
+                }
+                teleopNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));
+            }
+        });
+        teleopProcessor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteMode.isChecked()) {
+                    m_currentForm.teleopProcessor = Math.max(m_currentForm.teleopProcessor - 1, 0);
+                } else {
+                    m_currentForm.teleopProcessor++;
+                }
+                teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
             }
         });
         auto.setOnClickListener(new View.OnClickListener() {
