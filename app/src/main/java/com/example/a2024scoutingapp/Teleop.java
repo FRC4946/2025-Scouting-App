@@ -1,5 +1,6 @@
 package com.example.a2024scoutingapp;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
@@ -124,12 +126,13 @@ public class Teleop extends AppCompatActivity {
             }
         });
         send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Teleop.this, SendMessageActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Teleop.this, MainActivity.class);
+                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    ActivityCompat.requestPermissions(Teleop.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.WRITE_LOG_REQUEST);
+                    startActivity(intent);
+                }
+            });
     }
 }
