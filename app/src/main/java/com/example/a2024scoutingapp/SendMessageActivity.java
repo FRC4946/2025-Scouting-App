@@ -64,7 +64,7 @@ public class SendMessageActivity extends AppCompatActivity {
     EditText connectionMAC;
     TextView connectionInfo;
     ToggleButton sendSavedButton;
-    Button sendButton, deleteButton;
+    Button sendButton, deleteButton, exit;
     File[] existingFiles;
 
     boolean sending = false;
@@ -96,12 +96,20 @@ public class SendMessageActivity extends AppCompatActivity {
 
 
         sendSavedButton = (ToggleButton) findViewById(R.id.SendSaved);
-
+        exit = findViewById(R.id.exitbutton);
         sendButton = (Button) findViewById(R.id.SendButton);
         deleteButton = (Button) findViewById(R.id.samWhyYouFallAsleep);
 
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
+                Intent intent = new Intent(Auto.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);startActivity(intent);
+            }
+        });
+        
         sendButton.setOnClickListener(new View.OnClickListener() {
-
 
             /**
              * This method is called when the send button is pushed
