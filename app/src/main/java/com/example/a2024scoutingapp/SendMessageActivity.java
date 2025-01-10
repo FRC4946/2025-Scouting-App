@@ -103,12 +103,10 @@ public class SendMessageActivity extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                m_currentForm.disabled = disabled.isChecked();
-                Intent intent = new Intent(Auto.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);startActivity(intent);
+                Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
             }
         });
-        
+
         sendButton.setOnClickListener(new View.OnClickListener() {
 
             /**
