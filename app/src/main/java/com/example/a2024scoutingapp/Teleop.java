@@ -137,5 +137,13 @@ public class Teleop extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
+                Intent intent = new Intent(Teleop.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);startActivity(intent);
+            }
+        });
     }
 }
