@@ -120,6 +120,7 @@ public class Teleop extends AppCompatActivity {
         auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, Auto.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
@@ -128,6 +129,7 @@ public class Teleop extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    m_currentForm.disabled = disabled.isChecked();
                     Intent intent = new Intent(Teleop.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     ActivityCompat.requestPermissions(Teleop.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.WRITE_LOG_REQUEST);
