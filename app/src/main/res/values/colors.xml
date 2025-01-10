@@ -14,4 +14,6 @@
     <color name="iconColor">#DADADA</color>
     <color name="buttonSelectedColor">#666666</color>
     <color name="buttonNotSelectedColor">#414141</color>
+    <color name="button_normal">#FF6200EE</color> <!-- Normal color -->
+    <color name="button_highlight">#FF03DAC5</color> <!-- Highlight color -->
 </resources>
