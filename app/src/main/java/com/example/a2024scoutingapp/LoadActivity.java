@@ -3,6 +3,7 @@ package com.example.a2024scoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,12 +21,13 @@ public class LoadActivity extends AppCompatActivity {
     private RadioGroup filesGroup;
     private ArrayList<File> fileList = new ArrayList<>();
     private int selected = -1;
+    private Button exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
-
+        exit = findViewById(R.id.exiiits);
         filesGroup = findViewById(R.id.Files);
         Button loadButton = findViewById(R.id.LoadButton);
 
@@ -36,7 +38,13 @@ public class LoadActivity extends AppCompatActivity {
                 Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
         });
-
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoadActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
         updateFiles();
     }
 
