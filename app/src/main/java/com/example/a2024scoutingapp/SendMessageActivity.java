@@ -36,7 +36,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private EditText connectionMAC;
     private TextView connectionInfo;
     private ToggleButton sendSavedButton;
-    private Button sendButton;
+    private Button sendButton, exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +47,19 @@ public class SendMessageActivity extends AppCompatActivity {
         connectionInfo = findViewById(R.id.EsablishingConnection);
         sendSavedButton = findViewById(R.id.SendSaved);
         sendButton = findViewById(R.id.SendButton);
+        exit = findViewById(R.id.exitbutton);
 
         sendButton.setOnClickListener(v -> sendMessage());
 
         // Default connection MAC (for demo purposes)
         connectionMAC.setText("A4:42:3B:4D:C9:2E");
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void sendMessage() {
