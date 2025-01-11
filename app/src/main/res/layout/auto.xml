@@ -119,32 +119,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:layout_weight="6">
+    android:layout_weight="5.5">
 
 
     <Button
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:text="Auto"
-        android:layout_margin="10dp"
-        android:textSize="26dp"
+        android:layout_margin="3dp"
+        android:textSize="16dp"
         android:layout_height="match_parent"/>
     <Button
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:text="Teleop"
-        android:layout_margin="10dp"
+        android:layout_margin="3dp"
         android:id="@+id/teleop"
-        android:textSize="26dp"
+        android:textSize="16dp"
         android:layout_height="match_parent"/>
     <Button
+        android:id="@+id/exitbutton"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Save"
-        android:id="@+id/send"
-        android:layout_margin="10dp"
-        android:textSize="26dp"
-        android:layout_height="match_parent"/>
+        android:layout_margin="3dp"
+        android:text="EXIT"
+        android:textSize="16dp" />
+    <Button
+        android:id="@+id/exitbutton2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="3dp"
+        android:text="EXIT WITHOUT SAVE"
+        android:textAlignment="center"
+        android:textSize="16dp" />
 
 </LinearLayout>
 

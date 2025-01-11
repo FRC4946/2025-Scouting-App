@@ -21,6 +21,7 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AlphaDogs"
             android:exported="true">
             <intent-filter>
@@ -31,6 +32,7 @@
         </activity>
         <activity android:name=".Teleop"/>
         <activity android:name=".Auto"/>
+        <activity android:name=".LoadActivity"/>
         <activity android:name=".SendMessageActivity"/>
     </application>
 

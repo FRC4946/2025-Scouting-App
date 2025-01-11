@@ -16,14 +16,13 @@ public class MainActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm = new ScoutingForm();
     private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
-    private Button m_sendButton, m_nextButton, red, blue;
+    private Button m_sendButton, m_nextButton, red, blue, load;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-
         Intent intent = getIntent();
         m_loadName = intent.getStringExtra(intent.EXTRA_TEXT);
         if (intent.hasExtra("SCOUTING_FORM")) {
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         m_matchNumber = findViewById(R.id.matchNumber);
         m_nextButton = findViewById(R.id.nextButton);
         m_sendButton = findViewById(R.id.exitbutton);
-
+        load = findViewById(R.id.loadButton);
         m_scoutName.setText(m_currentForm.scoutName);
         m_teamNumber.setText("" + m_currentForm.teamNumber);
         m_matchNumber.setText("" + (m_currentForm.matchNumber+1));
@@ -76,5 +75,14 @@ public class MainActivity extends AppCompatActivity {
                 m_currentForm.team = Constants.Team.BLUE;
             }
         });
+        load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoadActivity.class);
+                startActivity(intent);
+            }
+       });
+
+
     }
 }
