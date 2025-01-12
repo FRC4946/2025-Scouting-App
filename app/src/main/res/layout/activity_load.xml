@@ -37,7 +37,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:id="@+id/DeleteButton"
+            android:id="@+id/delete"
             android:text="Delete"
             android:textSize="20dp"
             android:layout_margin="5dp"
@@ -66,12 +66,14 @@
             android:text="DELETE ALL"
             android:background="@drawable/notouchy"
             android:textSize="20dp"
+            android:id="@+id/notouchy"
             android:layout_height="match_parent"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:textSize="20sp"
                 android:layout_margin="5dp"
+                android:id="@+id/restore"
                 android:text="Recover page"
                 android:layout_height="match_parent"/>
         </LinearLayout>

@@ -14,11 +14,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class LoadActivity extends AppCompatActivity {
     private static final String TAG = "LoadActivity";
     private static final String DIRECTORY_NAME = "Logs";
+    private static final String BACKUP_DIRECTORY_NAME = "Backups";
 
     private RadioGroup filesGroup;
     private ArrayList<File> fileList = new ArrayList<>();
@@ -29,13 +32,16 @@ public class LoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
+
+        // Initialize UI components
         exit = findViewById(R.id.exiiits);
         restore = findViewById(R.id.restore);
         delete = findViewById(R.id.delete);
-        deleteAll = findViewById(R.id.deleteAll);
+        deleteAll = findViewById(R.id.notouchy);
         filesGroup = findViewById(R.id.Files);
         loadButton = findViewById(R.id.LoadButton);
 
+        // Button listeners
         loadButton.setOnClickListener(v -> {
             if (selected >= 0 && selected < fileList.size()) {
                 loadFile(fileList.get(selected));
@@ -43,63 +49,53 @@ public class LoadActivity extends AppCompatActivity {
                 Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
         });
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoadActivity.this, MainActivity.class);
-                startActivity(intent);
+
+        delete.setOnClickListener(v -> {
+            if (selected >= 0 && selected < fileList.size()) {
+                deleteFile(fileList.get(selected));
+            } else {
+                Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
         });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v){
-            }
+
+        deleteAll.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
+            builder.setTitle("Confirm Delete All")
+                    .setMessage("Are you sure you want to move all files to the backup directory?")
+                    .setPositiveButton("Yes", (dialog, which) -> deleteAllFiles())
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // Do nothing
+                    });
+            builder.show();
         });
-        deleteAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
-                builder.setTitle("ARE YOU SURE?????????")
 
-                        .setPositiveButton("Yes", (dialog, which) -> {
-                            System.out.println("Confirmed");
-                            //TODO
-                        })
-                        .setNegativeButton("No", (dialog, which) -> {
-                            System.out.println("Cancelled");
-                        });
+        restore.setOnClickListener(v -> {
+            final EditText pinInput = new EditText(LoadActivity.this);
+            pinInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
 
-                // Show the dialog
-                builder.show();
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
+            builder.setTitle("Enter PIN")
+                    .setMessage("Please enter your PIN to restore files.")
+                    .setView(pinInput)
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        String pin = pinInput.getText().toString();
+                        if (pin.equals("0111")) {  // Replace with actual PIN logic
+                            navigateToRestoreView();
+                        } else {
+                            Toast.makeText(LoadActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        // Do nothing
+                    });
+            builder.show();
         });
-        restore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EditText pinInput = new EditText(LoadActivity.this);
-                pinInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
 
-                // Create the AlertDialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
-                builder.setTitle("")
-                        .setMessage("Please enter your PIN.")
-                        .setView(pinInput)
-                        .setPositiveButton("OK", (dialog, which) -> {
-                            String pin = pinInput.getText().toString();
-                            if (pin.equals("0111")) {  // Example PIN, replace with your own logic
-                               //TODO
-                            } else {
-                                Toast.makeText(LoadActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton("Cancel", (dialog, which) -> {
-
-                        });
-
-                // Show the dialog
-                builder.show();
-            }
+        exit.setOnClickListener(v -> {
+            Intent intent = new Intent(LoadActivity.this, MainActivity.class);
+            startActivity(intent);
         });
+
         updateFiles();
     }
 
@@ -140,5 +136,57 @@ public class LoadActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void deleteFile(File file) {
+        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+
+        if (!backupDir.exists() && !backupDir.mkdirs()) {
+            Log.e(TAG, "Failed to create backup directory.");
+            return;
+        }
+
+        File backupFile = new File(backupDir, file.getName());
+        try {
+            Files.move(file.toPath(), backupFile.toPath());
+            Toast.makeText(this, "File moved to backup: " + backupFile.getName(), Toast.LENGTH_SHORT).show();
+            updateFiles();
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to move file to backup", e);
+            Toast.makeText(this, "Failed to move file to backup", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void deleteAllFiles() {
+        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+
+        if (!backupDir.exists() && !backupDir.mkdirs()) {
+            Log.e(TAG, "Failed to create backup directory.");
+            return;
+        }
+
+        File[] files = logsDir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                File backupFile = new File(backupDir, file.getName());
+                try {
+                    Files.move(file.toPath(), backupFile.toPath());
+                    Log.i(TAG, "Moved file to backup: " + backupFile.getName());
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to move file to backup: " + file.getName(), e);
+                }
+            }
+            Toast.makeText(this, "All files moved to backup", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No files to move", Toast.LENGTH_SHORT).show();
+        }
+
+        updateFiles();
+    }
+
+    private void navigateToRestoreView() {
+        Intent intent = new Intent(LoadActivity.this, RestoreActivity.class);
+        startActivity(intent);
     }
 }
