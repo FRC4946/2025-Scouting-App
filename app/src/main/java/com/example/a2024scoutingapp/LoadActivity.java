@@ -13,7 +13,12 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.a2024scoutingapp.forms.ScoutingForm;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -129,14 +134,35 @@ public class LoadActivity extends AppCompatActivity {
     }
 
     private void loadFile(File file) {
-        if (file.exists()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
+        if (file == null || !file.exists()) {
+            Toast.makeText(this, "File does not exist or is invalid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            StringBuilder fileContent = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                fileContent.append(line).append("\n");
+            }
+
+            // Assuming file content is serialized match data
+            ScoutingForm loadedForm = parseMatchData(fileContent.toString());
+
+            if (loadedForm != null) {
+                Intent intent = new Intent(this, Auto.class); // Change to the appropriate activity
+                intent.putExtra("SCOUTING_FORM", loadedForm);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Failed to parse match data", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error loading file: " + file.getName(), e);
+            Toast.makeText(this, "Error loading file", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void deleteFile(File file) {
         File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
@@ -183,6 +209,16 @@ public class LoadActivity extends AppCompatActivity {
         }
 
         updateFiles();
+    }
+    private ScoutingForm parseMatchData(String fileContent) {
+        try {
+            // Example: Parsing JSON data (adapt to your file format)
+            Gson gson = new Gson();
+            return gson.fromJson(fileContent, ScoutingForm.class);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to parse match data", e);
+            return null;
+        }
     }
 
     private void navigateToRestoreView() {

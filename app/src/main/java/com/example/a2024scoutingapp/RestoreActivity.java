@@ -24,7 +24,7 @@ public class RestoreActivity extends AppCompatActivity {
     private RadioGroup backupsGroup;
     private ArrayList<File> backupList = new ArrayList<>();
     private int selected = -1;
-    private Button restoreButton, backButton;
+    private Button restoreButton, deleteButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class RestoreActivity extends AppCompatActivity {
         // Initialize UI components
         backupsGroup = findViewById(R.id.BackupsGroup);
         restoreButton = findViewById(R.id.RestoreButton);
+        deleteButton = findViewById(R.id.DeleteButton);
         backButton = findViewById(R.id.BackButton);
 
         // Button listeners
@@ -41,7 +42,15 @@ public class RestoreActivity extends AppCompatActivity {
             if (selected >= 0 && selected < backupList.size()) {
                 restoreFile(backupList.get(selected));
             } else {
-                Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No file selected to restore", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            if (selected >= 0 && selected < backupList.size()) {
+                permanentlyDeleteFile(backupList.get(selected));
+            } else {
+                Toast.makeText(this, "No file selected to delete", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -96,10 +105,20 @@ public class RestoreActivity extends AppCompatActivity {
         try {
             Files.move(backupFile.toPath(), restoredFile.toPath());
             Toast.makeText(this, "File restored: " + restoredFile.getName(), Toast.LENGTH_SHORT).show();
-            updateBackups();
+            updateBackups(); // Refresh the list after restoring
         } catch (IOException e) {
             Log.e(TAG, "Failed to restore file: " + backupFile.getName(), e);
             Toast.makeText(this, "Failed to restore file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void permanentlyDeleteFile(File file) {
+        if (file.delete()) {
+            Toast.makeText(this, "File permanently deleted: " + file.getName(), Toast.LENGTH_SHORT).show();
+            updateBackups(); // Refresh the list after deleting
+        } else {
+            Log.e(TAG, "Failed to permanently delete file: " + file.getName());
+            Toast.makeText(this, "Failed to delete file", Toast.LENGTH_SHORT).show();
         }
     }
 }
