@@ -144,14 +144,17 @@ public class LoadActivity extends AppCompatActivity {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                fileContent.append(line).append("\n");
+                fileContent.append(line);
             }
 
-            // Assuming file content is serialized match data
-            ScoutingForm loadedForm = parseMatchData(fileContent.toString());
+            // Log the file content for debugging
+            Log.d(TAG, "File Content: " + fileContent.toString());
+
+            // Use ScoutingForm's fromString method to parse the data
+            ScoutingForm loadedForm = ScoutingForm.fromString(fileContent.toString());
 
             if (loadedForm != null) {
-                Intent intent = new Intent(this, Auto.class); // Change to the appropriate activity
+                Intent intent = new Intent(this, Auto.class); // Adjust if needed
                 intent.putExtra("SCOUTING_FORM", loadedForm);
                 startActivity(intent);
             } else {
@@ -160,8 +163,13 @@ public class LoadActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e(TAG, "Error loading file: " + file.getName(), e);
             Toast.makeText(this, "Error loading file", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e(TAG, "Error parsing match data: " + e.getMessage(), e);
+            Toast.makeText(this, "Error parsing match data", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 
     private void deleteFile(File file) {
@@ -198,9 +206,9 @@ public class LoadActivity extends AppCompatActivity {
                 File backupFile = new File(backupDir, file.getName());
                 try {
                     Files.move(file.toPath(), backupFile.toPath());
-                    Log.i(TAG, "Moved file to backup: " + backupFile.getName());
+                    Log.i(TAG, "Deleted " + backupFile.getName());
                 } catch (IOException e) {
-                    Log.e(TAG, "Failed to move file to backup: " + file.getName(), e);
+                    Log.e(TAG, "Could not delete: " + file.getName(), e);
                 }
             }
             Toast.makeText(this, "All files moved to backup", Toast.LENGTH_SHORT).show();
