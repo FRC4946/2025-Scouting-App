@@ -1,139 +1,105 @@
-/* package com.example.a2024scoutingapp;
+package com.example.a2024scoutingapp;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import static android.content.ContentValues.TAG;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.content.Intent;
+import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
+
 
 public class MatchActivity extends AppCompatActivity {
-    private boolean isRunning = false;
-    private String endgameTimerText;
-    private int endgameTimerCount;
     private ScoutingForm m_currentForm;
+    private static final String TAG = "AutoActivity";
+    private static final String DIRECTORY_NAME = "Logs";
+    private String m_loadName;
+    private EditText m_teamNumber, m_matchNumber, m_scoutName;
+    private Button red, blue, teleop, auto;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_match);
+        setContentView(R.layout.activity_main2);
+        Intent intent = getIntent();
+        m_loadName = intent.getStringExtra(intent.EXTRA_TEXT);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-
-        System.out.println(m_currentForm.opponentA);
-        System.out.println(m_currentForm.opponentB);
-        System.out.println(m_currentForm.opponentC);
-        Button exitwithoutsave = findViewById(R.id.exitbutton2);
-        Button teleopButton = findViewById(R.id.teleop);
-        Button autoButton = findViewById(R.id.auto);
-        Button sendPageButton = findViewById(R.id.exitbutton);
-        Button[] optionButtons = new Button[] {sendPageButton, autoButton, teleopButton};
-        System.out.println(m_currentForm.team);
         if (m_currentForm == null) {
-            m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-            (new Handler()).postDelayed(() -> {System.out.println(m_currentForm.team);}, 5000);
+            m_currentForm = new ScoutingForm();
         }
-        if (m_currentForm.team == Constants.Team.BLUE){
-            teleopButton.setBackgroundColor(getResources().getColor(R.color.blueTeam));
-            autoButton.setBackgroundColor(getResources().getColor(R.color.blueTeam));
-            sendPageButton.setBackgroundColor(getResources().getColor(R.color.blueTeam));
-        } else {
-            teleopButton.setBackgroundColor(getResources().getColor(R.color.redTeam));
-            autoButton.setBackgroundColor(getResources().getColor(R.color.redTeam));
-            sendPageButton.setBackgroundColor(getResources().getColor(R.color.redTeam));
-        }
-        sendPageButton.setOnClickListener(new View.OnClickListener() {
+        m_scoutName = findViewById(R.id.scoutName);
+        m_teamNumber = findViewById(R.id.teamNumber);
+        m_matchNumber = findViewById(R.id.matchNumber);
+        auto = findViewById(R.id.auto);
+        teleop = findViewById(R.id.teleop);
+        m_scoutName.setText(m_currentForm.scoutName);
+        m_teamNumber.setText("" + m_currentForm.teamNumber);
+        m_matchNumber.setText("" + (m_currentForm.matchNumber + 1));
+
+        red = findViewById(R.id.red);
+        blue = findViewById(R.id.blue);
+        red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                ActivityCompat.requestPermissions(MatchActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.WRITE_LOG_REQUEST);
-                startActivity(intent);
+                m_currentForm.team = Constants.Team.RED;
             }
         });
-
-        autoButton.setOnClickListener(v -> {
+        blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.team = Constants.Team.BLUE;
+            }
+        });
+        auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.scoutName = m_scoutName.getText().toString();
+                m_currentForm.teamNumber = Integer.parseInt(m_teamNumber.getText().toString());
+                m_currentForm.matchNumber = Integer.parseInt(m_matchNumber.getText().toString());
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
-        });
-
-        teleopButton.setOnClickListener(v -> {
-            Intent intent;
-            if(m_currentForm.isInverted) {
-                intent = new Intent(MatchActivity.this, InvertedTeleopActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            } else {
-                intent = new Intent(MatchActivity.this, TeleopActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
             }
         });
-        exitwithoutsave.setOnClickListener(new View.OnClickListener() {
+        teleop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
+                m_currentForm.scoutName = m_scoutName.getText().toString();
+                m_currentForm.teamNumber = Integer.parseInt(m_teamNumber.getText().toString());
+                m_currentForm.matchNumber = Integer.parseInt(m_matchNumber.getText().toString());
+                Intent intent = new Intent(MatchActivity.this, Teleop.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }
         });
-        // TODO: redo this one to actually work
+
+
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    private void saveFormToFile () {
+        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        if (!logsDir.exists() && !logsDir.mkdirs()) {
+            Log.e(TAG, "Failed to create Logs directory.");
+            return;
+        }
 
-        if (requestCode == Constants.WRITE_LOG_REQUEST) {
+        File logFile = new File(logsDir, String.format(Locale.getDefault(),
+                "match-%d-team-%d.log", m_currentForm.matchNumber, m_currentForm.teamNumber));
 
-            Log.i("A", "Received response for write permission request.");
-
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //When write permission is granted
-
-                Log.i("A", "Write permission has now been granted.");
-
-                File home = new File(getApplicationInfo().dataDir + "/Logs"); //application directory, so: /data/data/com.whatever.otherstuff/Logs
-                home.mkdirs();
-                File csv = new File(home.getAbsolutePath() + "/" + m_currentForm.matchNumber + "-" + m_currentForm.teamNumber);
-
-                try {
-
-
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(csv));
-                    writer.write(m_currentForm.toString());
-                    writer.close();
-
-
-                    Log.i("A", "Finished writing to " + csv.getAbsolutePath() + "");
-                    Utilities.showToast(this, "SAVED!", 2);
-
-                    //IO crap for testing
-                    //BufferedReader reader = new BufferedReader(new FileReader(csv));
-                    //reader.close();
-                } catch (IOException e) {
-                    //IO didn't work, honestly   shouldn't happen, if it does its probably a device or permission error
-                    Log.i("A", "File write to " + csv.getAbsolutePath() + " failed");
-                }
-
-            } else {
-                Log.i("A", "Write permission was NOT granted.");
-            }
-
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        try (FileWriter writer = new FileWriter(logFile)) {
+            writer.write(m_currentForm.toString());
+            Log.i(TAG, "Form saved successfully: " + logFile.getAbsolutePath());
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to save form", e);
         }
     }
 }
-
- */

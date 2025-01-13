@@ -21,14 +21,13 @@ public class Auto extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, teleop, send, exit;
+    private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, teleop, send, exit, main;
     private CheckBox deleteMode, disabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auto);
-
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
 
         autoL4 = findViewById(R.id.autoL4Coral);
@@ -48,6 +47,7 @@ public class Auto extends AppCompatActivity {
         exit = findViewById(R.id.exitbutton2);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
+        main = findViewById(R.id.main);
 
         Button[] Buttons = {autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet};
         for (int i = 0; i < Buttons.length; i++) {
@@ -155,6 +155,15 @@ public class Auto extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Auto.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
+                Intent intent = new Intent(Auto.this, MatchActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }

@@ -120,7 +120,14 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_weight="5.5">
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="Main"
+            android:layout_margin="3dp"
+            android:textSize="16dp"
+            android:id="@+id/main"
+            android:layout_height="match_parent"/>
 
         <Button
             android:layout_width="match_parent"
@@ -130,13 +137,7 @@
             android:textSize="16dp"
             android:id="@+id/auto"
             android:layout_height="match_parent"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:text="Teleop"
-            android:layout_margin="3dp"
-            android:textSize="16dp"
-            android:layout_height="match_parent"/>
+
         <Button
             android:id="@+id/exitbutton"
             android:layout_width="match_parent"

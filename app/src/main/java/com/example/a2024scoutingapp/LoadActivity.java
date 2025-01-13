@@ -97,7 +97,7 @@ public class LoadActivity extends AppCompatActivity {
         });
 
         exit.setOnClickListener(v -> {
-            Intent intent = new Intent(LoadActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoadActivity.this, MatchActivity.class);
             startActivity(intent);
         });
 
@@ -154,7 +154,7 @@ public class LoadActivity extends AppCompatActivity {
             ScoutingForm loadedForm = ScoutingForm.fromString(fileContent.toString());
 
             if (loadedForm != null) {
-                Intent intent = new Intent(this, Auto.class); // Adjust if needed
+                Intent intent = new Intent(this, MatchActivity.class); // Adjust if needed
                 intent.putExtra("SCOUTING_FORM", loadedForm);
                 startActivity(intent);
             } else {

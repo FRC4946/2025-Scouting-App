@@ -21,7 +21,7 @@ public class Teleop extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private Button teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit;
+    private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit;
     private CheckBox deleteMode, disabled;
 
     @Override
@@ -45,6 +45,7 @@ public class Teleop extends AppCompatActivity {
         teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
         auto = findViewById(R.id.auto);
         send = findViewById(R.id.exitbutton);
+        main = findViewById(R.id.main);
         exit = findViewById(R.id.exitbutton2);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
@@ -155,6 +156,15 @@ public class Teleop extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
+                Intent intent = new Intent(Teleop.this, MatchActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }

@@ -34,6 +34,7 @@
         <activity android:name=".LoadActivity"/>
         <activity android:name=".SendMessageActivity"/>
         <activity android:name=".RestoreActivity"/>
+        <activity android:name=".MatchActivity"/>
     </application>
 
 </manifest>

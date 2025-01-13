@@ -125,10 +125,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:text="Auto"
+        android:text="Main"
         android:layout_margin="3dp"
         android:textSize="16dp"
+        android:id="@+id/main"
         android:layout_height="match_parent"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_weight="1"
