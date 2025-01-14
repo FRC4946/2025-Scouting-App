@@ -3,17 +3,15 @@ package com.example.a2024scoutingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class RestoreActivity extends AppCompatActivity {
@@ -24,7 +22,8 @@ public class RestoreActivity extends AppCompatActivity {
     private RadioGroup backupsGroup;
     private ArrayList<File> backupList = new ArrayList<>();
     private int selected = -1;
-    private Button restoreButton, deleteButton, backButton;
+
+    private Button restoreButton, deleteButton, deleteAllButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +34,16 @@ public class RestoreActivity extends AppCompatActivity {
         backupsGroup = findViewById(R.id.BackupsGroup);
         restoreButton = findViewById(R.id.RestoreButton);
         deleteButton = findViewById(R.id.DeleteButton);
+        deleteAllButton = findViewById(R.id.DeleteAllButton);
         backButton = findViewById(R.id.BackButton);
 
-        // Button listeners
+        // Populate backup list
+        updateBackups();
+
+        backupsGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            selected = backupsGroup.indexOfChild(findViewById(checkedId));
+        });
+
         restoreButton.setOnClickListener(v -> {
             if (selected >= 0 && selected < backupList.size()) {
                 restoreFile(backupList.get(selected));
@@ -54,12 +60,23 @@ public class RestoreActivity extends AppCompatActivity {
             }
         });
 
+        deleteAllButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RestoreActivity.this);
+            builder.setTitle("Delete All Backups?")
+                    .setMessage("Are you sure you want to permanently delete all backup files?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        deleteAllBackups();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
+                    })
+                    .show();
+        });
+
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(RestoreActivity.this, LoadActivity.class);
             startActivity(intent);
         });
-
-        updateBackups();
     }
 
     private void updateBackups() {
@@ -76,19 +93,14 @@ public class RestoreActivity extends AppCompatActivity {
 
         File[] backups = backupDir.listFiles();
         if (backups != null && backups.length > 0) {
-            for (int i = 0; i < backups.length; i++) {
-                File file = backups[i];
+            for (File file : backups) {
                 backupList.add(file);
-
                 RadioButton button = new RadioButton(this);
                 button.setText(file.getName());
-                int finalI = i;
-                button.setOnClickListener(v -> selected = finalI);
-
                 backupsGroup.addView(button);
             }
         } else {
-            Toast.makeText(this, "No backups found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No backup files found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -102,12 +114,11 @@ public class RestoreActivity extends AppCompatActivity {
         }
 
         File restoredFile = new File(logsDir, backupFile.getName());
-        try {
-            Files.move(backupFile.toPath(), restoredFile.toPath());
+        if (backupFile.renameTo(restoredFile)) {
             Toast.makeText(this, "File restored: " + restoredFile.getName(), Toast.LENGTH_SHORT).show();
-            updateBackups(); // Refresh the list after restoring
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to restore file: " + backupFile.getName(), e);
+            updateBackups(); // Refresh list after restoration
+        } else {
+            Log.e(TAG, "Failed to restore file: " + backupFile.getName());
             Toast.makeText(this, "Failed to restore file", Toast.LENGTH_SHORT).show();
         }
     }
@@ -115,10 +126,37 @@ public class RestoreActivity extends AppCompatActivity {
     private void permanentlyDeleteFile(File file) {
         if (file.delete()) {
             Toast.makeText(this, "File permanently deleted: " + file.getName(), Toast.LENGTH_SHORT).show();
-            updateBackups(); // Refresh the list after deleting
+            updateBackups(); // Refresh list after deletion
         } else {
             Log.e(TAG, "Failed to permanently delete file: " + file.getName());
             Toast.makeText(this, "Failed to delete file", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void deleteAllBackups() {
+        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+
+        if (backupDir.exists() && backupDir.isDirectory()) {
+            File[] files = backupDir.listFiles();
+            if (files != null) {
+                boolean allDeleted = true;
+                for (File file : files) {
+                    if (!file.delete()) {
+                        Log.e(TAG, "Failed to delete file: " + file.getName());
+                        allDeleted = false;
+                    }
+                }
+
+                if (allDeleted) {
+                    Toast.makeText(this, "All backup files deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Some files could not be deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            Toast.makeText(this, "No backup files to delete", Toast.LENGTH_SHORT).show();
+        }
+
+        updateBackups(); // Refresh list after deletion
     }
 }

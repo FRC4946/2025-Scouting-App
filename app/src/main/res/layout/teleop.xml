@@ -144,7 +144,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:text="EXIT"
+            android:text="save"
             android:textSize="16dp" />
         <Button
             android:id="@+id/exitbutton2"
@@ -152,7 +152,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:text="EXIT WITHOUT SAVE"
+            android:text="DELETE"
             android:textAlignment="center"
             android:textSize="16dp" />
     </LinearLayout>

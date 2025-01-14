@@ -44,6 +44,13 @@
         android:layout_weight="1"
         android:text="Delete Selected File" />
 
+         <Button
+             android:id="@+id/DeleteAllButton"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_weight="1"
+             android:text="Delete All Files" />
+
     <Button
         android:id="@+id/BackButton"
         android:layout_width="match_parent"

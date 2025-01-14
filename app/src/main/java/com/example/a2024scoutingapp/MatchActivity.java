@@ -25,7 +25,7 @@ public class MatchActivity extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
     private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
-    private Button red, blue, teleop, auto;
+    private Button red, blue, teleop, auto, exit, send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class MatchActivity extends AppCompatActivity {
         m_matchNumber = findViewById(R.id.matchNumber);
         auto = findViewById(R.id.auto);
         teleop = findViewById(R.id.teleop);
+        send = findViewById(R.id.exitbutton);
+        exit = findViewById(R.id.exitbutton2);
         m_scoutName.setText(m_currentForm.scoutName);
         m_teamNumber.setText("" + m_currentForm.teamNumber);
         m_matchNumber.setText("" + (m_currentForm.matchNumber + 1));
@@ -67,6 +69,23 @@ public class MatchActivity extends AppCompatActivity {
                 m_currentForm.teamNumber = Integer.parseInt(m_teamNumber.getText().toString());
                 m_currentForm.matchNumber = Integer.parseInt(m_matchNumber.getText().toString());
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveFormToFile();
+                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }

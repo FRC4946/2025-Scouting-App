@@ -101,6 +101,22 @@
             android:id="@+id/teleop"
             android:textSize="16dp"
             android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="Save"
+            android:layout_margin="3dp"
+            android:id="@+id/exitbutton"
+            android:textSize="16dp"
+            android:layout_height="match_parent"/>'
+        <Button
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:text="delete"
+        android:layout_margin="3dp"
+        android:id="@+id/exitbutton2"
+        android:textSize="16dp"
+        android:layout_height="match_parent"/>
 
     </LinearLayout>
 </LinearLayout>

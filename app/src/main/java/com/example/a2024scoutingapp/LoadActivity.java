@@ -66,7 +66,7 @@ public class LoadActivity extends AppCompatActivity {
         deleteAll.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
             builder.setTitle("Confirm Delete All")
-                    .setMessage("Are you sure you want to move all files to the backup directory?")
+                    .setMessage("Are you sure you want to delete all files?")
                     .setPositiveButton("Yes", (dialog, which) -> deleteAllFiles())
                     .setNegativeButton("No", (dialog, which) -> {
                         // Do nothing
@@ -134,38 +134,28 @@ public class LoadActivity extends AppCompatActivity {
     }
 
     private void loadFile(File file) {
-        if (file == null || !file.exists()) {
-            Toast.makeText(this, "File does not exist or is invalid", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder fileContent = new StringBuilder();
             String line;
-
             while ((line = reader.readLine()) != null) {
                 fileContent.append(line);
             }
 
-            // Log the file content for debugging
-            Log.d(TAG, "File Content: " + fileContent.toString());
+            ScoutingForm form = ScoutingForm.fromString(fileContent.toString());
+            Intent intent = new Intent(this, MatchActivity.class);
+            intent.putExtra("SCOUTING_FORM", form);
 
-            // Use ScoutingForm's fromString method to parse the data
-            ScoutingForm loadedForm = ScoutingForm.fromString(fileContent.toString());
-
-            if (loadedForm != null) {
-                Intent intent = new Intent(this, MatchActivity.class); // Adjust if needed
-                intent.putExtra("SCOUTING_FORM", loadedForm);
-                startActivity(intent);
+            // Delete the old file immediately if it will be overwritten
+            if (file.delete()) {
+                Log.i(TAG, "Old file deleted: " + file.getName());
             } else {
-                Toast.makeText(this, "Failed to parse match data", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Failed to delete old file: " + file.getName());
             }
+
+            startActivity(intent);
         } catch (IOException e) {
-            Log.e(TAG, "Error loading file: " + file.getName(), e);
-            Toast.makeText(this, "Error loading file", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Log.e(TAG, "Error parsing match data: " + e.getMessage(), e);
-            Toast.makeText(this, "Error parsing match data", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Failed to load file: " + file.getName(), e);
+            Toast.makeText(this, "Failed to load file", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -183,11 +173,9 @@ public class LoadActivity extends AppCompatActivity {
         File backupFile = new File(backupDir, file.getName());
         try {
             Files.move(file.toPath(), backupFile.toPath());
-            Toast.makeText(this, "File moved to backup: " + backupFile.getName(), Toast.LENGTH_SHORT).show();
             updateFiles();
         } catch (IOException e) {
             Log.e(TAG, "Failed to move file to backup", e);
-            Toast.makeText(this, "Failed to move file to backup", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -211,9 +199,9 @@ public class LoadActivity extends AppCompatActivity {
                     Log.e(TAG, "Could not delete: " + file.getName(), e);
                 }
             }
-            Toast.makeText(this, "All files moved to backup", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All files deleted", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "No files to move", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No files to delete", Toast.LENGTH_SHORT).show();
         }
 
         updateFiles();
