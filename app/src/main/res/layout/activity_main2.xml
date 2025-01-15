@@ -6,7 +6,7 @@
     android:orientation="vertical" >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1.5"
+        android:layout_weight="1.6"
         android:orientation="vertical"
         android:layout_height="match_parent">
         <TextView
@@ -20,39 +20,76 @@
             android:textColor="@color/iconColor"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-
-        <EditText
-            android:id="@+id/scoutName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="35sp"
-            android:ems="30"
-            android:textColor="@color/iconColor"
-            android:hint="Scout name"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/matchNumber"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:text="Scout name"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_height="match_parent"/>
+            <EditText
+                android:id="@+id/scoutName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="35sp"
+                android:textColor="@color/iconColor"
+                android:hint="Scout name"
+                android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="30"
-            android:hint="Match number"
-            android:inputType="number"
-            android:textColor="@color/iconColor"
-            android:textSize="35sp"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:text="Match number"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_height="match_parent"/>
+            <EditText
+                android:id="@+id/matchNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="Match number"
+                android:inputType="number"
+                android:layout_weight="1"
+                android:textColor="@color/iconColor"
+                android:textSize="35sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/teamNumber"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/iconColor"
-            android:layout_marginTop="20dp"
-            android:textSize="35sp"
-            android:ems="30"
-            android:hint="Team number"
-            android:inputType="number" />
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:text="Team number"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_height="match_parent"/>
+            <EditText
+                android:id="@+id/teamNumber"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/iconColor"
+                android:layout_marginTop="20dp"
+                android:textSize="35sp"
+                android:hint="Team number"
+                android:inputType="number" />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="20dp"
@@ -81,42 +118,30 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="3">
-
+        android:layout_weight="2.3"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
         <Button
             android:layout_width="match_parent"
+            android:text="other options"
             android:layout_weight="1"
-            android:text="Auto"
-            android:layout_margin="3dp"
-            android:id="@+id/auto"
-            android:textSize="16dp"
+            android:id="@+id/fillerSoNoRed"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
             android:layout_height="match_parent"/>
         <Button
+            android:id="@+id/nextButton"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Teleop"
-            android:layout_margin="3dp"
-            android:id="@+id/teleop"
-            android:textSize="16dp"
-            android:layout_height="match_parent"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:text="Save"
-            android:layout_margin="3dp"
-            android:id="@+id/exitbutton"
-            android:textSize="16dp"
-            android:layout_height="match_parent"/>'
-        <Button
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="delete"
-        android:layout_margin="3dp"
-        android:id="@+id/exitbutton2"
-        android:textSize="16dp"
-        android:layout_height="match_parent"/>
-
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/iconColor"
+            android:textAlignment="center"
+            android:text="NEXT" />
     </LinearLayout>
+
 </LinearLayout>
