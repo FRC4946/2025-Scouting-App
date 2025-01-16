@@ -143,6 +143,7 @@ public class MatchActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveFormToFile();
                 Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
                 startActivity(intent);
             }
@@ -166,4 +167,5 @@ public class MatchActivity extends AppCompatActivity {
             Log.e(TAG, "Failed to save form", e);
         }
     }
+
 }
