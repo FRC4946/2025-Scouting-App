@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,21 +19,22 @@ public class MainActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm = new ScoutingForm();
     private String m_loadName;
     private Button start;
-    private String[] Tips = {"Click on buttons to interact with them", "Be a good scout, team needs you!", "Be careful in the pits", "Fixing errors", "Watching Declan yell at his computer", "Cross-checking scouting data", "Creeper? Aw man"};
+    private TextView LoadingTips;
+    private String[] Tips = {"Click on buttons to interact with them", "Be a good scout, team needs you!", "Be careful in the pits", "Fixing errors", "Declan's yelling at his computer", "Cross-checking scouting data", "Creeper? Aw man"};
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-
+        LoadingTips = findViewById(R.id.loadingscreentip);
         // Initialize UI components
         start = findViewById(R.id.start);
         if (start == null) {
             Log.e(TAG, "Button 'start' not found in layout");
             return;
         }
-
+        LoadingTips.setText(Tips[(int) (Math.random() * Tips.length)]);
         // Handle incoming Intent
         Intent intent = getIntent();
         if (intent != null) {
