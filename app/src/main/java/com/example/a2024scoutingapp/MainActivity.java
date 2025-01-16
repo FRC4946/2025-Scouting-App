@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm = new ScoutingForm();
     private String m_loadName;
     private Button start;
+    private String[] Tips = {"Click on buttons to interact with them", "Be a good scout, team needs you!", "Be careful in the pits", "Fixing errors", "Watching Declan yell at his computer", "Cross-checking scouting data", "Creeper? Aw man"};
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
