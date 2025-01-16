@@ -15,7 +15,7 @@ import com.example.a2024scoutingapp.forms.ScoutingForm;
 public class MainActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm = new ScoutingForm();
     private String m_loadName;
-    private Button m_sendButton, m_nextButton, load;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -27,37 +27,12 @@ public class MainActivity extends AppCompatActivity {
         if (intent.hasExtra("SCOUTING_FORM")) {
             m_currentForm = (ScoutingForm) intent.getSerializableExtra("SCOUTING_FORM");
         }
-        m_nextButton = findViewById(R.id.nextButton);
-        m_sendButton = findViewById(R.id.exitbutton);
-        load = findViewById(R.id.loadButton);
-
         m_currentForm = new ScoutingForm();
-
+        Intent cry = new Intent(MainActivity.this, MatchActivity.class);
+        intent.putExtra("SCOUTING_FORM", m_currentForm);
+        startActivity(cry);
 
 //yes
-        m_nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MatchActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-//yes
-        m_sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SendMessageActivity.class);
-                startActivity(intent);
-            }
-        });
-        load.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoadActivity.class);
-                startActivity(intent);
-            }
-       });
 
 
     }

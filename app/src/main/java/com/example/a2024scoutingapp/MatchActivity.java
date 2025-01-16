@@ -25,7 +25,8 @@ public class MatchActivity extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
     private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
-    private Button red, blue, teleop, auto, exit, send;
+    private Button red, blue, teleop, auto, exit, send, m_sendButton, load;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,14 @@ public class MatchActivity extends AppCompatActivity {
         m_scoutName = findViewById(R.id.scoutName);
         m_teamNumber = findViewById(R.id.teamNumber);
         m_matchNumber = findViewById(R.id.matchNumber);
+        m_sendButton = findViewById(R.id.exitbutton);
+        load = findViewById(R.id.loadButton);
         auto = findViewById(R.id.auto);
         teleop = findViewById(R.id.teleop);
         send = findViewById(R.id.exitbutton);
         exit = findViewById(R.id.exitbutton2);
         m_scoutName.setText(m_currentForm.scoutName);
-        m_teamNumber.setText("" + m_currentForm.teamNumber);
-        m_matchNumber.setText("" + (m_currentForm.matchNumber + 1));
+        m_matchNumber.setText("" + (m_currentForm.matchNumber));
 
         red = findViewById(R.id.red);
         blue = findViewById(R.id.blue);
@@ -101,7 +103,21 @@ public class MatchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+//yes
+        m_sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
+                startActivity(intent);
+            }
+        });
+        load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
     private void saveFormToFile () {
