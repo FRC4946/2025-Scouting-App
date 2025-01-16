@@ -145,7 +145,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:text="DELETE"
+            android:text="Save without exit"
             android:textAlignment="center"
             android:textSize="16dp" />
     </LinearLayout>
