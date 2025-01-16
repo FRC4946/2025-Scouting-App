@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +26,7 @@ public class MatchActivity extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
     private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
-    private Button red, blue, teleop, auto, exit, send, m_sendButton, load;
+    private Button red, blue, m_sendButton, load;
 
 
     @Override
@@ -43,67 +44,95 @@ public class MatchActivity extends AppCompatActivity {
         m_matchNumber = findViewById(R.id.matchNumber);
         m_sendButton = findViewById(R.id.exitbutton);
         load = findViewById(R.id.loadButton);
-        auto = findViewById(R.id.auto);
-        teleop = findViewById(R.id.teleop);
-        send = findViewById(R.id.exitbutton);
-        exit = findViewById(R.id.exitbutton2);
         m_scoutName.setText(m_currentForm.scoutName);
         m_matchNumber.setText("" + (m_currentForm.matchNumber));
 
         red = findViewById(R.id.red);
         blue = findViewById(R.id.blue);
+        m_teamNumber.setText("" + m_currentForm.teamNumber);
+        m_matchNumber.setText("" + (m_currentForm.matchNumber));
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 m_currentForm.team = Constants.Team.RED;
+
+                try {
+                    // Validate scout name
+                    String scoutName = m_scoutName.getText().toString().trim();
+                    if (scoutName.isEmpty()) {
+                        Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
+                        return; // Stop further execution
+                    }
+                    m_currentForm.scoutName = scoutName;
+
+                    // Validate and parse team number
+                    String teamNumberInput = m_teamNumber.getText().toString().trim();
+                    if (teamNumberInput.isEmpty()) {
+                        Toast.makeText(MatchActivity.this, "Team number cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
+
+                    // Validate and parse match number
+                    String matchNumberInput = m_matchNumber.getText().toString().trim();
+                    if (matchNumberInput.isEmpty()) {
+                        Toast.makeText(MatchActivity.this, "Match number cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
+
+                } catch (NumberFormatException e) {
+                    // Catch invalid number format errors
+                    Toast.makeText(MatchActivity.this, "Match number or Team number must be valid integers", Toast.LENGTH_SHORT).show();
+                    return; // Stop further execution
+                }
+                Intent intent = new Intent(MatchActivity.this, Auto.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+
             }
         });
         blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 m_currentForm.team = Constants.Team.BLUE;
-            }
-        });
-        auto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                m_currentForm.scoutName = m_scoutName.getText().toString();
-                m_currentForm.teamNumber = Integer.parseInt(m_teamNumber.getText().toString());
-                m_currentForm.matchNumber = Integer.parseInt(m_matchNumber.getText().toString());
+
+                try {
+                    // Validate scout name
+                    String scoutName = m_scoutName.getText().toString().trim();
+                    if (scoutName.isEmpty()) {
+                        Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
+                        return; // Stop further execution
+                    }
+                    m_currentForm.scoutName = scoutName;
+
+                    // Validate and parse team number
+                    String teamNumberInput = m_teamNumber.getText().toString().trim();
+                    if (teamNumberInput.isEmpty()) {
+                        Toast.makeText(MatchActivity.this, "Team number cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
+
+                    // Validate and parse match number
+                    String matchNumberInput = m_matchNumber.getText().toString().trim();
+                    if (matchNumberInput.isEmpty()) {
+                        Toast.makeText(MatchActivity.this, "Match number cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
+
+                } catch (NumberFormatException e) {
+                    // Catch invalid number format errors
+                    Toast.makeText(MatchActivity.this, "Match number or Team number must be valid integers", Toast.LENGTH_SHORT).show();
+                    return; // Stop further execution
+                }
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
+
             }
         });
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveFormToFile();
-                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-        teleop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                m_currentForm.scoutName = m_scoutName.getText().toString();
-                m_currentForm.teamNumber = Integer.parseInt(m_teamNumber.getText().toString());
-                m_currentForm.matchNumber = Integer.parseInt(m_matchNumber.getText().toString());
-                Intent intent = new Intent(MatchActivity.this, Teleop.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-//yes
         m_sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

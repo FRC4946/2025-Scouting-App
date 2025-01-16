@@ -44,7 +44,6 @@ public class Auto extends AppCompatActivity {
         autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
         teleop = findViewById(R.id.teleop);
         send = findViewById(R.id.exitbutton);
-        exit = findViewById(R.id.exitbutton2);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
         main = findViewById(R.id.main);
@@ -144,16 +143,6 @@ public class Auto extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 saveFormToFile();
-                Intent intent = new Intent(Auto.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Auto.this, MainActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);

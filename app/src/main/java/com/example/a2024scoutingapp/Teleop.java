@@ -46,7 +46,6 @@ public class Teleop extends AppCompatActivity {
         auto = findViewById(R.id.auto);
         send = findViewById(R.id.exitbutton);
         main = findViewById(R.id.main);
-        exit = findViewById(R.id.exitbutton2);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
 
@@ -145,16 +144,6 @@ public class Teleop extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 saveFormToFile();
-                Intent intent = new Intent(Teleop.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, MainActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
