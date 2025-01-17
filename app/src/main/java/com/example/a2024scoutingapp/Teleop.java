@@ -21,7 +21,7 @@ public class Teleop extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit;
+    private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit, endgame;
     private CheckBox deleteMode, disabled;
 
     @Override
@@ -46,6 +46,7 @@ public class Teleop extends AppCompatActivity {
         auto = findViewById(R.id.auto);
         send = findViewById(R.id.exitbutton);
         main = findViewById(R.id.main);
+        endgame = findViewById(R.id.endgame);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
 
@@ -138,7 +139,14 @@ public class Teleop extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        endgame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Teleop.this, Endgame.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

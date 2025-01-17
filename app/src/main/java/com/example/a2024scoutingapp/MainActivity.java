@@ -39,32 +39,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.e(TAG, "Intent is null. Initializing with default values.");
         }
-
-        /*
-        setContentView(R.layout.activity_main1);
-        LoadingTips = findViewById(R.id.loadingscreentip);
-        // Initialize UI components
-        start = findViewById(R.id.start);
-        if (start == null) {
-            Log.e(TAG, "Button 'start' not found in layout");
-            return;
-        }
-        LoadingTips.setText(Tips[(int) (Math.random() * Tips.length)]);
-        // Handle incoming Intent
-        Intent intent = getIntent();
-
-        // Set OnClickListener for start button
-        start.setOnClickListener(v -> {
-            Log.d(TAG, "Start button clicked, starting MatchActivity.");
-            m_currentForm = new ScoutingForm(); // Reset form
-
-            // Launch MatchActivity
-            */
             Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
             matchIntent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(matchIntent);
-            /*
-        });
-             */
     }
 }

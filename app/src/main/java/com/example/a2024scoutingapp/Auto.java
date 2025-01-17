@@ -43,10 +43,10 @@ public class Auto extends AppCompatActivity {
         autoProcessor = findViewById(R.id.autoProcessor);
         autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
         teleop = findViewById(R.id.teleop);
+        main = findViewById(R.id.main);
         send = findViewById(R.id.exitbutton);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
-        main = findViewById(R.id.main);
 
         Button[] Buttons = {autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet};
         for (int i = 0; i < Buttons.length; i++) {

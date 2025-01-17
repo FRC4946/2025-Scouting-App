@@ -12,6 +12,7 @@ public class ScoutingForm implements Serializable {
 
     public int matchNumber = 0;
     public int teleopL4Coral = 0;
+    public int defencePercent = 0;
     public int teleopL3Coral = 0;
     public int teleopL2Coral = 0;
     public int teleopL1Coral = 0;
@@ -25,6 +26,7 @@ public class ScoutingForm implements Serializable {
     public int teleopNet = 0;
 
     public String scoutName = "";
+    public String climbSpeed = "";
 
     public Constants.GameMode currentMode = Constants.GameMode.AUTO;
     public Constants.GameMode teleopMode = Constants.GameMode.TELEOP;
@@ -54,7 +56,9 @@ public class ScoutingForm implements Serializable {
                 + teleopL3Coral + ","
                 +teleopL4Coral + ","
                 + teleopProcessor + ","
-                + teleopNet + ",";
+                + teleopNet + ","
+                + defencePercent + ","
+                + climbSpeed + ",";
     }
 
     public static ScoutingForm fromString(String s) {
@@ -80,6 +84,8 @@ public class ScoutingForm implements Serializable {
         ret.teleopL4Coral = Integer.parseInt(arr[14]);
         ret.teleopProcessor = Integer.parseInt(arr[15]);
         ret.teleopNet = Integer.parseInt(arr[16]);
+        ret.defencePercent = Integer.parseInt(arr[17]);
+        ret.climbSpeed = arr[18];
         ret.matchStarted = true;
         ret.matchOver = true;
         return ret;

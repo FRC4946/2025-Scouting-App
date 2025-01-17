@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        <TextView
+            android:id="@+id/setupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:text="ENDGAME"
+            android:textStyle="bold"
+            android:textColor="@color/iconColor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.6"
+            android:textSize = "30dp"
+            android:textAlignment="center"
+            android:text="Defense toggle"/>
+        <ToggleButton
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:id="@+id/defenseToggle"
+            />
+        <TextView
+            android:id="@+id/percentageText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="0%"
+            android:textAlignment="center"
+            android:layout_weight="1.6"
+            android:textSize="40dp" />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:padding="30dp"
+            android:text="Blue alliance"
+            android:id="@+id/defenseBar"
+            android:textSize="25dp"
+            android:background="@color/buttonNotSelectedColor"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Climb speed"
+            android:textAlignment="center"
+            android:layout_weight="1.6"
+            android:textSize="40dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1.5">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="FAST"
+                android:layout_margin="3dp"
+                android:id="@+id/fastClimb"
+                android:textSize="16dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/mediumClimb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:text="MEDIUM"
+                android:textSize="16dp" />
+            <Button
+                android:id="@+id/slowClimb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:text="SLOW"
+                android:textAlignment="center"
+                android:textSize="16dp" />
+            <Button
+                android:id="@+id/noClimb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:text="NONE"
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.7"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1.4">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Teleop"
+                android:layout_margin="3dp"
+                android:id="@+id/teleop"
+                android:textSize="16dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/exitbutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:text="save"
+                android:textSize="16dp" />
+            <Button
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:text="Exit without save"
+                android:textAlignment="center"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

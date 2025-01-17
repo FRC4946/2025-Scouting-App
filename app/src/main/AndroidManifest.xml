@@ -35,6 +35,7 @@
         <activity android:name=".SendMessageActivity"/>
         <activity android:name=".RestoreActivity"/>
         <activity android:name=".MatchActivity"/>
+        <activity android:name=".Endgame"/>
     </application>
 
 </manifest>
