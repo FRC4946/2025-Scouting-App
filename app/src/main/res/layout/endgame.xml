@@ -46,6 +46,7 @@
         <SeekBar
             android:layout_width="match_parent"
             android:padding="30dp"
+            android:max="135"
             android:text="Blue alliance"
             android:id="@+id/defenseBar"
             android:textSize="25dp"

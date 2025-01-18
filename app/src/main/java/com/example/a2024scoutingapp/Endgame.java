@@ -30,7 +30,7 @@ public class Endgame extends AppCompatActivity {
     private ToggleButton defenseToggle;
     private CheckBox deleteMode, disabled;
     private Button fast, medium, slow, none;
-    private String[] climbSpeeds = {"FAST", "MEDIUM", "SLOW", "NONE"};
+    private int[] climbSpeeds = { 3, 2, 1, 0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class Endgame extends AppCompatActivity {
         slow = findViewById(R.id.slowClimb);
         none = findViewById(R.id.noClimb);
         defenseBar.setProgress(m_currentForm.defencePercent);
-        percentageText.setText(m_currentForm.defencePercent + "%");
+        percentageText.setText(m_currentForm.defencePercent*1.35 + "s");
         if (m_currentForm.defencePercent == 0) {
             defenseToggle.setChecked(false);
         } else {
@@ -65,14 +65,14 @@ public class Endgame extends AppCompatActivity {
             climbs[w].setBackgroundColor(colors[3]);
         }
         for (int i = 0; i < climbs.length; i++) {
-            if (m_currentForm.climbSpeed.contains(climbSpeeds[i])) {
+            if (m_currentForm.climbSpeed == climbSpeeds[i]) {
                 climbs[i].setBackgroundColor(colors[i]);
             }
         }
         defenseBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                percentageText.setText(progress + "%");
+                percentageText.setText(progress +"s");
             }
 
             @Override
@@ -82,7 +82,7 @@ public class Endgame extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                m_currentForm.defencePercent = defenseBar.getProgress();
+                m_currentForm.defencePercent = (int) (defenseBar.getProgress() / 1.35);
             }
         });
         for (int i = 0; i < climbs.length; i++) {
