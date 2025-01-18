@@ -2,6 +2,7 @@ package com.example.a2024scoutingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,10 +28,12 @@ public class Endgame extends AppCompatActivity {
     private SeekBar defenseBar;
     private TextView percentageText;
     private Button teleop, send, main;
-    private ToggleButton defenseToggle;
+    private Button defenseToggle;
     private CheckBox deleteMode, disabled;
     private Button fast, medium, slow, none;
     private int[] climbSpeeds = { 3, 2, 1, 0};
+    private Handler handler = new Handler();
+    private boolean defenseTimer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +53,9 @@ public class Endgame extends AppCompatActivity {
         defenseBar.setProgress(m_currentForm.defencePercent);
         percentageText.setText(m_currentForm.defencePercent*1.35 + "s");
         if (m_currentForm.defencePercent == 0) {
-            defenseToggle.setChecked(false);
+            defenseToggle.setText("Defense: ON");
         } else {
-            defenseToggle.setChecked(true);
+            defenseToggle.setText("DEFENSE: OFF");
         }
         Button[] climbs = {fast, medium, slow, none};
         int[] colors = {
@@ -77,7 +80,6 @@ public class Endgame extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                defenseToggle.setChecked(true);
             }
 
             @Override
@@ -124,7 +126,47 @@ public class Endgame extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (defenseTimer) {
+                    // Log the timer running
+                    Log.d(TAG, "Timer is running");
+
+                    // Increment the SeekBar's progress
+                    int currentProgress = defenseBar.getProgress();
+                    currentProgress++;
+
+                    // Ensure progress does not exceed 135
+                    currentProgress = Math.min(currentProgress, 135);
+
+                    // Update the TextView and SeekBar
+                    percentageText.setText(currentProgress + "s");
+                    defenseBar.setProgress(currentProgress);
+
+                    // Repost the Runnable to the handler after 1 second
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        };
+
+// Update in onCreate: Start the timer when defenseTimer is true
+        defenseToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                defenseTimer = !defenseTimer;
+                if (defenseTimer) {
+                    Log.d(TAG, "Defense Timer ON");
+                    defenseToggle.setText("DEFENSE: ON");
+                    handler.post(runnable); // Start the timer when toggled on
+                } else {
+                    Log.d(TAG, "Defense Timer OFF");
+                    defenseToggle.setText("DEFENSE: OFF");
+                }
+            }
+        });
+
+    }
     private void saveFormToFile() {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
