@@ -143,7 +143,12 @@ public class MatchActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveFormToFile();
+                String scoutName = m_scoutName.getText().toString().trim();
+                int teamNumber = Integer.parseInt(m_teamNumber.getText().toString().trim());
+                int matchNumber = Integer.parseInt(m_matchNumber.getText().toString().trim());
+                if (!scoutName.isEmpty() && teamNumber > 0 && matchNumber > 0) {
+                    saveFormToFile();
+                }
                 Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
                 startActivity(intent);
             }
