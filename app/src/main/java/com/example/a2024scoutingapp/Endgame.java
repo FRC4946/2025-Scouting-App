@@ -1,5 +1,7 @@
 package com.example.a2024scoutingapp;
 
+import static android.text.TextUtils.replace;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -107,7 +109,7 @@ public class Endgame extends AppCompatActivity {
             teleop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    m_currentForm.notes = notes.getText().toString();
+                    m_currentForm.notes = notes.getText().toString().replace(",", "");
                     Intent intent = new Intent(Endgame.this, Teleop.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);
@@ -117,7 +119,7 @@ public class Endgame extends AppCompatActivity {
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    m_currentForm.notes = notes.getText().toString();
+                    m_currentForm.notes = notes.getText().toString().replace(",", "");
                     saveFormToFile();
                     Intent intent = new Intent(Endgame.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -127,7 +129,7 @@ public class Endgame extends AppCompatActivity {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    m_currentForm.notes = notes.getText().toString();
+                    m_currentForm.notes = notes.getText().toString().replace(",", "");
                     Intent intent = new Intent(Endgame.this, MatchActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);
