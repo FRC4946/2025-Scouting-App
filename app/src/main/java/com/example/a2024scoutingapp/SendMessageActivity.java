@@ -70,11 +70,11 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private boolean checkBluetoothPermissions() {
         // Check required permissions
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             // Request Bluetooth permission
             ActivityCompat.requestPermissions(
                     this,
-                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
+                    new String[]{Manifest.permission.BLUETOOTH},
                     BLUETOOTH_PERMISSION_REQUEST_CODE
             );
             return false;
@@ -106,10 +106,10 @@ public class SendMessageActivity extends AppCompatActivity {
 
         try {
             // Check for permissions on Android 12+
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                         this,
-                        new String[]{Manifest.permission.BLUETOOTH_CONNECT},
+                        new String[]{Manifest.permission.BLUETOOTH},
                         BLUETOOTH_PERMISSION_REQUEST_CODE
                 );
                 return false;
