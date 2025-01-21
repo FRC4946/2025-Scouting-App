@@ -22,6 +22,7 @@ public class ScoutingForm implements Serializable {
     public int autoL1Coral = 0;
     public int autoProcessor = 0;
     public int autoNet = 0;
+    public String notes = "";
     public int teleopProcessor = 0;
     public int teleopNet = 0;
 
@@ -58,7 +59,8 @@ public class ScoutingForm implements Serializable {
                 + teleopProcessor + ","
                 + teleopNet + ","
                 + defencePercent + ","
-                + climbSpeed + ",";
+                + climbSpeed + ","
+                + notes + ",";
     }
 
     public static ScoutingForm fromString(String s) {
@@ -86,6 +88,7 @@ public class ScoutingForm implements Serializable {
         ret.teleopNet = Integer.parseInt(arr[16]);
         ret.defencePercent = Integer.parseInt(arr[17]);
         ret.climbSpeed = Integer.parseInt(arr[18]);
+        ret.notes = arr[19];
         ret.matchStarted = true;
         ret.matchOver = true;
         return ret;

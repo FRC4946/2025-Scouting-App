@@ -43,7 +43,14 @@
         android:text="Blue alliance"
         android:textSize="25dp" />
 
-
+    <EditText
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Extra notes"
+        android:layout_weight="0"
+        android:textAlignment="center"
+        android:textSize="40dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

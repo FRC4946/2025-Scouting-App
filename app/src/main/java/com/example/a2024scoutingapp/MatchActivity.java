@@ -63,7 +63,7 @@ public class MatchActivity extends AppCompatActivity {
                         Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
                         return; // Stop further execution
                     }
-                    m_currentForm.scoutName = scoutName;
+                    m_currentForm.scoutName = scoutName.replace(",", "");
 
                     // Validate and parse team number
                     String teamNumberInput = m_teamNumber.getText().toString().trim();
@@ -99,7 +99,7 @@ public class MatchActivity extends AppCompatActivity {
 
                 try {
                     // Validate scout name
-                    String scoutName = m_scoutName.getText().toString().trim();
+                    String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
                     if (scoutName.isEmpty()) {
                         Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
                         return; // Stop further execution
@@ -107,7 +107,7 @@ public class MatchActivity extends AppCompatActivity {
                     m_currentForm.scoutName = scoutName;
 
                     // Validate and parse team number
-                    String teamNumberInput = m_teamNumber.getText().toString().trim();
+                    String teamNumberInput = m_teamNumber.getText().toString().trim().replace(",", "");
                     if (teamNumberInput.isEmpty()) {
                         Toast.makeText(MatchActivity.this, "Team number cannot be empty", Toast.LENGTH_SHORT).show();
                         return;
@@ -115,7 +115,7 @@ public class MatchActivity extends AppCompatActivity {
                     m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
 
                     // Validate and parse match number
-                    String matchNumberInput = m_matchNumber.getText().toString().trim();
+                    String matchNumberInput = m_matchNumber.getText().toString().trim().replace(",", "");
                     if (matchNumberInput.isEmpty()) {
                         Toast.makeText(MatchActivity.this, "Match number cannot be empty", Toast.LENGTH_SHORT).show();
                         return;
@@ -143,7 +143,7 @@ public class MatchActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String scoutName = m_scoutName.getText().toString().trim();
+                String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
                 int teamNumber = Integer.parseInt(m_teamNumber.getText().toString().trim());
                 int matchNumber = Integer.parseInt(m_matchNumber.getText().toString().trim());
                 if (!scoutName.isEmpty() && teamNumber > 0 && matchNumber > 0) {

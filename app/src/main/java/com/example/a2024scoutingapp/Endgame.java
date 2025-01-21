@@ -1,5 +1,7 @@
 package com.example.a2024scoutingapp;
 
+import static android.text.TextUtils.replace;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -30,6 +33,7 @@ public class Endgame extends AppCompatActivity {
     private Button teleop, send, main;
     private Button defenseToggle;
     private CheckBox deleteMode, disabled;
+    private EditText notes;
     private Button fast, medium, slow, none;
     private int[] climbSpeeds = { 3, 2, 1, 0};
     private Handler handler = new Handler();
@@ -50,8 +54,10 @@ public class Endgame extends AppCompatActivity {
         medium = findViewById(R.id.mediumClimb);
         slow = findViewById(R.id.slowClimb);
         none = findViewById(R.id.noClimb);
+        notes = findViewById(R.id.notes);
         defenseBar.setProgress(m_currentForm.defencePercent);
         percentageText.setText(m_currentForm.defencePercent*1.35 + "s");
+        notes.setText(m_currentForm.notes);
         if (m_currentForm.defencePercent == 0) {
             defenseToggle.setText("Defense: ON");
         } else {
@@ -103,6 +109,7 @@ public class Endgame extends AppCompatActivity {
             teleop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    m_currentForm.notes = notes.getText().toString().replace(",", "");
                     Intent intent = new Intent(Endgame.this, Teleop.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);
@@ -112,6 +119,7 @@ public class Endgame extends AppCompatActivity {
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    m_currentForm.notes = notes.getText().toString().replace(",", "");
                     saveFormToFile();
                     Intent intent = new Intent(Endgame.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -121,6 +129,7 @@ public class Endgame extends AppCompatActivity {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    m_currentForm.notes = notes.getText().toString().replace(",", "");
                     Intent intent = new Intent(Endgame.this, MatchActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);
