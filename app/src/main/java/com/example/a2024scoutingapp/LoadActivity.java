@@ -48,6 +48,10 @@ public class LoadActivity extends AppCompatActivity {
 
         // Button listeners
         loadButton.setOnClickListener(v -> {
+            if (MainActivity.loaded){
+                Toast.makeText(this, "Already loaded", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (selected >= 0 && selected < fileList.size()) {
                 MainActivity.loaded = true;
                 loadFile(fileList.get(selected));
