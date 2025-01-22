@@ -21,7 +21,7 @@ public class Auto extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, teleop, send, exit, main;
+    private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, endgame, teleop, send, exit, main;
     private CheckBox deleteMode, disabled;
 
     @Override
@@ -44,6 +44,7 @@ public class Auto extends AppCompatActivity {
         autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
+        endgame = findViewById(R.id.endgame);
         send = findViewById(R.id.exitbutton);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
@@ -126,6 +127,14 @@ public class Auto extends AppCompatActivity {
                     m_currentForm.autoProcessor++;
                 }
                 autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
+            }
+        });
+        endgame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Auto.this, Endgame.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
             }
         });
 
