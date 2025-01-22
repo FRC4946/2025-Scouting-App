@@ -12,6 +12,7 @@ public class ScoutingForm implements Serializable {
 
     public int matchNumber = 0;
     public int teleopL4Coral = 0;
+    public int defencePercent = 0;
     public int teleopL3Coral = 0;
     public int teleopL2Coral = 0;
     public int teleopL1Coral = 0;
@@ -21,10 +22,12 @@ public class ScoutingForm implements Serializable {
     public int autoL1Coral = 0;
     public int autoProcessor = 0;
     public int autoNet = 0;
+    public String notes = "depression";
     public int teleopProcessor = 0;
     public int teleopNet = 0;
-
+    public boolean loaded = false;
     public String scoutName = "";
+    public int climbSpeed = 0;
 
     public Constants.GameMode currentMode = Constants.GameMode.AUTO;
     public Constants.GameMode teleopMode = Constants.GameMode.TELEOP;
@@ -54,7 +57,10 @@ public class ScoutingForm implements Serializable {
                 + teleopL3Coral + ","
                 +teleopL4Coral + ","
                 + teleopProcessor + ","
-                + teleopNet + ",";
+                + teleopNet + ","
+                + defencePercent + ","
+                + climbSpeed + ","
+                + notes + ",";
     }
 
     public static ScoutingForm fromString(String s) {
@@ -62,7 +68,7 @@ public class ScoutingForm implements Serializable {
         String[] arr = s.split(",");
 
         ScoutingForm ret = new ScoutingForm();
-
+        System.out.println(s);
         ret.teamNumber = Integer.parseInt(arr[0]);
         ret.team = Constants.Team.fromString(arr[1]);
         ret.matchNumber = Integer.parseInt(arr[2]);
@@ -80,6 +86,9 @@ public class ScoutingForm implements Serializable {
         ret.teleopL4Coral = Integer.parseInt(arr[14]);
         ret.teleopProcessor = Integer.parseInt(arr[15]);
         ret.teleopNet = Integer.parseInt(arr[16]);
+        ret.defencePercent = Integer.parseInt(arr[17]);
+        ret.climbSpeed = Integer.parseInt(arr[18]);
+        ret.notes = arr[19];
         ret.matchStarted = true;
         ret.matchOver = true;
         return ret;

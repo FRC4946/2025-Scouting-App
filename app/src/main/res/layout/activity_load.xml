@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     <LinearLayout
-
+        android:orientation="vertical"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,16 +24,22 @@
     </ScrollView>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:layout_height="match_parent">
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:id="@+id/DeleteButton"
+            android:id="@+id/delete"
             android:text="Delete"
+            android:textSize="20dp"
             android:layout_margin="5dp"
             android:layout_height="match_parent"/>
             <Button
@@ -42,13 +48,43 @@
                 android:text="Load"
                 android:id="@+id/LoadButton"
                 android:layout_margin="5dp"
+                android:textSize="20dp"
                 android:layout_height="match_parent"/>
 
 
         </LinearLayout>
-
-
-
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textColor="@color/greenColor"
+            android:text="DELETE ALL"
+            android:background="@drawable/notouchy"
+            android:textSize="20dp"
+            android:id="@+id/notouchy"
+            android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+                android:id="@+id/restore"
+                android:text="Recover page"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1.03"
+            android:text="EXIT"
+            android:textSize="20dp"
+            android:id="@+id/exiiits"
+            android:layout_margin="5dp"
+            android:layout_height="match_parent"/>
+</LinearLayout>
 
 </LinearLayout>

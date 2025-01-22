@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1.6"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/setupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:gravity="center"
+            android:text="Setup"
+            android:textStyle="bold"
+            android:textColor="@color/iconColor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:text="Scout name"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_height="match_parent"/>
+            <EditText
+                android:id="@+id/scoutName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="35sp"
+                android:textColor="@color/iconColor"
+                android:hint="Scout name"
+                android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:text="Match number"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_height="match_parent"/>
+            <EditText
+                android:id="@+id/matchNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="Match number"
+                android:inputType="number"
+                android:layout_weight="1"
+                android:textColor="@color/iconColor"
+                android:textSize="35sp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:text="Team number"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_height="match_parent"/>
+            <EditText
+                android:id="@+id/teamNumber"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/iconColor"
+                android:layout_marginTop="20dp"
+                android:textSize="35sp"
+                android:hint="Team number"
+                android:inputType="number" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.4"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
+            android:padding="30dp"
+            android:text="Blue alliance"
+            android:id="@+id/blue"
+            android:textSize="25dp"
+            android:background="@drawable/bluebutton"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:padding="30dp"
+            android:background="@drawable/redbutton"
+            android:textSize="25dp"
+            android:id="@+id/red"
+            android:text="Red alliance"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="2.3"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/loadButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="Load"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/iconColor"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/exitbutton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="send"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/iconColor"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</LinearLayout>

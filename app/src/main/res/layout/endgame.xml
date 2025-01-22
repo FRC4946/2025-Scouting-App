@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/setupTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ENDGAME"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/iconColor"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/defenseToggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="whatever"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/percentageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:textAlignment="center"
+        android:textSize="40dp" />
+
+    <SeekBar
+        android:id="@+id/defenseBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/buttonNotSelectedColor"
+        android:max="135"
+        android:padding="30dp"
+        android:text="Blue alliance"
+        android:textSize="25dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+    <EditText
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Extra notes"
+        android:hint="Extra notes"
+        android:layout_weight="0"
+        android:textAlignment="center"
+        android:textSize="40dp" />
+    </ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Climb speed"
+        android:textAlignment="center"
+        android:textSize="40dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/gif"
+        android:layout_height="0dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/fastClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="FAST"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/mediumClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="MEDIUM"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/slowClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="SLOW"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/noClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="NONE"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/teleop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="Teleop"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/exitbutton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="save"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="exit without save"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/ScrollView"
+            android:layout_height="match_parent">
+            <RadioGroup
+                android:id="@+id/BackupsGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+
+        </ScrollView>
+
+    </LinearLayout>
+     <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/RestoreButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Restore Selected File" />
+
+    <Button
+        android:id="@+id/DeleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Delete Selected File" />
+
+         <Button
+             android:id="@+id/DeleteAllButton"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_weight="1"
+             android:text="Delete All Files" />
+
+    <Button
+        android:id="@+id/BackButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Back to Load Activity"/>
+</LinearLayout>
+</LinearLayout>
+

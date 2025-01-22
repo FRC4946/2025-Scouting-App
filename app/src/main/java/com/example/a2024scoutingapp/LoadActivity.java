@@ -1,8 +1,6 @@
 package com.example.a2024scoutingapp;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,172 +8,222 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.EditText;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
+import com.example.a2024scoutingapp.forms.ScoutingForm;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class LoadActivity extends AppCompatActivity {
-
     private static final String TAG = "LoadActivity";
-    private static final int DELETE_PERMISSION_REQUEST = 100;
+    private static final String DIRECTORY_NAME = "Logs";
+    private static final String BACKUP_DIRECTORY_NAME = "Backups";
 
-    int selected = -1; // Default to no selection
-    File[] existingFiles = new File[0];
-    RadioGroup filesGroup;
-    ArrayList<RadioButton> fileButtons;
+    private RadioGroup filesGroup;
+    private ArrayList<File> fileList = new ArrayList<>();
+    private int selected = -1;
+    private Button exit, deleteAll, delete, loadButton, restore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        updateFiles();
+        // Initialize UI components
+        exit = findViewById(R.id.exiiits);
+        restore = findViewById(R.id.restore);
+        delete = findViewById(R.id.delete);
+        deleteAll = findViewById(R.id.notouchy);
+        filesGroup = findViewById(R.id.Files);
+        loadButton = findViewById(R.id.LoadButton);
 
-        Button loadButton = findViewById(R.id.LoadButton);
-        Button deleteButton = findViewById(R.id.DeleteButton);
-
+        // Button listeners
         loadButton.setOnClickListener(v -> {
-            Log.i(TAG, "Commencing load");
-            if (existingFiles.length > 0 && selected >= 0) {
-                loadFile(existingFiles[selected]);
+            if (MainActivity.loaded){
+                Toast.makeText(this, "Already loaded", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (selected >= 0 && selected < fileList.size()) {
+                MainActivity.loaded = true;
+                loadFile(fileList.get(selected));
             } else {
-                Toast.makeText(this, "No file selected to load.", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "No files found, returning to main activity");
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
         });
 
-        deleteButton.setOnClickListener(v -> {
-            Log.i(TAG, "Commencing delete");
-            if (existingFiles.length > 0 && selected >= 0) {
-                // Check for required permissions
-                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            DELETE_PERMISSION_REQUEST);
-                } else {
-                    deleteFile(existingFiles[selected]);
-                }
+        delete.setOnClickListener(v -> {
+            if (selected >= 0 && selected < fileList.size()) {
+                deleteFile(fileList.get(selected));
             } else {
-                Toast.makeText(this, "No file selected to delete.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void loadFile(File file) {
-        if (file != null && file.exists()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            String fileName = file.getAbsolutePath();
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(Intent.EXTRA_TEXT, fileName);
+        deleteAll.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
+            builder.setTitle("Confirm Delete All")
+                    .setMessage("Are you sure you want to delete all files?")
+                    .setPositiveButton("Yes", (dialog, which) -> deleteAllFiles())
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // Do nothing
+                    });
+            builder.show();
+        });
+
+        restore.setOnClickListener(v -> {
+            final EditText pinInput = new EditText(LoadActivity.this);
+            pinInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoadActivity.this);
+            builder.setTitle("Enter PIN")
+                    .setMessage("Please enter your PIN to restore files.")
+                    .setView(pinInput)
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        String pin = pinInput.getText().toString();
+                        if (pin.equals("0111")) {  // Replace with actual PIN logic
+                            navigateToRestoreView();
+                        } else {
+                            Toast.makeText(LoadActivity.this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        // Do nothing
+                    });
+            builder.show();
+        });
+
+        exit.setOnClickListener(v -> {
+            Intent intent = new Intent(LoadActivity.this, MatchActivity.class);
             startActivity(intent);
-        } else {
-            Toast.makeText(this, "Selected file does not exist.", Toast.LENGTH_SHORT).show();
-        }
-    }
+        });
 
-    private void deleteFile(File file) {
-        if (file != null && file.exists() && file.delete()) {
-            Toast.makeText(this, "File deleted successfully.", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "File deleted successfully.");
-            updateFiles();
-        } else {
-            Toast.makeText(this, "Failed to delete file.", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "Failed to delete file.");
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == DELETE_PERMISSION_REQUEST) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (selected >= 0 && selected < existingFiles.length) {
-                    deleteFile(existingFiles[selected]);
-                }
-            } else {
-                Toast.makeText(this, "Permission denied to delete files.", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Write permission was NOT granted.");
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+        updateFiles();
     }
 
     private void updateFiles() {
-        filesGroup = findViewById(R.id.Files);
-        filesGroup.removeAllViews(); // Clear existing RadioButtons
-        fileButtons = new ArrayList<>();
+        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
 
-        File logsDir = new File(getApplicationInfo().dataDir, "Logs");
-        Log.i(TAG, "Logs directory path: " + logsDir.getAbsolutePath());
-        System.out.println("Logs directory path: " + logsDir.getAbsolutePath());
-        if (!logsDir.exists()) {
-            if (!logsDir.mkdirs()) {
-                Log.e(TAG, "Failed to create Logs directory.");
-                System.out.println("Logs not able to make");
-                Toast.makeText(this, "Logs directory is missing.", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if (!logsDir.exists() && !logsDir.mkdirs()) {
+            Log.e(TAG, "Failed to create Logs directory.");
+            return;
         }
-        System.out.println("Logs directory path: " + logsDir.getAbsolutePath());
-        existingFiles = logsDir.listFiles();
-        if (existingFiles != null && existingFiles.length > 0) {
-            for (int i = 0; i < existingFiles.length; i++) {
-                Log.i(TAG, "Found file: " + existingFiles[i].getName());
-                System.out.println("Found file: " + existingFiles[i].getName());
-                RadioButton fileButton = new RadioButton(this);
-                fileButton.setLayoutParams(new RadioGroup.LayoutParams(
-                        RadioGroup.LayoutParams.WRAP_CONTENT,
-                        RadioGroup.LayoutParams.WRAP_CONTENT));
-                String fileName = existingFiles[i].getName();
 
-                // Extract details from file name
-                String[] arr = fileName.split("-");
-                if (arr.length >= 2) {
-                    fileButton.setText((i + 1) + " - Match " + arr[0] + ", Team " + arr[1]);
-                } else {
-                    fileButton.setText((i + 1) + " - " + fileName);
-                }
+        fileList.clear();
+        filesGroup.removeAllViews();
 
-                fileButton.setOnClickListener(v -> selected = filesGroup.indexOfChild(v));
-                fileButtons.add(fileButton);
-                filesGroup.addView(fileButton);
+        File[] files = logsDir.listFiles();
+        if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                fileList.add(file);
+
+                RadioButton button = new RadioButton(this);
+                button.setText(file.getName());
+                int finalI = i;
+                button.setOnClickListener(v -> selected = finalI);
+
+                filesGroup.addView(button);
             }
-
-            // Select the first file by default
-            filesGroup.check(fileButtons.get(0).getId());
         } else {
-            Toast.makeText(this, "No files found.", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "No files found in Logs directory.");
+            Toast.makeText(this, "No files found", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Example method to save a file
-    private void saveFile(String fileName, String fileContent) {
-        File logsDir = new File(getApplicationInfo().dataDir, "Logs");
-        if (!logsDir.exists()) {
-            logsDir.mkdirs();
+    private void loadFile(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            StringBuilder fileContent = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                fileContent.append(line);
+            }
+            System.out.println("File" + fileContent.toString());
+            ScoutingForm form = ScoutingForm.fromString(fileContent.toString());
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("SCOUTING_FORM", form);
+
+            // Delete the old file immediately if it will be overwritten
+            if (file.delete()) {
+                Log.i(TAG, "Old file deleted: " + file.getName());
+            } else {
+                Log.e(TAG, "Failed to delete old file: " + file.getName());
+            }
+
+            startActivity(intent);
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to load file: " + file.getName(), e);
+            Toast.makeText(this, "Failed to load file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+    private void deleteFile(File file) {
+        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+
+        if (!backupDir.exists() && !backupDir.mkdirs()) {
+            Log.e(TAG, "Failed to create backup directory.");
+            return;
         }
 
-        File newFile = new File(logsDir, fileName);
-        try (FileWriter writer = new FileWriter(newFile)) {
-            writer.write(fileContent);
-            writer.flush();
-            Log.i(TAG, "File saved: " + newFile.getAbsolutePath());
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(newFile))); // Ensure file system visibility
-            updateFiles(); // Refresh the list
+        File backupFile = new File(backupDir, file.getName());
+        try {
+            Files.move(file.toPath(), backupFile.toPath());
+            updateFiles();
         } catch (IOException e) {
-            Log.e(TAG, "Error saving file", e);
-            Toast.makeText(this, "Failed to save file.", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Failed to move file to backup", e);
         }
+    }
+
+    private void deleteAllFiles() {
+        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+
+        if (!backupDir.exists() && !backupDir.mkdirs()) {
+            Log.e(TAG, "Failed to create backup directory.");
+            return;
+        }
+
+        File[] files = logsDir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                File backupFile = new File(backupDir, file.getName());
+                try {
+                    Files.move(file.toPath(), backupFile.toPath());
+                    Log.i(TAG, "Deleted " + backupFile.getName());
+                } catch (IOException e) {
+                    Log.e(TAG, "Could not delete: " + file.getName(), e);
+                }
+            }
+            Toast.makeText(this, "All files deleted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No files to delete", Toast.LENGTH_SHORT).show();
+        }
+
+        updateFiles();
+    }
+    private ScoutingForm parseMatchData(String fileContent) {
+        try {
+            // Example: Parsing JSON data (adapt to your file format)
+            Gson gson = new Gson();
+            return gson.fromJson(fileContent, ScoutingForm.class);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to parse match data", e);
+            return null;
+        }
+    }
+
+    private void navigateToRestoreView() {
+        Intent intent = new Intent(LoadActivity.this, RestoreActivity.class);
+        startActivity(intent);
     }
 }

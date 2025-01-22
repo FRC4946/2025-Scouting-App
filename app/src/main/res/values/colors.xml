@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#acacac</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#AC0004</color>
-    <color name="accent_material_dark_1">#AD0000</color>
-    <color name="redTeam">#E73C37</color>
+    <color name="colorAccent">#008000</color>
+    <color name="accent_material_dark_1">#E73C37</color>
+    <color name="redTeam">#AD0000</color>
     <color name="blueTeam">#657ED4</color>
-    <color name="greenColor">#008000</color>
+    <color name="greenColor">#AC0004</color>
     <color name="orangeColor">#FFC36E</color>
     <color name="purpleColor">#E8AAFD</color>
     <color name="navyBlue">#040F3C</color>

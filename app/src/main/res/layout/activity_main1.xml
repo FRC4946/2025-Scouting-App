@@ -4,120 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_weight="1.5"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/setupTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:text="Setup"
-        android:textStyle="bold"
-        android:textColor="@color/iconColor"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-
-    <EditText
-        android:id="@+id/scoutName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:ems="30"
-        android:textColor="@color/iconColor"
-        android:hint="Scout name"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/matchNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="30"
-        android:hint="Match number"
-        android:inputType="number"
-        android:textColor="@color/iconColor"
-        android:textSize="35sp"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/teamNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/iconColor"
-        android:layout_marginTop="20dp"
-        android:textSize="35sp"
-        android:ems="30"
-        android:hint="Team number"
-        android:inputType="number" />
-</LinearLayout>
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2.4"
-        android:orientation="horizontal">
-        <Button
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:padding="30dp"
-            android:text="Blue alliance"
-            android:id="@+id/blue"
-            android:textSize="25dp"
-            android:background="@drawable/bluebutton"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <Button
-            android:layout_width="match_parent"
-            android:padding="30dp"
-            android:background="@drawable/redbutton"
-            android:textSize="25dp"
-            android:id="@+id/red"
-            android:text="Red alliance"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Algae"
+                android:textSize="23dp"
+                android:textAlignment="center"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="4"
+                android:id="@+id/loadingscreentip"
+                android:textSize="40dp"
+                android:textAlignment="center"
+                android:layout_height="match_parent"
+                android:text="Click on buttons to interact with them"/>
+
+
+        </LinearLayout>
+
+
+
+
+
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_weight="2.3"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <Button
-        android:id="@+id/loadButton"
-        android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:text="Load"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/iconColor"
-        android:textSize="25dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"/>
-    <Button
-        android:id="@+id/exitbutton"
-        android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:text="send"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/iconColor"
-        android:textSize="25dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"/>
-    <Button
-        android:id="@+id/nextButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorPrimaryDark"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:textColor="@color/iconColor"
-        android:textAlignment="center"
-        android:text="NEXT" />
-</LinearLayout>
+        android:orientation="horizontal"
+        android:layout_weight="5.5">
+
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:text="Start"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

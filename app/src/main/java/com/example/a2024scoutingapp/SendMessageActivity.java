@@ -4,450 +4,236 @@ import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-//import android.support.v4.app.ActivityCompat;
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.app.AlertDialog;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
-
-
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 public class SendMessageActivity extends AppCompatActivity {
-    //yes
-    BluetoothSocket socket;
+    private static final String TAG = "SendMessageActivity";
+    private static final String DIRECTORY_NAME = "Logs";
+    private static final int BLUETOOTH_PERMISSION_REQUEST_CODE = 101;
 
-    BluetoothDevice hostComputer;
-    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//yes
+    private EditText macInput;
+    private TextView connectionStatus, connectionInfo;
+    private ToggleButton sendSavedToggle;
+    private Button sendButton, exitButton;
 
-    private OutputStream outputStream; //Stream data is written to
-    private InputStream inStream; //Stream data is read from, currently unused
+    private BluetoothSocket socket;
+    private OutputStream outputStream;
+    private BluetoothDevice hostDevice;
+    private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-    String computerAddress = "A4:42:3B:4D:C9:2E"; //"00:C2:C6:C4:71:C3" //3C:F8:62:C5:8D:C4
-    //"E0:2B:E9:A9:CB:57"
-    final String stringUUID = "39675b0d-6dd8-4622-847f-3e5acc607e27"; //UUID of application DO NOT CHANGE
-    UUID ConnectToUUID = UUID.fromString(stringUUID);
-
-    boolean connected = false;
-
-    String message;
-
-    EditText connectionMAC;
-    TextView connectionInfo;
-    ToggleButton sendSavedButton;
-    Button sendButton, deleteButton, exit;
-    File[] existingFiles;
-
-    boolean sending = false;
+    private static final UUID CONNECT_UUID = UUID.fromString("39675b0d-6dd8-4622-847f-3e5acc607e27");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO: make the send screen
-        // all of the errors here are from no send screen
         setContentView(R.layout.send);
 
+        // Initialize UI components
+        macInput = findViewById(R.id.MacText);
+        connectionStatus = findViewById(R.id.ConnectionStatus);
+        connectionInfo = findViewById(R.id.EsablishingConnection);
+        sendSavedToggle = findViewById(R.id.SendSaved);
+        sendButton = findViewById(R.id.SendButton);
+        exitButton = findViewById(R.id.exitbutton);
 
-        System.out.println(getApplicationInfo().dataDir);
-        existingFiles = new File(getApplicationInfo().dataDir + "/Logs").listFiles();
-
-        // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
-        message = intent.getStringExtra(Intent.EXTRA_TEXT); //Gets message from previous activity, stores in message string
-
-        connectionMAC = (EditText) findViewById(R.id.MacText);
-        connectionMAC.setText(computerAddress);
-
-        //TODO: add this + message info later
-        connectionInfo = (TextView) findViewById(R.id.EsablishingConnection);
-        connectionInfo.setText("Not Connected");
-
-        final TextView messageInfo = (TextView) findViewById(R.id.ConnectionStatus);
-        messageInfo.setText(message);
-
-
-        sendSavedButton = (ToggleButton) findViewById(R.id.SendSaved);
-        exit = findViewById(R.id.exitbutton);
-        sendButton = (Button) findViewById(R.id.SendButton);
-        deleteButton = (Button) findViewById(R.id.samWhyYouFallAsleep);
-
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
+        // Button listeners
+        sendButton.setOnClickListener(v -> {
+            if (checkBluetoothPermissions()) {
+                sendFiles();
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * This method is called when the send button is pushed
-             *
-             * @param v ignore this, android handles this variable automatically
-             */
-
-            public void onClick(View v) {
-                sendButton.setVisibility(View.INVISIBLE);
-                connectionInfo.setText("Sending Message");
-                sendMessage();
-            }
-
+        exitButton.setOnClickListener(v -> {
+            Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
+            startActivity(intent);
         });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityCompat.requestPermissions(SendMessageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.DELETE_LOG_REQUEST);
-                //onRequestPermissionsResult(Constants.DELETE_LOG_REQUEST, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new int[]{PackageManager.PERMISSION_GRANTED});
-            }
-        });
-
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    void sendMessage() {
-        if (!sending) {
-            sending = true;
-            new Thread(
-                    new Runnable() {
-                        public void run() {
-                            //when the send button is pushed
-
-                            connect();
-
-                            try {
-                                Thread.sleep(250);
-                            } catch (Exception e) {
-                                Log.i("A", "Error Waiting");
-                            }
-
-                            if (connected) {
-                                try {
-                                    if (!sendSavedButton.isChecked()) {
-                                        write("" + message + "\n");
-                                    }
-
-                                    if (sendSavedButton.isChecked()) {
-
-                                        //if the send saved option is selected
-
-                                        StringBuilder toSend = new StringBuilder();
-                                        File[] existingFiles = new File(getApplicationInfo().dataDir + "/Logs").listFiles(); //List of saved scouting logs
-                                        for (File f : existingFiles) {
-
-                                            BufferedReader reader = new BufferedReader(new FileReader(f));
-
-                                            //write("" + reader.readLine() + "\n"); //Writes contents of loaded file t ooutput stream
-                                            toSend.append("" + reader.readLine() + "\n");
-
-                                            reader.close();
-
-                                        }
-
-                                        write(toSend.toString());
-
-                                    }
-
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            connectionInfo.setText("Sending Message");
-                                        }
-                                    });
-
-                                    write("end"); //causes the computer to stop listening for messages and send its own end message
-
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            connectionInfo.setText("Message Sent");
-                                        }
-                                    });
-
-                                    try {
-                                        Thread.sleep(500);
-                                    } catch (Exception e) {
-                                        Log.i("A", "Error Waiting");
-                                    }
-                                    boolean received = waitForEnd(); //waits until it times out or receives the end message
-
-                                    if (!received) {
-                                        Log.i("A", "Error Sending Message");
-                                        runOnUiThread(new Runnable() {
-                                            public void run() {
-                                                connectionInfo.setText("Error Sending Message");
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(SendMessageActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-                                                builder.setMessage("The Message Failed To Send. Please Try Again.").setTitle("Not Sent").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                    }
-                                                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                    }
-                                                }).setCancelable(false).setIcon(R.mipmap.ic_launcher); //TODO: Change icon
-                                                builder.create();
-                                                builder.show();
-                                            }
-                                        });
-                                    }
-
-                                    socket.close();
-                                } catch (IOException e) {
-                                    Log.i("A", "Error Sending Message");
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            connectionInfo.setText("Error Sending Message");
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(SendMessageActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-                                            builder.setMessage("The Message Failed To Send. Please Try Again.").setTitle("Not Sent").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                }
-                                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                }
-                                            }).setCancelable(false).setIcon(R.mipmap.ic_launcher);
-                                            builder.create();
-                                            builder.show();
-                                        }
-                                    });
-
-                                    e.printStackTrace();
-                                }
-                                connected = false;
-                            }
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    sendButton.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            sending = false;
-                        }
-                    }).start();
+    private boolean checkBluetoothPermissions() {
+        // Check required permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+            // Request Bluetooth permission
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.BLUETOOTH},
+                    BLUETOOTH_PERMISSION_REQUEST_CODE
+            );
+            return false;
         }
+        return true;
     }
 
-    public void connect() {
-        //When the connect button is pushed
-        if (!connected) {
-            computerAddress = connectionMAC.getText().toString();
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    connectionInfo.setText("Connecting...");
-                }
-            });
-            try {
-                init();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (connected) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        connectionInfo.setText("Connected");
-                    }
-                });
+    private void sendFiles() {
+        String macAddress = macInput.getText().toString().trim();
+        if (macAddress.isEmpty()) {
+            Toast.makeText(this, "Please enter a valid MAC address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (connectToHost(macAddress)) {
+            if (sendSavedToggle.isChecked()) {
+                sendAllFiles();
             } else {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        connectionInfo.setText("Error: Connection Failed. Do You Have The Right MAC Address?");
-                        AlertDialog.Builder builder = new AlertDialog.Builder(SendMessageActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-                        builder.setMessage("The Message Failed To Send. Please Try Again.").setTitle("Not Sent").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        }).setCancelable(false).setIcon(R.mipmap.ic_launcher);
-                        builder.create();
-                        builder.show();
-                    }
-                });
+                sendSingleFile();
             }
         }
     }
 
-    /**
-     *  @return true if end is recieved in the time limit, false otherwise
-     *  Waits until it recieves end or times out
-     */
-
-    public boolean waitForEnd() {
-
-        boolean result = false;
-
-        Log.i("A", "Waiting for end");
-        try {
-            byte[] bytes = new byte[3];
-            Log.i("A", "Checking For End");
-            int bytesRead = inStream.read(bytes, 0, bytes.length);
-            String recieved = new String(bytes, "UTF-8");
-
-            if (recieved.equals("end")) { //check if the message is end
-                result = true;
-                Log.i("A", "Received End");
-                //onRequestPermissionsResult(Constants.DELETE_LOG_REQUEST, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new int[]{PackageManager.PERMISSION_GRANTED});
-            }
-        } catch (Exception e) {
-            Log.i("A", "Error While Waiting For End, Aborting");
-            for (StackTraceElement s : e.getStackTrace()) {
-                Log.i("A", s.toString());
-            }
-        }
-
-        return result;
-
-    }
-
-    /**Creates the connection between the client and server apps, requires that the two devices are paired
-     *
-     * @throws IOException never gonna happen
-     */
-
-    private void init() throws IOException {
-
-        int REQUEST_ENABLE_BT = 1;
-
-        if (mBluetoothAdapter == null) {
-            /* Device doesn't support Bluetooth
-            app crashes if this is true, put error handling code in here
-
-
-             */
-            System.out.println("Crashed.");
-
-        }
-
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            try {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    System.out.println("Got to this step, but didn't work.");
-                    return;
-                }
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT); //Enables bluetooth, gets permissions
-            } catch (Exception e) {
-                Log.i("A", "Error Enabling Bluetooth");
-            }
-        }
-
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
-        if (pairedDevices.size() > 0) {
-            // There are paired devices. Get the name and address of each paired device.
-            for (BluetoothDevice device : pairedDevices) {
-                String deviceHardwareAddress = device.getAddress(); // MAC addresses of paired devices
-
-                if (device.getAddress().toString().equals(computerAddress)) {
-                    hostComputer = device;
-                }
-
-
-            }
-
+    private boolean connectToHost(String macAddress) {
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Toast.makeText(this, "Bluetooth is not enabled", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         try {
-            if (!(hostComputer == null)) {
-                socket = hostComputer.createRfcommSocketToServiceRecord(ConnectToUUID);
-                socket.connect();
-                connected = true;
-                outputStream = socket.getOutputStream();
-                inStream = socket.getInputStream();
-                write(mBluetoothAdapter.getName().toString());
+            // Check for permissions on Android 12+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.BLUETOOTH},
+                        BLUETOOTH_PERMISSION_REQUEST_CODE
+                );
+                return false;
+            }
+
+            // Get the remote device
+            hostDevice = bluetoothAdapter.getRemoteDevice(macAddress);
+            if (hostDevice == null) {
+                Toast.makeText(this, "Unable to find the host device", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            // Create and connect the Bluetooth socket
+            socket = hostDevice.createRfcommSocketToServiceRecord(CONNECT_UUID);
+            socket.connect();
+            outputStream = socket.getOutputStream();
+            connectionInfo.setText("Connected to: " + macAddress);
+            return true;
+
+        } catch (SecurityException e) {
+            Log.e(TAG, "Missing Bluetooth permissions", e);
+            Toast.makeText(this, "Missing Bluetooth permissions", Toast.LENGTH_SHORT).show();
+            return false;
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid MAC address", e);
+            Toast.makeText(this, "Invalid MAC address", Toast.LENGTH_SHORT).show();
+            return false;
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to connect to the host device", e);
+            connectionInfo.setText("Connection failed");
+            Toast.makeText(this, "Failed to connect to the host device", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private void sendSingleFile() {
+        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        if (!logsDir.exists() || !logsDir.isDirectory()) {
+            Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        File[] files = logsDir.listFiles();
+        if (files != null && files.length > 0) {
+            File file = files[0]; // Sending the first available file as an example
+            sendFile(file);
+        } else {
+            Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void sendAllFiles() {
+        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        if (!logsDir.exists() || !logsDir.isDirectory()) {
+            Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        File[] files = logsDir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                sendFile(file);
+            }
+            Toast.makeText(this, "All files sent successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void sendFile(File file) {
+        if (file == null || !file.exists()) {
+            Toast.makeText(this, "File does not exist or is invalid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                write(line + "\n"); // Write each line to the Bluetooth connection
+            }
+
+            // Write the "end" indicator
+            if (outputStream != null) {
+                write("end");
+                Toast.makeText(this, "File sent successfully: " + file.getName(), Toast.LENGTH_SHORT).show();
             } else {
-                connected = false;
+                Log.e(TAG, "Output stream is null, cannot send 'end' indicator");
+                Toast.makeText(this, "Failed to send file, output stream not available", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error sending file: " + file.getName(), e);
+            Toast.makeText(this, "Error sending file: " + file.getName(), Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    /**Writes a string to the output stream between this and the paired device using the bluetooth connection
-     *
-     * @param s String to write to output stream
-     * @throws IOException
-     */
-
-    public void write(String s) throws IOException {
-        outputStream.write(s.getBytes());
+    private void write(String data) throws IOException {
+        if (outputStream != null) {
+            outputStream.write(data.getBytes());
+        }
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        if (requestCode == Constants.DELETE_LOG_REQUEST) {
-
-            Log.i("A", "Received response for write permission request.");
-            existingFiles = new File(getApplicationInfo().dataDir + "/Logs").listFiles();
-
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //When write permission is granted
-                //Deletes file
-                for (File existingFile : existingFiles) {
-                    if (existingFile.delete()) {
-                        Log.i("A", "File deleted");
-                    } else {
-                        Log.i("A", "Delete failed");
-                    }
-                }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == BLUETOOTH_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Retry sending files if permission was granted
+                sendFiles();
             } else {
-                Log.i("A", "Write permission was NOT granted.");
+                Toast.makeText(this, "Bluetooth permission is required to send files", Toast.LENGTH_SHORT).show();
             }
-
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to close Bluetooth socket", e);
+            }
+        }
     }
 }

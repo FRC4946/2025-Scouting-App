@@ -21,7 +21,6 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AlphaDogs"
             android:exported="true">
             <intent-filter>
@@ -34,6 +33,9 @@
         <activity android:name=".Auto"/>
         <activity android:name=".LoadActivity"/>
         <activity android:name=".SendMessageActivity"/>
+        <activity android:name=".RestoreActivity"/>
+        <activity android:name=".MatchActivity"/>
+        <activity android:name=".Endgame"/>
     </application>
 
 </manifest>
