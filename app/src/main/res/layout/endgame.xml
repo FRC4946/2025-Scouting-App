@@ -42,7 +42,9 @@
         android:padding="30dp"
         android:text="Blue alliance"
         android:textSize="25dp" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
     <EditText
         android:id="@+id/notes"
         android:layout_width="match_parent"
@@ -52,6 +54,7 @@
         android:layout_weight="0"
         android:textAlignment="center"
         android:textSize="40dp" />
+    </ScrollView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
