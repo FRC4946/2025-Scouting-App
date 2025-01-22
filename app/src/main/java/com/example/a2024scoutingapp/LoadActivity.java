@@ -49,6 +49,7 @@ public class LoadActivity extends AppCompatActivity {
         // Button listeners
         loadButton.setOnClickListener(v -> {
             if (selected >= 0 && selected < fileList.size()) {
+                MainActivity.loaded = true;
                 loadFile(fileList.get(selected));
             } else {
                 Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
@@ -140,7 +141,7 @@ public class LoadActivity extends AppCompatActivity {
             while ((line = reader.readLine()) != null) {
                 fileContent.append(line);
             }
-
+            System.out.println("File" + fileContent.toString());
             ScoutingForm form = ScoutingForm.fromString(fileContent.toString());
             Intent intent = new Intent(this, MatchActivity.class);
             intent.putExtra("SCOUTING_FORM", form);

@@ -45,6 +45,9 @@ public class MatchActivity extends AppCompatActivity {
         m_sendButton = findViewById(R.id.exitbutton);
         load = findViewById(R.id.loadButton);
         m_scoutName.setText(m_currentForm.scoutName);
+        if (!MainActivity.loaded){
+            m_currentForm.matchNumber++;
+        }
         m_matchNumber.setText("" + (m_currentForm.matchNumber));
 
         red = findViewById(R.id.red);

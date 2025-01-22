@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ScoutingForm m_currentForm = new ScoutingForm();
-    private String m_loadName;
-    private Button start;
-    private TextView LoadingTips;
-    private String[] Tips = {"Click on buttons to interact with them", "Be a good scout, team needs you!", "Be careful in the pits", "Fixing errors", "Declan's yelling at his computer", "Cross-checking scouting data", "Creeper? Aw man"};
+    private String m_loadName, scoutName;
+    int matchNumber = 0;
+
+    public static boolean loaded = false;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -38,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             Log.e(TAG, "Intent is null. Initializing with default values.");
+        }
+        if (!loaded) {
+            scoutName = m_currentForm.scoutName;
+            matchNumber = m_currentForm.matchNumber;
+            m_currentForm = new ScoutingForm();
+            m_currentForm.scoutName = scoutName;
+            m_currentForm.matchNumber = matchNumber++;
         }
             Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
             matchIntent.putExtra("SCOUTING_FORM", m_currentForm);

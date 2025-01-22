@@ -57,7 +57,11 @@ public class Endgame extends AppCompatActivity {
         notes = findViewById(R.id.notes);
         defenseBar.setProgress(m_currentForm.defencePercent);
         percentageText.setText(Math.floor(m_currentForm.defencePercent*1.35 + 0.5) + "s");
-        notes.setText(m_currentForm.notes);
+        if (m_currentForm.notes == null || m_currentForm.notes.equals("depression")) {
+            notes.setText("Extra Notes");
+        } else {
+            notes.setText(m_currentForm.notes);
+        }
         if (m_currentForm.defencePercent == 0) {
             defenseToggle.setText("Defense: ON");
         } else {
@@ -119,7 +123,11 @@ public class Endgame extends AppCompatActivity {
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MainActivity.loaded = false;
                     m_currentForm.notes = notes.getText().toString().replace(",", "");
+                    if (m_currentForm.notes == null || m_currentForm.notes.equals("depression")) {
+                        m_currentForm.notes = "Extra Notes";
+                    }
                     saveFormToFile();
                     Intent intent = new Intent(Endgame.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
