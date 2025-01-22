@@ -56,7 +56,7 @@ public class Endgame extends AppCompatActivity {
         none = findViewById(R.id.noClimb);
         notes = findViewById(R.id.notes);
         defenseBar.setProgress(m_currentForm.defencePercent);
-        percentageText.setText(m_currentForm.defencePercent*1.35 + "s");
+        percentageText.setText(Math.floor(m_currentForm.defencePercent*1.35 + 0.5) + "s");
         notes.setText(m_currentForm.notes);
         if (m_currentForm.defencePercent == 0) {
             defenseToggle.setText("Defense: ON");
