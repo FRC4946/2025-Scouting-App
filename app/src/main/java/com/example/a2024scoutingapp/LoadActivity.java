@@ -140,9 +140,9 @@ public class LoadActivity extends AppCompatActivity {
             while ((line = reader.readLine()) != null) {
                 fileContent.append(line);
             }
-
+            System.out.println("File" + fileContent.toString());
             ScoutingForm form = ScoutingForm.fromString(fileContent.toString());
-            Intent intent = new Intent(this, MatchActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("SCOUTING_FORM", form);
 
             // Delete the old file immediately if it will be overwritten
