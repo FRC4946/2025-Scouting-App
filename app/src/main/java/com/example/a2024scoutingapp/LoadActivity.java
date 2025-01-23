@@ -168,23 +168,29 @@ public class LoadActivity extends AppCompatActivity {
 
 
     private void deleteFile(File file) {
-        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
-
-        if (!backupDir.exists() && !backupDir.mkdirs()) {
-            Log.e(TAG, "Failed to create backup directory.");
-            return;
-        }
-
-        File backupFile = new File(backupDir, file.getName());
         try {
-            Files.move(file.toPath(), backupFile.toPath());
-            updateFiles();
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to move file to backup", e);
+            File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+
+            if (!backupDir.exists() && !backupDir.mkdirs()) {
+                Log.e(TAG, "Failed to create backup directory.");
+                return;
+            }
+
+            File backupFile = new File(backupDir, file.getName());
+            try {
+                Files.move(file.toPath(), backupFile.toPath());
+                updateFiles();
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to move file to backup", e);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to delete file", e);
+            Toast.makeText(this, "Failed to delete file, get Declan", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void deleteAllFiles() {
+        try {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
         File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
 
@@ -210,6 +216,10 @@ public class LoadActivity extends AppCompatActivity {
         }
 
         updateFiles();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to delete all files", e);
+            Toast.makeText(this, "Failed to delete all files, get Declan", Toast.LENGTH_SHORT).show();
+        }
     }
     private ScoutingForm parseMatchData(String fileContent) {
         try {

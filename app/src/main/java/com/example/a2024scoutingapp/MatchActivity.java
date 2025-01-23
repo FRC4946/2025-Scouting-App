@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +57,23 @@ public class MatchActivity extends AppCompatActivity {
         blue = findViewById(R.id.blue);
         m_teamNumber.setText("" + m_currentForm.teamNumber);
         m_matchNumber.setText("" + (m_currentForm.matchNumber));
+        InputFilter letterFilter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                // Loop through the characters and ensure they're letters
+                for (int i = start; i < end; i++) {
+                    if (!Character.isLetter(source.charAt(i))) {
+                        return ""; // Block non-letter input
+                    }
+                }
+                return null; // Accept valid input
+            }
+        };
+        m_scoutName.setFilters(new InputFilter[]{
+                new InputFilter.LengthFilter(10) // Limit to 10 characters
+        });
+        // Apply the filter to the EditText
+        m_scoutName.setFilters(new InputFilter[]{letterFilter});
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,8 +159,50 @@ public class MatchActivity extends AppCompatActivity {
         m_sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MatchActivity.this);
+                builder.setTitle("WARNING")
+                        .setMessage("Do you want to save?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            try {
+                                // Validate scout name
+                                String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
+                                if (scoutName.isEmpty()) {
+                                    Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
+                                    return; // Stop further execution
+                                }
+                                m_currentForm.scoutName = scoutName;
+
+                                // Validate and parse team number
+                                String teamNumberInput = m_teamNumber.getText().toString().trim().replace(",", "");
+                                if (teamNumberInput.isEmpty()) {
+                                    Toast.makeText(MatchActivity.this, "Team number cannot be empty", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
+
+                                // Validate and parse match number
+                                String matchNumberInput = m_matchNumber.getText().toString().trim().replace(",", "");
+                                if (matchNumberInput.isEmpty()) {
+                                    Toast.makeText(MatchActivity.this, "Match number cannot be empty", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
+
+                            } catch (NumberFormatException e) {
+                                // Catch invalid number format errors
+                                Toast.makeText(MatchActivity.this, "Match number or Team number must be valid integers", Toast.LENGTH_SHORT).show();
+                                return; // Stop further execution
+                            }
+                            saveFormToFile();
+                            Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
+                            startActivity(intent);
+                            MainActivity.loaded = false;
+                        })
+                        .setNegativeButton("No", (dialog, which) -> {
+                            Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
+                            startActivity(intent);
+                        });
+                builder.create().show();
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
