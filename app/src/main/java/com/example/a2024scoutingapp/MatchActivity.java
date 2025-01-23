@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
@@ -146,14 +147,49 @@ public class MatchActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
-                int teamNumber = Integer.parseInt(m_teamNumber.getText().toString().trim());
-                int matchNumber = Integer.parseInt(m_matchNumber.getText().toString().trim());
-                if (!scoutName.isEmpty() && teamNumber > 0 && matchNumber > 0) {
-                    saveFormToFile();
-                }
-                Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MatchActivity.this);
+                builder.setTitle("WARNING")
+                        .setMessage("Do you want to save?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            try {
+                                // Validate scout name
+                                String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
+                                if (scoutName.isEmpty()) {
+                                    Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
+                                    return; // Stop further execution
+                                }
+                                m_currentForm.scoutName = scoutName;
+
+                                // Validate and parse team number
+                                String teamNumberInput = m_teamNumber.getText().toString().trim().replace(",", "");
+                                if (teamNumberInput.isEmpty()) {
+                                    Toast.makeText(MatchActivity.this, "Team number cannot be empty", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
+
+                                // Validate and parse match number
+                                String matchNumberInput = m_matchNumber.getText().toString().trim().replace(",", "");
+                                if (matchNumberInput.isEmpty()) {
+                                    Toast.makeText(MatchActivity.this, "Match number cannot be empty", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
+
+                            } catch (NumberFormatException e) {
+                                // Catch invalid number format errors
+                                Toast.makeText(MatchActivity.this, "Match number or Team number must be valid integers", Toast.LENGTH_SHORT).show();
+                                return; // Stop further execution
+                            }
+                            saveFormToFile();
+                            Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton("No", (dialog, which) -> {
+                            Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
+                            startActivity(intent);
+                        });
+                builder.create().show();
             }
         });
 
