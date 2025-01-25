@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.example.a2024scoutingapp"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 

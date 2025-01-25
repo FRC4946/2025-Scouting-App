@@ -22,10 +22,10 @@ public class ScoutingForm implements Serializable {
     public int autoL1Coral = 0;
     public int autoProcessor = 0;
     public int autoNet = 0;
-    public String notes = "";
+    public String notes = "depression";
     public int teleopProcessor = 0;
     public int teleopNet = 0;
-
+    public boolean loaded = false;
     public String scoutName = "";
     public int climbSpeed = 0;
 
@@ -68,7 +68,7 @@ public class ScoutingForm implements Serializable {
         String[] arr = s.split(",");
 
         ScoutingForm ret = new ScoutingForm();
-
+        System.out.println(s);
         ret.teamNumber = Integer.parseInt(arr[0]);
         ret.team = Constants.Team.fromString(arr[1]);
         ret.matchNumber = Integer.parseInt(arr[2]);

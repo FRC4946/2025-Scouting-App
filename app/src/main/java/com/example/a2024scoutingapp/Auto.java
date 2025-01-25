@@ -150,6 +150,7 @@ public class Auto extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.loaded = false;
                 m_currentForm.disabled = disabled.isChecked();
                 saveFormToFile();
                 Intent intent = new Intent(Auto.this, MainActivity.class);
