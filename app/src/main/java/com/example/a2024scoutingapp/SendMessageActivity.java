@@ -34,9 +34,10 @@ public class SendMessageActivity extends AppCompatActivity {
     private TextView connectionStatus, connectionInfo;
     private ToggleButton sendSavedToggle;
     private Button sendButton, exitButton;
-
+    String computerAddress = "B8:1E:A4:CF:BA:54"; //" 3C:58:C2:CB:8B:8E"
     private BluetoothSocket socket;
     private OutputStream outputStream;
+    EditText connectionMAC;
     private BluetoothDevice hostDevice;
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -54,6 +55,8 @@ public class SendMessageActivity extends AppCompatActivity {
         sendSavedToggle = findViewById(R.id.SendSaved);
         sendButton = findViewById(R.id.SendButton);
         exitButton = findViewById(R.id.exitbutton);
+        connectionMAC = (EditText) findViewById(R.id.MacText);
+        connectionMAC.setText(computerAddress);
 
         // Button listeners
         sendButton.setOnClickListener(v -> {
