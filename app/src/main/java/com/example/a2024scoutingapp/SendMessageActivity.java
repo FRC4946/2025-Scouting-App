@@ -193,7 +193,6 @@ public class SendMessageActivity extends AppCompatActivity {
 
             // Write the "end" indicator
             if (outputStream != null) {
-                write("end");
                 Toast.makeText(this, "File sent successfully: " + file.getName(), Toast.LENGTH_SHORT).show();
             } else {
                 Log.e(TAG, "Output stream is null, cannot send 'end' indicator");

@@ -245,6 +245,7 @@ public class MatchActivity extends AppCompatActivity {
                             saveFormToFile();
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
                             startActivity(intent);
+                            MainActivity.loaded = false;
                         })
                         .setNegativeButton("No", (dialog, which) -> {
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
