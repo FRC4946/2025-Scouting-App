@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public class MatchActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm;
-    private static final String TAG = "AutoActivity";
+    private static final String TAG = "MatchActivity";
     private static final String DIRECTORY_NAME = "Logs";
     private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
@@ -249,6 +249,7 @@ public class MatchActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("No", (dialog, which) -> {
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
+                            intent.putExtra("SCOUTING_FORM", m_currentForm);
                             startActivity(intent);
                         });
                 builder.create().show();

@@ -65,7 +65,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL4Coral = Math.max(m_currentForm.teleopL4Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL4Coral++;
+                    m_currentForm.teleopL4Coral = Math.min(m_currentForm.teleopL4Coral+1, 12);
                 }
                 teleopL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));
             }
@@ -77,7 +77,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL3Coral = Math.max(m_currentForm.teleopL3Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL3Coral++;
+                    m_currentForm.teleopL3Coral = Math.min(m_currentForm.teleopL3Coral+1, 12);
                 }
                 teleopL3.setText("L3 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));
             }
@@ -89,7 +89,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL2Coral = Math.max(m_currentForm.teleopL2Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL2Coral++;
+                    m_currentForm.teleopL2Coral = Math.min(m_currentForm.teleopL2Coral+1, 12);
                 }
                 teleopL2.setText("L2 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL2Coral)));
             }
@@ -162,6 +162,7 @@ public class Teleop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
+                m_currentForm.matchNumber--;
                 Intent intent = new Intent(Teleop.this, MatchActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);

@@ -137,6 +137,7 @@ public class Endgame extends AppCompatActivity {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    m_currentForm.matchNumber--;
                     m_currentForm.notes = notes.getText().toString().replace(",", "");
                     Intent intent = new Intent(Endgame.this, MatchActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);

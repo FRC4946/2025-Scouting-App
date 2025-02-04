@@ -31,14 +31,14 @@ public class LoadActivity extends AppCompatActivity {
     private RadioGroup filesGroup;
     private ArrayList<File> fileList = new ArrayList<>();
     private int selected = -1;
+    private ScoutingForm m_currentForm;
     private Button exit, deleteAll, delete, loadButton, restore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
-
-        // Initialize UI components
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
         exit = findViewById(R.id.exiiits);
         restore = findViewById(R.id.restore);
         delete = findViewById(R.id.delete);
@@ -102,7 +102,9 @@ public class LoadActivity extends AppCompatActivity {
         });
 
         exit.setOnClickListener(v -> {
+            m_currentForm.matchNumber--;
             Intent intent = new Intent(LoadActivity.this, MatchActivity.class);
+            intent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(intent);
         });
 

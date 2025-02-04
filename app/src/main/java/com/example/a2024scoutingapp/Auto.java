@@ -64,7 +64,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL4Coral = Math.max(m_currentForm.autoL4Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL4Coral++;
+                    m_currentForm.autoL4Coral = Math.min(m_currentForm.autoL4Coral+1, 12);
                 }
                 autoL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL4Coral)));
             }
@@ -76,7 +76,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL3Coral = Math.max(m_currentForm.autoL3Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL3Coral++;
+                    m_currentForm.autoL3Coral = Math.min(m_currentForm.autoL3Coral+1, 12);
                 }
                 autoL3.setText("L3 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL3Coral)));
             }
@@ -88,7 +88,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL2Coral = Math.max(m_currentForm.autoL2Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL2Coral++;
+                    m_currentForm.autoL2Coral = Math.min(m_currentForm.autoL2Coral+1, 12);
                 }
                 autoL2.setText("L2 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL2Coral)));
             }
@@ -162,6 +162,7 @@ public class Auto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
+                m_currentForm.matchNumber--;
                 Intent intent = new Intent(Auto.this, MatchActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
