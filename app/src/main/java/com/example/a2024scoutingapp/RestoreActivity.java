@@ -135,7 +135,6 @@ public class RestoreActivity extends AppCompatActivity {
 
     private void deleteAllBackups() {
         File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
-
         if (backupDir.exists() && backupDir.isDirectory()) {
             File[] files = backupDir.listFiles();
             if (files != null) {

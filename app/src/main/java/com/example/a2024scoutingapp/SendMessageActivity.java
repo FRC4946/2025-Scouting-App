@@ -21,8 +21,10 @@ import androidx.core.app.ActivityCompat;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.UUID;
 
 public class SendMessageActivity extends AppCompatActivity {
@@ -32,7 +34,6 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private EditText macInput;
     private TextView connectionStatus, connectionInfo;
-    private ToggleButton sendSavedToggle;
     private Button sendButton, exitButton;
 
     private BluetoothSocket socket;
@@ -51,7 +52,6 @@ public class SendMessageActivity extends AppCompatActivity {
         macInput = findViewById(R.id.MacText);
         connectionStatus = findViewById(R.id.ConnectionStatus);
         connectionInfo = findViewById(R.id.EsablishingConnection);
-        sendSavedToggle = findViewById(R.id.SendSaved);
         sendButton = findViewById(R.id.SendButton);
         exitButton = findViewById(R.id.exitbutton);
 
@@ -88,13 +88,8 @@ public class SendMessageActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter a valid MAC address", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (connectToHost(macAddress)) {
-            if (sendSavedToggle.isChecked()) {
                 sendAllFiles();
-            } else {
-                sendSingleFile();
-            }
         }
     }
 
@@ -163,6 +158,18 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private void sendAllFiles() {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        if (!logsDir.exists() && !logsDir.mkdirs()) {
+            Log.e(TAG, "Failed to create Logs directory.");
+            return;
+        }
+
+        File logFile = new File(logsDir, String.format(Locale.getDefault(),"DeadInside.log"));
+
+        try (FileWriter writer = new FileWriter(logFile)) {
+            writer.write("NO ONE EXPECTS THE SPANISH INQUISITION");
+            System.out.println("THE SPANISH INQUISITION HAS ARRIVED");
+        } catch (IOException e) {
+        }
         if (!logsDir.exists() || !logsDir.isDirectory()) {
             Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
             return;
@@ -174,6 +181,8 @@ public class SendMessageActivity extends AppCompatActivity {
                 sendFile(file);
             }
             Toast.makeText(this, "All files sent successfully", Toast.LENGTH_SHORT).show();
+            wipeFiles("Backups");
+            wipeFiles("Logs");
         } else {
             Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
         }
@@ -209,7 +218,22 @@ public class SendMessageActivity extends AppCompatActivity {
             outputStream.write(data.getBytes());
         }
     }
+    private void wipeFiles(String directory){
+        File backupDir = new File(getExternalFilesDir(null), directory);
+        if (backupDir.exists() && backupDir.isDirectory()) {
+            File[] files = backupDir.listFiles();
+            if (files != null) {
+                boolean allDeleted = true;
+                for (File file : files) {
+                    if (!file.delete()) {
+                        Log.e(TAG, "Failed to delete file: " + file.getName());
+                        allDeleted = false;
+                    }
+                }
+            }
+        }
 
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == BLUETOOTH_PERMISSION_REQUEST_CODE) {
