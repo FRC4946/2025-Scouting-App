@@ -72,16 +72,14 @@ public class MatchActivity extends AppCompatActivity {
         m_scoutName.setFilters(new InputFilter[]{
                 new InputFilter.LengthFilter(10) // Limit to 10 characters
         });
-        // Apply the filter to the EditText
         m_scoutName.setFilters(new InputFilter[]{letterFilter});
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 m_currentForm.team = Constants.Team.RED;
-
                 try {
                     // Validate scout name
-                    String scoutName = m_scoutName.getText().toString().trim();
+                    String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
                     if (scoutName.isEmpty()) {
                         Toast.makeText(MatchActivity.this, "Scouting name cannot be empty", Toast.LENGTH_SHORT).show();
                         return; // Stop further execution
@@ -89,7 +87,7 @@ public class MatchActivity extends AppCompatActivity {
                     m_currentForm.scoutName = scoutName.replace(",", "");
 
                     // Validate and parse team number
-                    String teamNumberInput = m_teamNumber.getText().toString().trim();
+                    String teamNumberInput = m_teamNumber.getText().toString().trim().replace(",", "");
                     if (teamNumberInput.isEmpty()) {
                         Toast.makeText(MatchActivity.this, "Team number cannot be empty", Toast.LENGTH_SHORT).show();
                         return;
@@ -97,7 +95,7 @@ public class MatchActivity extends AppCompatActivity {
                     m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
 
                     // Validate and parse match number
-                    String matchNumberInput = m_matchNumber.getText().toString().trim();
+                    String matchNumberInput = m_matchNumber.getText().toString().trim().replace(",", "");
                     if (matchNumberInput.isEmpty()) {
                         Toast.makeText(MatchActivity.this, "Match number cannot be empty", Toast.LENGTH_SHORT).show();
                         return;

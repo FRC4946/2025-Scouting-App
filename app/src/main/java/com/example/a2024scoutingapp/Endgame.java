@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -125,9 +126,8 @@ public class Endgame extends AppCompatActivity {
                 public void onClick(View v) {
                     MainActivity.loaded = false;
                     m_currentForm.notes = notes.getText().toString().replace(",", "");
-                    if (m_currentForm.notes == null || m_currentForm.notes.equals("depression")) {
-                        m_currentForm.notes = "Extra Notes";
-                    }
+                        m_currentForm.notes += ".";
+                    System.out.println("Notes" + m_currentForm.notes);
                     saveFormToFile();
                     Intent intent = new Intent(Endgame.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -137,8 +137,13 @@ public class Endgame extends AppCompatActivity {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    m_currentForm.matchNumber--;
+                    if (!MainActivity.loaded){
+                        m_currentForm.matchNumber--;
+                    }
                     m_currentForm.notes = notes.getText().toString().replace(",", "");
+                    if (m_currentForm.notes == null) {
+                        m_currentForm.notes = "depression";
+                    }
                     Intent intent = new Intent(Endgame.this, MatchActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);
