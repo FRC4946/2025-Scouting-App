@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.a2024scoutingapp.forms.ScoutingForm;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -166,7 +168,8 @@ public class SendMessageActivity extends AppCompatActivity {
         File logFile = new File(logsDir, String.format(Locale.getDefault(),"DeadInside.log"));
 
         try (FileWriter writer = new FileWriter(logFile)) {
-            writer.write("NO ONE EXPECTS THE SPANISH INQUISITION");
+            ScoutingForm die = new ScoutingForm();
+            writer.write(die.toString());
             System.out.println("THE SPANISH INQUISITION HAS ARRIVED");
         } catch (IOException e) {
         }
