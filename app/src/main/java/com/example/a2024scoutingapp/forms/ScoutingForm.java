@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ScoutingForm implements Serializable {
     public Constants.Team team = Constants.Team.RED;
 
-    public int teamNumber = 1;
+    public int teamNumber = 0;
 
     public int matchNumber = 0;
     public int teleopL4Coral = 0;
