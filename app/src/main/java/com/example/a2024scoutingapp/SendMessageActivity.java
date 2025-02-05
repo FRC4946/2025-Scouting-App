@@ -181,7 +181,8 @@ public class SendMessageActivity extends AppCompatActivity {
 
         File[] files = logsDir.listFiles();
         if (files != null) {
-            for (File file : files) {
+            for (int i = files.length - 1; i >= 0; i--) {
+                File file = files[i];
                 sendFile(file);
             }
             Toast.makeText(this, "All files sent successfully", Toast.LENGTH_SHORT).show();
