@@ -37,7 +37,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private EditText macInput;
     private TextView connectionStatus, connectionInfo;
     private Button sendButton, exitButton;
-
+    String computerAddress = "B8:1E:A4:CF:BA:54"; //"00:C2:C6:C4:71:C3" "3C:F8:62:C5:8D:C4"
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private BluetoothDevice hostDevice;
@@ -56,7 +56,8 @@ public class SendMessageActivity extends AppCompatActivity {
         connectionInfo = findViewById(R.id.EsablishingConnection);
         sendButton = findViewById(R.id.SendButton);
         exitButton = findViewById(R.id.exitbutton);
-
+        macInput = (EditText) findViewById(R.id.MacText);
+        macInput.setText(computerAddress);
         // Button listeners
         sendButton.setOnClickListener(v -> {
             if (checkBluetoothPermissions()) {
