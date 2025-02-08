@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.a2024scoutingapp.forms.ScoutingForm;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class RestoreActivity extends AppCompatActivity {
     private RadioGroup backupsGroup;
     private ArrayList<File> backupList = new ArrayList<>();
     private int selected = -1;
+    private ScoutingForm m_currentForm;
 
     private Button restoreButton, deleteButton, deleteAllButton, backButton;
 
@@ -29,7 +32,7 @@ public class RestoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore);
-
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
         // Initialize UI components
         backupsGroup = findViewById(R.id.BackupsGroup);
         restoreButton = findViewById(R.id.RestoreButton);
@@ -74,7 +77,8 @@ public class RestoreActivity extends AppCompatActivity {
         });
 
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RestoreActivity.this, LoadActivity.class);
+            Intent intent = new Intent(RestoreActivity.this, MatchActivity.class);
+            intent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(intent);
         });
     }

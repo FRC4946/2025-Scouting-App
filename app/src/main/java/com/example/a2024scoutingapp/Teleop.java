@@ -49,7 +49,7 @@ public class Teleop extends AppCompatActivity {
         endgame = findViewById(R.id.endgame);
         disabled = findViewById(R.id.disabled);
         deleteMode = findViewById(R.id.delete);
-
+        disabled.setChecked(m_currentForm.disabled);
         Button[] Buttons = {teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet};
         for (int i = 0; i < Buttons.length; i++) {
             if (m_currentForm.team == Constants.Team.RED) {
@@ -134,6 +134,7 @@ public class Teleop extends AppCompatActivity {
         auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, Auto.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
@@ -142,6 +143,7 @@ public class Teleop extends AppCompatActivity {
         endgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, Endgame.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
