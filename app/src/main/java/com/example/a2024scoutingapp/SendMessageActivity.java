@@ -62,6 +62,8 @@ public class SendMessageActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> {
             if (checkBluetoothPermissions()) {
                 sendFiles();
+                sendButton.setEnabled(false); // Disable button
+                sendButton.postDelayed(() -> sendButton.setEnabled(true), 5000); // Re-enable after 5 seconds
             }
         });
 
@@ -142,23 +144,6 @@ public class SendMessageActivity extends AppCompatActivity {
             return false;
         }
     }
-
-    private void sendSingleFile() {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
-        if (!logsDir.exists() || !logsDir.isDirectory()) {
-            Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        File[] files = logsDir.listFiles();
-        if (files != null && files.length > 0) {
-            File file = files[0]; // Sending the first available file as an example
-            sendFile(file);
-        } else {
-            Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void sendAllFiles() {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
