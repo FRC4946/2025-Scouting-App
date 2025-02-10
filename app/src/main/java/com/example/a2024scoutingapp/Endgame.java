@@ -29,24 +29,20 @@ public class Endgame extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private SeekBar defenseBar;
-    private TextView percentageText;
     private Button teleop, send, main;
     private Button defenseToggle;
-    private CheckBox deleteMode, disabled;
     private EditText notes;
+    private Button defense0, defense1, defense2, defense3, defense4, defense5;
+    private int[] defensePercentages = {100, 80, 60, 40, 20, 0};
     private Button fast, medium, slow, none;
     private int[] climbSpeeds = { 3, 2, 1, 0};
     private Handler handler = new Handler();
-    private boolean defenseTimer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-        defenseBar = findViewById(R.id.defenseBar);
-        percentageText = findViewById(R.id.percentageText);
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
         defenseToggle = findViewById(R.id.defenseToggle);
@@ -56,8 +52,12 @@ public class Endgame extends AppCompatActivity {
         slow = findViewById(R.id.slowClimb);
         none = findViewById(R.id.noClimb);
         notes = findViewById(R.id.notes);
-        defenseBar.setProgress(m_currentForm.defencePercent);
-        percentageText.setText(Math.floor(m_currentForm.defencePercent*1.35 + 0.5) + "s");
+        defense0 = findViewById(R.id.defense0);
+        defense1 = findViewById(R.id.defense1);
+        defense2 = findViewById(R.id.defense2);
+        defense3 = findViewById(R.id.defense3);
+        defense4 = findViewById(R.id.defense4);
+        defense5 = findViewById(R.id.defense5);
         if (m_currentForm.notes == null || m_currentForm.notes.equals("depression")) {
             notes.setText("Extra Notes");
         } else {
@@ -68,127 +68,111 @@ public class Endgame extends AppCompatActivity {
         } else {
             defenseToggle.setText("DEFENSE: OFF");
         }
+        Button[] percents = {defense5, defense4, defense3, defense2, defense1, defense0};
+        int[] percentColors = {
+                getResources().getColor(R.color.redTeam),
+                getResources().getColor(R.color.orangeColor),
+                getResources().getColor(R.color.yellow),
+                getResources().getColor(R.color.colorAccent),
+                getResources().getColor(R.color.blueTeam),
+                getResources().getColor(R.color.buttonSelectedColor)
+        };
+        for (int cry = 0; cry < percents.length; cry++){
+            if (m_currentForm.defencePercent == defensePercentages[cry]){
+                percents[cry].setBackgroundColor(percentColors[cry]);
+            } else {
+                percents[cry].setBackgroundColor(percentColors[percentColors.length - 1]);
+            }
+        }
+        for (int p = 0; p < percents.length; p++){
+            int finalP = p;
+            percents[finalP].setOnClickListener(v ->{
+            m_currentForm.defencePercent = defensePercentages[finalP];
+                for (int i = 0; i < percents.length; i++) {
+                    if (m_currentForm.defencePercent == defensePercentages[i]) {
+                        percents[i].setBackgroundColor(percentColors[i]);
+                    } else {
+                        percents[i].setBackgroundColor(percentColors[percentColors.length - 1]);
+                    }
+                }
+            });
+        }
         Button[] climbs = {fast, medium, slow, none};
-        int[] colors = {
+        int[] climbColors = {
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.orangeColor),
                 getResources().getColor(R.color.redTeam),
                 getResources().getColor(R.color.buttonSelectedColor)
         };
         for (int w = 0; w < climbs.length; w++) {
-            climbs[w].setBackgroundColor(colors[3]);
+            climbs[w].setBackgroundColor(climbColors[3]);
+        }
+        for (int l = 0; l < percents.length; l++){
+            if (m_currentForm.defencePercent == defensePercentages[l]){
+                percents[l].setBackgroundColor(percentColors[l]);
+            } else {
+                percents[l].setBackgroundColor(percentColors[percentColors.length - 1]);
+            }
         }
         for (int i = 0; i < climbs.length; i++) {
             if (m_currentForm.climbSpeed == climbSpeeds[i]) {
-                climbs[i].setBackgroundColor(colors[i]);
+                for (int j = 0; j < climbs.length; j++) {
+                    climbs[j].setBackgroundColor(percentColors[percentColors.length - 1]);
+                }
+                climbs[i].setBackgroundColor(climbColors[i]);
             }
         }
-        defenseBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                percentageText.setText(progress +"s");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                m_currentForm.defencePercent = (int) (defenseBar.getProgress() / 1.35);
-            }
-        });
         for (int i = 0; i < climbs.length; i++) {
             int finalI = i;
             climbs[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     for (int j = 0; j < climbs.length; j++) {
-                        climbs[j].setBackgroundColor(colors[3]);
+                        climbs[j].setBackgroundColor(climbColors[3]);
                     }
-                    climbs[finalI].setBackgroundColor(colors[finalI]);
+                    climbs[finalI].setBackgroundColor(climbColors[finalI]);
                     m_currentForm.climbSpeed = climbSpeeds[finalI];
                 }
             });
         }
-            teleop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    m_currentForm.notes = notes.getText().toString().replace(",", "");
-                    Intent intent = new Intent(Endgame.this, Teleop.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
-                    startActivity(intent);
-                }
-            });
-
-            send.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainActivity.loaded = false;
-                    m_currentForm.notes = notes.getText().toString().replace(",", "");
-                        m_currentForm.notes += ".";
-                    System.out.println("Notes" + m_currentForm.notes);
-                    saveFormToFile();
-                    Intent intent = new Intent(Endgame.this, MainActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
-                    startActivity(intent);
-                }
-            });
-            main.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!MainActivity.loaded){
-                        m_currentForm.matchNumber--;
-                    }
-                    m_currentForm.notes = notes.getText().toString().replace(",", "");
-                    if (m_currentForm.notes == null) {
-                        m_currentForm.notes = "depression";
-                    }
-                    Intent intent = new Intent(Endgame.this, MatchActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
-                    startActivity(intent);
-                }
-            });
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (defenseTimer) {
-                    // Log the timer running
-                    Log.d(TAG, "Timer is running");
-
-                    // Increment the SeekBar's progress
-                    int currentProgress = defenseBar.getProgress();
-                    currentProgress++;
-
-                    // Ensure progress does not exceed 135
-                    currentProgress = Math.min(currentProgress, 135);
-
-                    // Update the TextView and SeekBar
-                    percentageText.setText(currentProgress + "s");
-                    defenseBar.setProgress(currentProgress);
-
-                    // Repost the Runnable to the handler after 1 second
-                    handler.postDelayed(this, 1000);
-                }
-            }
-        };
-
-// Update in onCreate: Start the timer when defenseTimer is true
-        defenseToggle.setOnClickListener(new View.OnClickListener() {
+        teleop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defenseTimer = !defenseTimer;
-                if (defenseTimer) {
-                    Log.d(TAG, "Defense Timer ON");
-                    defenseToggle.setText("DEFENSE: ON");
-                    handler.post(runnable); // Start the timer when toggled on
-                } else {
-                    Log.d(TAG, "Defense Timer OFF");
-                    defenseToggle.setText("DEFENSE: OFF");
-                }
+                m_currentForm.notes = notes.getText().toString().replace(",", "");
+                Intent intent = new Intent(Endgame.this, Teleop.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
             }
         });
 
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.loaded = false;
+                m_currentForm.notes = notes.getText().toString().replace(",", "");
+                m_currentForm.notes += ".";
+                System.out.println("Notes" + m_currentForm.notes);
+                saveFormToFile();
+                Intent intent = new Intent(Endgame.this, MainActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!MainActivity.loaded) {
+                    m_currentForm.matchNumber--;
+                }
+                m_currentForm.notes = notes.getText().toString().replace(",", "");
+                if (m_currentForm.notes == null) {
+                    m_currentForm.notes = "depression";
+                }
+                Intent intent = new Intent(Endgame.this, MatchActivity.class);
+                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                startActivity(intent);
+            }
+        });
     }
     private void saveFormToFile() {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
