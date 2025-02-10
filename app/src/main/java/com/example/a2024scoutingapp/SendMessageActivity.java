@@ -151,14 +151,8 @@ public class SendMessageActivity extends AppCompatActivity {
             return;
         }
 
-        File logFile = new File(logsDir, String.format(Locale.getDefault(),"DeadInside.log"));
+        File logFile = new File(logsDir, "DeadInside.log");
 
-        try (FileWriter writer = new FileWriter(logFile)) {
-            ScoutingForm die = new ScoutingForm();
-            writer.write(die.toString());
-            System.out.println("THE SPANISH INQUISITION HAS ARRIVED");
-        } catch (IOException e) {
-        }
         if (!logsDir.exists() || !logsDir.isDirectory()) {
             Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
             return;
@@ -166,10 +160,25 @@ public class SendMessageActivity extends AppCompatActivity {
 
         File[] files = logsDir.listFiles();
         if (files != null) {
-            for (int i = files.length - 1; i >= 0; i--) {
-                File file = files[i];
-                sendFile(file);
+            try (FileWriter writer = new FileWriter(logFile)) {
+                writer.write("NO ONE EXPECTS THE SPANISH INQUISITION");
+                System.out.println("THE SPANISH INQUISITION HAS ARRIVED");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            // Send DeadInside.log first if it exists
+            if (logFile.exists()) {
+                sendFile(logFile);
+            }
+
+            // Send the rest of the files, excluding DeadInside.log
+            for (File file : files) {
+                if (!file.getName().equals("DeadInside.log")) {
+                    sendFile(file);
+                }
+            }
+
             Toast.makeText(this, "All files sent successfully", Toast.LENGTH_SHORT).show();
             wipeFiles("Backups");
             wipeFiles("Logs");
