@@ -30,13 +30,11 @@ public class Endgame extends AppCompatActivity {
 
     private ScoutingForm m_currentForm;
     private Button teleop, send, main;
-    private Button defenseToggle;
     private EditText notes;
     private Button defense0, defense1, defense2, defense3, defense4, defense5;
     private int[] defensePercentages = {100, 80, 60, 40, 20, 0};
     private Button fast, medium, slow, none;
     private int[] climbSpeeds = { 3, 2, 1, 0};
-    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,6 @@ public class Endgame extends AppCompatActivity {
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
-        defenseToggle = findViewById(R.id.defenseToggle);
         send = findViewById(R.id.exitbutton);
         fast = findViewById(R.id.fastClimb);
         medium = findViewById(R.id.mediumClimb);
@@ -62,11 +59,6 @@ public class Endgame extends AppCompatActivity {
             notes.setText("Extra Notes");
         } else {
             notes.setText(m_currentForm.notes);
-        }
-        if (m_currentForm.defencePercent == 0) {
-            defenseToggle.setText("Defense: ON");
-        } else {
-            defenseToggle.setText("DEFENSE: OFF");
         }
         Button[] percents = {defense5, defense4, defense3, defense2, defense1, defense0};
         int[] percentColors = {
