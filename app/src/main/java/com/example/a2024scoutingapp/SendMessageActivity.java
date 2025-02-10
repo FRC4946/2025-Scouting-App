@@ -37,7 +37,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private EditText macInput;
     private TextView connectionStatus, connectionInfo;
     private Button sendButton, exitButton;
-    String computerAddress = "B8:1E:A4:CF:BA:54"; //"00:C2:C6:C4:71:C3" "3C:F8:62:C5:8D:C4"
+    String computerAddress ="00:24:D6:F3:F2:A9"; //"B8:1E:A4:CF:BA:54";
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private BluetoothDevice hostDevice;
