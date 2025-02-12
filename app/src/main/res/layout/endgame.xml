@@ -17,14 +17,6 @@
         android:textStyle="bold" />
 
 
-    <Button
-        android:id="@+id/defenseToggle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="whatever"
-        android:textSize="25sp" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,36 +33,48 @@
             android:layout_width="match_parent"
             android:id="@+id/defense5"
             android:text="100%"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:id="@+id/defense4"
             android:text="80%"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:id="@+id/defense3"
             android:text="60%"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:id="@+id/defense2"
             android:text="40%"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:id="@+id/defense1"
             android:text="20%"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
             android:id="@+id/defense0"
             android:text="0%"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
     </LinearLayout>
