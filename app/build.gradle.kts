@@ -39,7 +39,7 @@ android {
 
 dependencies {
     implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
-
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.25")
     implementation("com.google.android.material:material:1.11.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
