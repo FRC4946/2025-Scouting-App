@@ -102,7 +102,6 @@
         android:layout_height="match_parent"
         android:id="@+id/gifs"
         android:layout_weight="1"
-        android:src="@drawable/eightseconds"
         />
     <LinearLayout
         android:layout_width="match_parent"

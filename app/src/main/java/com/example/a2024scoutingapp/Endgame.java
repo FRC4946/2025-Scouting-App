@@ -31,6 +31,7 @@ public class Endgame extends AppCompatActivity {
     private ScoutingForm m_currentForm;
     private Button teleop, send, main;
     private EditText notes;
+    private pl.droidsonroids.gif.GifImageView gifs;
     private Button defense0, defense1, defense2, defense3, defense4, defense5;
     private int[] defensePercentages = {100, 80, 60, 40, 20, 0};
     private Button fast, medium, slow, none;
@@ -49,6 +50,7 @@ public class Endgame extends AppCompatActivity {
         slow = findViewById(R.id.slowClimb);
         none = findViewById(R.id.noClimb);
         notes = findViewById(R.id.notes);
+        gifs = findViewById(R.id.gifs);
         defense0 = findViewById(R.id.defense0);
         defense1 = findViewById(R.id.defense1);
         defense2 = findViewById(R.id.defense2);
@@ -89,6 +91,18 @@ public class Endgame extends AppCompatActivity {
                 }
             });
         }
+        none.setOnClickListener(v -> {
+            gifs.setImageResource(R.drawable.img);
+        });
+        slow.setOnClickListener(v -> {
+            gifs.setImageResource(R.drawable.eightseconds);
+        });
+        medium.setOnClickListener(v -> {
+            gifs.setImageResource(R.drawable.eightseconds);
+        });
+        fast.setOnClickListener(v -> {
+            gifs.setImageResource(R.drawable.eightseconds);
+        });
         Button[] climbs = {fast, medium, slow, none};
         int[] climbColors = {
                 getResources().getColor(R.color.colorAccent),
@@ -166,6 +180,7 @@ public class Endgame extends AppCompatActivity {
             }
         });
     }
+
     private void saveFormToFile() {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
