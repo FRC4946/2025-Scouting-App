@@ -99,10 +99,11 @@
         android:textSize="40dp" />
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
-    android:layout_height="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gifs"
         android:layout_weight="1"
-    android:drawable="@drawable/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    />
+        android:src="@drawable/eightseconds"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
