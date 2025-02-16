@@ -1,23 +1,14 @@
 package com.example.a2024scoutingapp;
 
-import static android.text.TextUtils.replace;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.a2024scoutingapp.forms.ScoutingForm;
+import androidx.appcompat.app.AppCompatActivity;
+import pl.droidsonroids.gif.GifImageView;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,16 +22,17 @@ public class Endgame extends AppCompatActivity {
     private ScoutingForm m_currentForm;
     private Button teleop, send, main;
     private EditText notes;
-    private pl.droidsonroids.gif.GifImageView gifs;
+    private GifImageView gifs;
     private Button defense0, defense1, defense2, defense3, defense4, defense5;
     private int[] defensePercentages = {100, 80, 60, 40, 20, 0};
     private Button fast, medium, slow, none;
-    private int[] climbSpeeds = { 3, 2, 1, 0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame);
+
+
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
@@ -57,11 +49,15 @@ public class Endgame extends AppCompatActivity {
         defense3 = findViewById(R.id.defense3);
         defense4 = findViewById(R.id.defense4);
         defense5 = findViewById(R.id.defense5);
+
+
         if (m_currentForm.notes == null || m_currentForm.notes.equals("depression")) {
             notes.setText("Extra Notes");
         } else {
             notes.setText(m_currentForm.notes);
         }
+
+
         Button[] percents = {defense5, defense4, defense3, defense2, defense1, defense0};
         int[] percentColors = {
                 getResources().getColor(R.color.redTeam),
@@ -71,17 +67,21 @@ public class Endgame extends AppCompatActivity {
                 getResources().getColor(R.color.blueTeam),
                 getResources().getColor(R.color.buttonSelectedColor)
         };
-        for (int cry = 0; cry < percents.length; cry++){
-            if (m_currentForm.defencePercent == defensePercentages[cry]){
+
+
+        for (int cry = 0; cry < percents.length; cry++) {
+            if (m_currentForm.defencePercent == defensePercentages[cry]) {
                 percents[cry].setBackgroundColor(percentColors[cry]);
             } else {
                 percents[cry].setBackgroundColor(percentColors[percentColors.length - 1]);
             }
         }
-        for (int p = 0; p < percents.length; p++){
+
+
+        for (int p = 0; p < percents.length; p++) {
             int finalP = p;
-            percents[finalP].setOnClickListener(v ->{
-            m_currentForm.defencePercent = defensePercentages[finalP];
+            percents[finalP].setOnClickListener(v -> {
+                m_currentForm.defencePercent = defensePercentages[finalP];
                 for (int i = 0; i < percents.length; i++) {
                     if (m_currentForm.defencePercent == defensePercentages[i]) {
                         percents[i].setBackgroundColor(percentColors[i]);
@@ -91,18 +91,8 @@ public class Endgame extends AppCompatActivity {
                 }
             });
         }
-        none.setOnClickListener(v -> {
-            gifs.setImageResource(R.drawable.img);
-        });
-        slow.setOnClickListener(v -> {
-            gifs.setImageResource(R.drawable.eightseconds);
-        });
-        medium.setOnClickListener(v -> {
-            gifs.setImageResource(R.drawable.eightseconds);
-        });
-        fast.setOnClickListener(v -> {
-            gifs.setImageResource(R.drawable.eightseconds);
-        });
+
+
         Button[] climbs = {fast, medium, slow, none};
         int[] climbColors = {
                 getResources().getColor(R.color.colorAccent),
@@ -110,76 +100,98 @@ public class Endgame extends AppCompatActivity {
                 getResources().getColor(R.color.redTeam),
                 getResources().getColor(R.color.buttonSelectedColor)
         };
-        for (int w = 0; w < climbs.length; w++) {
-            climbs[w].setBackgroundColor(climbColors[3]);
-        }
-        for (int l = 0; l < percents.length; l++){
-            if (m_currentForm.defencePercent == defensePercentages[l]){
-                percents[l].setBackgroundColor(percentColors[l]);
-            } else {
-                percents[l].setBackgroundColor(percentColors[percentColors.length - 1]);
-            }
-        }
+
+
         for (int i = 0; i < climbs.length; i++) {
-            if (m_currentForm.climbSpeed == climbSpeeds[i]) {
-                for (int j = 0; j < climbs.length; j++) {
-                    climbs[j].setBackgroundColor(percentColors[percentColors.length - 1]);
-                }
-                climbs[i].setBackgroundColor(climbColors[i]);
-            }
+            climbs[i].setBackgroundColor(climbColors[3]);
         }
+
+
+        switch (m_currentForm.climbSpeed) {
+            case 3:
+                fast.setBackgroundColor(climbColors[0]);
+                loadGif(R.drawable.twoseconds);
+                break;
+            case 2:
+                medium.setBackgroundColor(climbColors[1]);
+                loadGif(R.drawable.fourseconds);
+                break;
+            case 1:
+                slow.setBackgroundColor(climbColors[2]);
+                loadGif(R.drawable.eightseconds);
+                break;
+            case 0:
+                none.setBackgroundColor(climbColors[3]);
+                loadGif(R.drawable.img);
+                break;
+        }
+
         for (int i = 0; i < climbs.length; i++) {
             int finalI = i;
-            climbs[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (int j = 0; j < climbs.length; j++) {
-                        climbs[j].setBackgroundColor(climbColors[3]);
-                    }
-                    climbs[finalI].setBackgroundColor(climbColors[finalI]);
-                    m_currentForm.climbSpeed = climbSpeeds[finalI];
+            climbs[i].setOnClickListener(v -> {
+
+                for (int j = 0; j < climbs.length; j++) {
+                    climbs[j].setBackgroundColor(climbColors[3]);
+                }
+
+                climbs[finalI].setBackgroundColor(climbColors[finalI]);
+
+
+                switch (finalI) {
+                    case 0:
+                        m_currentForm.climbSpeed = 3;
+                        loadGif(R.drawable.twoseconds);
+                        break;
+                    case 1:
+                        m_currentForm.climbSpeed = 2;
+                        loadGif(R.drawable.fourseconds);
+                        break;
+                    case 2:
+                        m_currentForm.climbSpeed = 1;
+                        loadGif(R.drawable.eightseconds);
+                        break;
+                    case 3:
+                        m_currentForm.climbSpeed = 0;
+                        loadGif(R.drawable.img);
+                        break;
                 }
             });
         }
-        teleop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                m_currentForm.notes = notes.getText().toString().replace(",", "");
-                Intent intent = new Intent(Endgame.this, Teleop.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
+
+
+        teleop.setOnClickListener(v -> {
+            m_currentForm.notes = notes.getText().toString().replace(",", "");
+            Intent intent = new Intent(Endgame.this, Teleop.class);
+            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            startActivity(intent);
         });
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.loaded = false;
-                m_currentForm.notes = notes.getText().toString().replace(",", "");
-                m_currentForm.notes += ".";
-                System.out.println("Notes" + m_currentForm.notes);
-                saveFormToFile();
-                Intent intent = new Intent(Endgame.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
+
+        send.setOnClickListener(v -> {
+            MainActivity.loaded = false;
+            m_currentForm.notes = notes.getText().toString().replace(",", "");
+            m_currentForm.notes += ".";
+            saveFormToFile();
+            Intent intent = new Intent(Endgame.this, MainActivity.class);
+            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            startActivity(intent);
         });
-        main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!MainActivity.loaded) {
-                    m_currentForm.matchNumber--;
-                }
-                m_currentForm.notes = notes.getText().toString().replace(",", "");
-                if (m_currentForm.notes == null) {
-                    m_currentForm.notes = "depression";
-                }
-                Intent intent = new Intent(Endgame.this, MatchActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
+
+
+        main.setOnClickListener(v -> {
+            if (!MainActivity.loaded) {
+                m_currentForm.matchNumber--;
             }
+            m_currentForm.notes = notes.getText().toString().replace(",", "");
+            if (m_currentForm.notes == null) {
+                m_currentForm.notes = "depression";
+            }
+            Intent intent = new Intent(Endgame.this, MatchActivity.class);
+            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            startActivity(intent);
         });
     }
+
 
     private void saveFormToFile() {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
@@ -198,4 +210,9 @@ public class Endgame extends AppCompatActivity {
             Log.e(TAG, "Failed to save form", e);
         }
     }
+
+
+    private void loadGif(int gifResource) {
+        gifs.setImageResource(gifResource);
     }
+}
