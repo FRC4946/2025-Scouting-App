@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,7 @@ public class Auto extends AppCompatActivity {
     private ScoutingForm m_currentForm;
     private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, endgame, teleop, send, exit, main;
     private CheckBox deleteMode, disabled;
+    private TextView matchNum, teamNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,10 @@ public class Auto extends AppCompatActivity {
         autoNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoNet)));
         autoProcessor = findViewById(R.id.autoProcessor);
         autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
+        matchNum = findViewById(R.id.matchNum);
+        matchNum.setText("Match: " + m_currentForm.matchNumber);
+        teamNum = findViewById(R.id.teamNum);
+        teamNum.setText("Team: " + m_currentForm.teamNumber);
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
         endgame = findViewById(R.id.endgame);

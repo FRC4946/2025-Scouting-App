@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,14 +24,13 @@ public class Teleop extends AppCompatActivity {
     private ScoutingForm m_currentForm;
     private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit, endgame;
     private CheckBox deleteMode, disabled;
+    private TextView matchNum, teamNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teleop);
-
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-
         teleopL4 = findViewById(R.id.teleopL4Coral);
         teleopL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));
         teleopL3 = findViewById(R.id.teleopL3Coral);
@@ -43,6 +43,10 @@ public class Teleop extends AppCompatActivity {
         teleopNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));
         teleopProcessor = findViewById(R.id.teleopProcessor);
         teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
+        matchNum = findViewById(R.id.matchNum);
+        matchNum.setText("Match: " + m_currentForm.matchNumber);
+        teamNum = findViewById(R.id.teamNum);
+        teamNum.setText("Team: " + m_currentForm.teamNumber);
         auto = findViewById(R.id.auto);
         send = findViewById(R.id.exitbutton);
         main = findViewById(R.id.main);

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 import androidx.appcompat.app.AppCompatActivity;
 import pl.droidsonroids.gif.GifImageView;
@@ -26,13 +28,12 @@ public class Endgame extends AppCompatActivity {
     private Button defense0, defense1, defense2, defense3, defense4, defense5;
     private int[] defensePercentages = {100, 80, 60, 40, 20, 0};
     private Button fast, medium, slow, none;
+    private TextView matchNum, teamNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame);
-
-
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
@@ -49,7 +50,10 @@ public class Endgame extends AppCompatActivity {
         defense3 = findViewById(R.id.defense3);
         defense4 = findViewById(R.id.defense4);
         defense5 = findViewById(R.id.defense5);
-
+        matchNum = findViewById(R.id.matchNum);
+        matchNum.setText("Match: " + m_currentForm.matchNumber);
+        teamNum = findViewById(R.id.teamNum);
+        teamNum.setText("Team: " + m_currentForm.teamNumber);
 
         if (m_currentForm.notes == null || m_currentForm.notes.equals("depression")) {
             notes.setText("Extra Notes");
@@ -122,7 +126,7 @@ public class Endgame extends AppCompatActivity {
                 break;
             case 0:
                 none.setBackgroundColor(climbColors[3]);
-                loadGif(R.drawable.img);
+                loadGif(R.drawable.noclimb);
                 break;
         }
 
@@ -152,7 +156,7 @@ public class Endgame extends AppCompatActivity {
                         break;
                     case 3:
                         m_currentForm.climbSpeed = 0;
-                        loadGif(R.drawable.img);
+                        loadGif(R.drawable.noclimb);
                         break;
                 }
             });

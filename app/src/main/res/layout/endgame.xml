@@ -4,19 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/setupTitle"
+        android:id="@+id/matchNum"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:text="Match: 1"
+        android:textColor="@color/iconColor"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="ENDGAME"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/iconColor"
         android:textSize="40sp"
         android:textStyle="bold" />
-
-
+    <TextView
+        android:id="@+id/teamNum"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:text="Team: 1"
+        android:textColor="@color/iconColor"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,32 +52,8 @@
         android:orientation="horizontal">
         <Button
             android:layout_width="match_parent"
-            android:id="@+id/defense5"
-            android:text="100%"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-        <Button
-            android:layout_width="match_parent"
-            android:id="@+id/defense4"
-            android:text="80%"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-        <Button
-            android:layout_width="match_parent"
-            android:id="@+id/defense3"
-            android:text="60%"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-        <Button
-            android:layout_width="match_parent"
-            android:id="@+id/defense2"
-            android:text="40%"
+            android:id="@+id/defense0"
+            android:text="0%"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
@@ -71,12 +68,36 @@
             android:layout_height="match_parent"/>
         <Button
             android:layout_width="match_parent"
-            android:id="@+id/defense0"
-            android:text="0%"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:id="@+id/defense2"
+            android:text="40%"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/defense3"
+            android:text="60%"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/defense4"
+            android:text="80%"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/defense5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="100%" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -107,35 +128,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/fastClimb"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="FAST"
-            android:textSize="16dp" />
-
-        <Button
-            android:id="@+id/mediumClimb"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="MEDIUM"
-            android:textSize="16dp" />
-
-        <Button
-            android:id="@+id/slowClimb"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="SLOW"
-            android:textAlignment="center"
-            android:textSize="16dp" />
-
         <Button
             android:id="@+id/noClimb"
             android:layout_width="match_parent"
@@ -145,8 +137,31 @@
             android:text="NONE"
             android:textAlignment="center"
             android:textSize="16dp" />
-
-
+        <Button
+            android:id="@+id/slowClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="SLOW"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+        <Button
+            android:id="@+id/mediumClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="MEDIUM"
+            android:textSize="16dp" />
+        <Button
+            android:id="@+id/fastClimb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:text="FAST"
+            android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout
