@@ -43,9 +43,12 @@ At the time of writing, the default orientation of the tablets are in portrait m
 What you're doing with Java: <br/> 
 It's difficult to explain, but here's the things you need to know: <br/> 
 Every java class you make, ensure it's added to AndroidManifest.xml properly. <br/> 
-The scouting form is used to save data, edit the variables storied inside it's class and save any data to it's associated variable. (i.e m_scoutingform.score = score) <br/> 
+The scouting form is used to save data, edit the variables storied inside it's class and save any data to it's associated variable. (i.e form.score = score) <br/> 
 You can use arrays to shorten code, as once an OnClick listener is made it doesn't go away <br/> 
-Copy and paste the code used to swap files, intents and the added message are needed to pass around the scouting form<br/> 
+This code is used to swap files and pass around the form: <br/> 
+Intent intent = new Intent(CurrentClass.this, TargetClass.class);<br/> 
+intent.putExtra("SCOUTING_FORM", form);<br/> 
+startActivity(intent);<br/> 
 OnClick listeners detect when the buttons are clicked (crazy I know) <br/> 
 Within the class, after defining each UI elements, ensure this code is used to store all your java code: <br/> 
     @Override <br/> 
@@ -54,10 +57,10 @@ Within the class, after defining each UI elements, ensure this code is used to s
         setContentView(R.layout.layout);<br/> 
         // Java code here <br/> 
     } <br/> 
-Overall, the best way to do this is to simply mimic the previous years. 2025 Main Scouting app should have commented code if you want to understand further.<br/> 
+Overall, the best way to do this is to simply mimic the previous years.<br/> 
 <br/> 
 I made the app, what am I doing now? <br/> 
-When uploading the app to a tablet (a USB cable is recommended), use debug mode and ensure that log cat is both running properly and logging to the correct device (Don't pull a Riley). <br/> 
+When uploading the app to a tablet (a USB cable is recommended), use debug mode and ensure that log cat is both running properly and reading the correct device (Don't pull a Riley). <br/> 
 Logcat will show you what debug messages are being put out, and what errors are occuring behind the scenes <br/> 
 Once everything runs correctly, test it with the server made for your season (there's also documentation on that if you're lost).<br/> 
 <br/> 
