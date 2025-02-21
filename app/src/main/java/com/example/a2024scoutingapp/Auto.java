@@ -57,7 +57,7 @@ public class Auto extends AppCompatActivity {
         disabled.setChecked(m_currentForm.disabled);
         Button[] Buttons = {autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet};
         for (int i = 0; i < Buttons.length; i++) {
-            if (m_currentForm.team == Constants.Team.RED) {
+            if (m_currentForm.team.equals("RED")) {
                 Buttons[i].setBackgroundResource(R.drawable.redbutton);
             } else {
                 Buttons[i].setBackgroundResource(R.drawable.bluebutton);

@@ -76,7 +76,7 @@ public class MatchActivity extends AppCompatActivity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                m_currentForm.team = Constants.Team.RED;
+                m_currentForm.team = "RED";
                 try {
                     // Validate scout name
                     String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
@@ -116,7 +116,7 @@ public class MatchActivity extends AppCompatActivity {
         blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                m_currentForm.team = Constants.Team.BLUE;
+                m_currentForm.team = "BLUE";
 
                 try {
                     // Validate scout name

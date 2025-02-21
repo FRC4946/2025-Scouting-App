@@ -1,12 +1,9 @@
 package com.example.a2024scoutingapp.forms;
 
-import com.example.a2024scoutingapp.Constants;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class ScoutingForm implements Serializable {
-    public Constants.Team team = Constants.Team.RED;
+    public String team = "RED";
 
     public int teamNumber = 0;
 
@@ -28,10 +25,6 @@ public class ScoutingForm implements Serializable {
     public boolean loaded = false;
     public String scoutName = "";
     public int climbSpeed = 0;
-
-    public Constants.GameMode currentMode = Constants.GameMode.AUTO;
-    public Constants.GameMode teleopMode = Constants.GameMode.TELEOP;
-
     public boolean matchOver = false;
     public boolean matchStarted = false;
     public boolean disabled = false;
@@ -70,7 +63,7 @@ public class ScoutingForm implements Serializable {
         ScoutingForm ret = new ScoutingForm();
         System.out.println(s);
         ret.teamNumber = Integer.parseInt(arr[0]);
-        ret.team = Constants.Team.fromString(arr[1]);
+        ret.team = arr[1];
         ret.matchNumber = Integer.parseInt(arr[2]);
         ret.scoutName = arr[3];
         ret.disabled = Boolean.parseBoolean(arr[4]);
