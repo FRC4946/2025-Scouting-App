@@ -21,7 +21,6 @@ RestoreActivity.java (manages the backup directory files get sent to upon first 
 MainActivity.java (manages intents passed around between files)<br/> 
 ScoutingForm.java (where you're saving all the data to be passed around)<br/> 
 SendMessageActivity.java (manages all of server code)<br/> 
-Utilities.java and Constants.java (Called upon sometimes, not all of it's needed but it works) <br/> 
 saveFormToFile(); (translates the form to a file)<br/> 
 <br/> 
 UI Files: <br/> 
