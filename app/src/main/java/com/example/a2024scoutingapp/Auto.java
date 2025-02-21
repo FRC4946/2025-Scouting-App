@@ -118,7 +118,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoNet = Math.max(m_currentForm.autoNet - 1, 0);
                 } else {
-                    m_currentForm.autoNet++;
+                    m_currentForm.autoNet = Math.min(m_currentForm.autoNet+1, 18);
                 }
                 autoNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoNet)));
             }

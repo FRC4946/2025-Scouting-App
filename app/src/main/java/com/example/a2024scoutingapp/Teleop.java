@@ -117,7 +117,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopNet = Math.max(m_currentForm.teleopNet - 1, 0);
                 } else {
-                    m_currentForm.teleopNet++;
+                    m_currentForm.teleopNet = Math.min(m_currentForm.teleopNet+1, 18);
                 }
                 teleopNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));
             }
