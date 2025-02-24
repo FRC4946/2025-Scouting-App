@@ -60,8 +60,34 @@ public class Endgame extends AppCompatActivity {
         } else {
             notes.setText(m_currentForm.notes);
         }
-
-
+        if (MainActivity.loaded){
+            main.setText("DISCARD CHANGES");
+            main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!MainActivity.loaded){
+                        m_currentForm.matchNumber--;
+                    }
+                    MainActivity.loaded = false;
+                    Intent intent = new Intent(Endgame.this, MainActivity.class);
+                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            main.setText("EXIT WITHOUT SAVE");
+            main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!MainActivity.loaded){
+                        m_currentForm.matchNumber--;
+                    }
+                    Intent intent = new Intent(Endgame.this, MatchActivity.class);
+                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    startActivity(intent);
+                }
+            });
+        }
         Button[] percents = {defense5, defense4, defense3, defense2, defense1, defense0};
         int[] percentColors = {
                 getResources().getColor(R.color.redTeam),
@@ -69,6 +95,7 @@ public class Endgame extends AppCompatActivity {
                 getResources().getColor(R.color.yellow),
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.blueTeam),
+                getResources().getColor(R.color.purple),
                 getResources().getColor(R.color.buttonSelectedColor)
         };
 
@@ -102,12 +129,13 @@ public class Endgame extends AppCompatActivity {
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.orangeColor),
                 getResources().getColor(R.color.redTeam),
+                getResources().getColor(R.color.purple),
                 getResources().getColor(R.color.buttonSelectedColor)
         };
 
 
         for (int i = 0; i < climbs.length; i++) {
-            climbs[i].setBackgroundColor(climbColors[3]);
+            climbs[i].setBackgroundColor(climbColors[4]);
         }
 
 
@@ -133,11 +161,9 @@ public class Endgame extends AppCompatActivity {
         for (int i = 0; i < climbs.length; i++) {
             int finalI = i;
             climbs[i].setOnClickListener(v -> {
-
                 for (int j = 0; j < climbs.length; j++) {
-                    climbs[j].setBackgroundColor(climbColors[3]);
+                    climbs[j].setBackgroundColor(climbColors[4]);
                 }
-
                 climbs[finalI].setBackgroundColor(climbColors[finalI]);
 
 
@@ -177,20 +203,6 @@ public class Endgame extends AppCompatActivity {
             m_currentForm.notes += ".";
             saveFormToFile();
             Intent intent = new Intent(Endgame.this, MainActivity.class);
-            intent.putExtra("SCOUTING_FORM", m_currentForm);
-            startActivity(intent);
-        });
-
-
-        main.setOnClickListener(v -> {
-            if (!MainActivity.loaded) {
-                m_currentForm.matchNumber--;
-            }
-            m_currentForm.notes = notes.getText().toString().replace(",", "");
-            if (m_currentForm.notes == null) {
-                m_currentForm.notes = "depression";
-            }
-            Intent intent = new Intent(Endgame.this, MatchActivity.class);
             intent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(intent);
         });

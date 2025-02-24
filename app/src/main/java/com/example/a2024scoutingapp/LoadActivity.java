@@ -158,12 +158,7 @@ public class LoadActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("SCOUTING_FORM", form);
 
-            // Delete the old file immediately if it will be overwritten
-            if (file.delete()) {
-                Log.i(TAG, "Old file deleted: " + file.getName());
-            } else {
-                Log.e(TAG, "Failed to delete old file: " + file.getName());
-            }
+            MatchActivity.loadedFile = file;
 
             startActivity(intent);
         } catch (IOException e) {

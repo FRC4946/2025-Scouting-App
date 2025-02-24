@@ -63,7 +63,36 @@ public class Auto extends AppCompatActivity {
                 Buttons[i].setBackgroundResource(R.drawable.bluebutton);
             }
         }
-
+        if (MainActivity.loaded){
+            main.setText("DISCARD CHANGES");
+            main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    m_currentForm.disabled = disabled.isChecked();
+                    if (!MainActivity.loaded){
+                        m_currentForm.matchNumber--;
+                    }
+                    MainActivity.loaded = false;
+                    Intent intent = new Intent(Auto.this, MainActivity.class);
+                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            main.setText("EXIT WITHOUT SAVE");
+            main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    m_currentForm.disabled = disabled.isChecked();
+                    if (!MainActivity.loaded){
+                        m_currentForm.matchNumber--;
+                    }
+                    Intent intent = new Intent(Auto.this, MatchActivity.class);
+                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    startActivity(intent);
+                }
+            });
+        }
         autoL4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,18 +191,6 @@ public class Auto extends AppCompatActivity {
                 m_currentForm.disabled = disabled.isChecked();
                 saveFormToFile();
                 Intent intent = new Intent(Auto.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
-                startActivity(intent);
-            }
-        });
-        main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                m_currentForm.disabled = disabled.isChecked();
-                if (!MainActivity.loaded){
-                    m_currentForm.matchNumber--;
-                }
-                Intent intent = new Intent(Auto.this, MatchActivity.class);
                 intent.putExtra("SCOUTING_FORM", m_currentForm);
                 startActivity(intent);
             }

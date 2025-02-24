@@ -13,6 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
@@ -46,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             m_currentForm.scoutName = scoutName;
             m_currentForm.matchNumber = matchNumber++;
         }
-            Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
-            matchIntent.putExtra("SCOUTING_FORM", m_currentForm);
-            startActivity(matchIntent);
+        Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
+        matchIntent.putExtra("SCOUTING_FORM", m_currentForm);
+        startActivity(matchIntent);
     }
 }
