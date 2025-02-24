@@ -188,13 +188,13 @@ public class MatchActivity extends AppCompatActivity {
                 return false;
             }
             m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
+            saveFormToFile();
             return true;
         } catch (NumberFormatException e) {
             // Catch invalid number format errors
             Toast.makeText(MatchActivity.this, "Match number or Team number must be valid integers", Toast.LENGTH_SHORT).show();
             return false; // Stop further execution
         }
-
     }
     private void saveFormToFile () {
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);

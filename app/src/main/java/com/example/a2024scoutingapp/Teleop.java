@@ -57,9 +57,9 @@ public class Teleop extends AppCompatActivity {
         Button[] Buttons = {teleopL4, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet};
         for (int i = 0; i < Buttons.length; i++) {
             if (m_currentForm.team.equals("BLUE")) {
-                Buttons[i].setBackgroundResource(R.drawable.redbutton);
-            } else {
                 Buttons[i].setBackgroundResource(R.drawable.bluebutton);
+            } else {
+                Buttons[i].setBackgroundResource(R.drawable.redbutton);
             }
         }
         if (MainActivity.loaded){

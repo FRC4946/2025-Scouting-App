@@ -200,6 +200,7 @@ public class Endgame extends AppCompatActivity {
         send.setOnClickListener(v -> {
             MainActivity.loaded = false;
             m_currentForm.notes = notes.getText().toString().replace(",", "");
+            m_currentForm.notes = notes.getText().toString().replace(".", "");
             m_currentForm.notes += ".";
             saveFormToFile();
             Intent intent = new Intent(Endgame.this, MainActivity.class);

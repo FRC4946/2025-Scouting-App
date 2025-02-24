@@ -63,7 +63,7 @@ public class SendMessageActivity extends AppCompatActivity {
             if (checkBluetoothPermissions()) {
                 sendFiles();
                 sendButton.setEnabled(false); // Disable button
-                sendButton.postDelayed(() -> sendButton.setEnabled(true), 5000); // Re-enable after 5 seconds
+                sendButton.postDelayed(() -> sendButton.setEnabled(true), 10000);
             }
         });
 

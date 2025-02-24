@@ -237,6 +237,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private void navigateToRestoreView() {
         Intent intent = new Intent(LoadActivity.this, RestoreActivity.class);
+        intent.putExtra("SCOUTING_FORM", m_currentForm);
         startActivity(intent);
     }
 }
