@@ -23,6 +23,11 @@ MatchActivity.java (shouldn't need too much changing)<br/>
 ScoutingForm.java (where you're saving all the data to be passed around)<br/> 
 SendMessageActivity.java (manages all of server code)<br/> 
 <br/> 
+Java Code:<br/> 
+Save file code - Every UI logic java file<br/> 
+Send screen & Load screen button code - MatchActivity.java<br/> 
+Main button (Becomes "Exit without save" or "Discard changes") - Match files<br/> 
+<br/> 
 UI Files: <br/> 
 activity_load.xml<br/> 
 activity_restore.xml<br/> 

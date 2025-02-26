@@ -1,7 +1,5 @@
 package com.example.a2024scoutingapp;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -36,7 +34,7 @@ public class MatchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         m_loadName = intent.getStringExtra(intent.EXTRA_TEXT);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
