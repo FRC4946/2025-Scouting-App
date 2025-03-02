@@ -114,6 +114,9 @@ public class MatchActivity extends AppCompatActivity {
                             }
                             if (MainActivity.loaded){
                                 swapLoadFile();
+                            } else {
+                                saveFormToFile();
+                                m_currentForm.matchNumber++;
                             }
                             Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
                             intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -121,6 +124,7 @@ public class MatchActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("No", (dialog, which) -> {
                             Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
+                            intent.putExtra("SCOUTING_FORM", m_currentForm);
                             startActivity(intent);
                         });
                 builder.create().show();
@@ -138,6 +142,9 @@ public class MatchActivity extends AppCompatActivity {
                             }
                             if (MainActivity.loaded){
                                 swapLoadFile();
+                            } else {
+                                saveFormToFile();
+                                m_currentForm.matchNumber++;
                             }
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
                             intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -186,7 +193,6 @@ public class MatchActivity extends AppCompatActivity {
                 return false;
             }
             m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
-            saveFormToFile();
             return true;
         } catch (NumberFormatException e) {
             // Catch invalid number format errors

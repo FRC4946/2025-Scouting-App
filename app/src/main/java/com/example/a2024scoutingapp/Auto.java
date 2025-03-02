@@ -22,7 +22,7 @@ public class Auto extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, endgame, teleop, send, exit, main;
+    private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, endgame, teleop, send, main;
     private CheckBox deleteMode, disabled;
     private TextView matchNum, teamNum;
 
@@ -31,7 +31,9 @@ public class Auto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auto);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
-
+        if (m_currentForm == null) {
+            m_currentForm = new ScoutingForm();
+        }
         autoL4 = findViewById(R.id.autoL4Coral);
         autoL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL4Coral)));
         autoL3 = findViewById(R.id.autoL3Coral);
@@ -135,7 +137,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL1Coral = Math.max(m_currentForm.autoL1Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL1Coral++;
+                    m_currentForm.autoL1Coral = Math.min(m_currentForm.autoL1Coral+1, 50);
                 }
                 autoL1.setText("L1 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL1Coral)));
             }
@@ -159,7 +161,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoProcessor = Math.max(m_currentForm.autoProcessor - 1, 0);
                 } else {
-                    m_currentForm.autoProcessor++;
+                    m_currentForm.autoProcessor = Math.min(m_currentForm.autoProcessor+1, 50);
                 }
                 autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
             }

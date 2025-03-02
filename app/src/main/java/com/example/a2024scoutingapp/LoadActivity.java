@@ -39,6 +39,9 @@ public class LoadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        if (m_currentForm == null) {
+            m_currentForm = new ScoutingForm();
+        }
         exit = findViewById(R.id.exiiits);
         restore = findViewById(R.id.restore);
         delete = findViewById(R.id.delete);
@@ -134,7 +137,8 @@ public class LoadActivity extends AppCompatActivity {
                 File file = files[i];
                 fileList.add(file);
 
-                RadioButton button = new RadioButton(this);
+                RadioButton button = new RadioButton(this);;
+                System.out.println("Radio button form added: " + file.toString());
                 button.setText(file.getName());
                 int finalI = i;
                 button.setOnClickListener(v -> selected = finalI);

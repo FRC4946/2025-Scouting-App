@@ -26,7 +26,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Locale;
+import java.nio.file.Files;
 import java.util.UUID;
 
 public class SendMessageActivity extends AppCompatActivity {
@@ -37,6 +37,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private EditText macInput;
     private TextView connectionStatus, connectionInfo;
     private Button sendButton, exitButton;
+    private ScoutingForm form;
     String computerAddress ="00:24:D6:F3:F2:A9"; //"B8:1E:A4:CF:BA:54";
     private BluetoothSocket socket;
     private OutputStream outputStream;
@@ -49,7 +50,10 @@ public class SendMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send);
-
+        form = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        if (form == null) {
+            form = new ScoutingForm();
+        }
         // Initialize UI components
         macInput = findViewById(R.id.MacText);
         connectionStatus = findViewById(R.id.ConnectionStatus);
@@ -68,13 +72,18 @@ public class SendMessageActivity extends AppCompatActivity {
         });
 
         exitButton.setOnClickListener(v -> {
+            if (!MainActivity.loaded) {
+                form.matchNumber--;
+            }
             Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
+            intent.putExtra("SCOUTING_FORM", form);
             startActivity(intent);
         });
     }
 
     private boolean checkBluetoothPermissions() {
         // Check required permissions
+        connectionStatus.setText("Checking Bluetooth...");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             // Request Bluetooth permission
             ActivityCompat.requestPermissions(
@@ -88,6 +97,7 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     private void sendFiles() {
+        connectionStatus.setText("Sending files");
         String macAddress = macInput.getText().toString().trim();
         if (macAddress.isEmpty()) {
             Toast.makeText(this, "Please enter a valid MAC address", Toast.LENGTH_SHORT).show();
@@ -181,7 +191,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
             Toast.makeText(this, "All files sent successfully", Toast.LENGTH_SHORT).show();
             wipeFiles("Backups");
-            wipeFiles("Logs");
+            moveBackup();
         } else {
             Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
         }
@@ -246,7 +256,36 @@ public class SendMessageActivity extends AppCompatActivity {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+    private void moveBackup() {
+        try {
+            File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+            File backupDir = new File(getExternalFilesDir(null), "Backups");
 
+            if (!backupDir.exists() && !backupDir.mkdirs()) {
+                Log.e(TAG, "Failed to create backup directory.");
+                return;
+            }
+
+            File[] files = logsDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    File backupFile = new File(backupDir, file.getName());
+                    try {
+                        Files.move(file.toPath(), backupFile.toPath());
+                        Log.i(TAG, "Deleted " + backupFile.getName());
+                    } catch (IOException e) {
+                        Log.e(TAG, "Could not delete: " + file.getName(), e);
+                    }
+                }
+                Toast.makeText(this, "All files deleted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No files to delete", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to delete all files", e);
+            Toast.makeText(this, "Failed to delete all files, get Declan", Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

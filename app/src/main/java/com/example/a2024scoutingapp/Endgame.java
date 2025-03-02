@@ -35,6 +35,9 @@ public class Endgame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        if (m_currentForm == null) {
+            m_currentForm = new ScoutingForm();
+        }
         teleop = findViewById(R.id.teleop);
         main = findViewById(R.id.main);
         send = findViewById(R.id.exitbutton);
@@ -199,9 +202,7 @@ public class Endgame extends AppCompatActivity {
 
         send.setOnClickListener(v -> {
             MainActivity.loaded = false;
-            m_currentForm.notes = notes.getText().toString().replace(",", "");
-            m_currentForm.notes = notes.getText().toString().replace(".", "");
-            m_currentForm.notes += ".";
+            m_currentForm.notes = notes.getText().toString().replace(",", "").replace(".", "") + ".";
             saveFormToFile();
             Intent intent = new Intent(Endgame.this, MainActivity.class);
             intent.putExtra("SCOUTING_FORM", m_currentForm);

@@ -33,6 +33,9 @@ public class RestoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        if (m_currentForm == null) {
+            m_currentForm = new ScoutingForm();
+        }
         // Initialize UI components
         backupsGroup = findViewById(R.id.BackupsGroup);
         restoreButton = findViewById(R.id.RestoreButton);
@@ -77,6 +80,7 @@ public class RestoreActivity extends AppCompatActivity {
         });
 
         backButton.setOnClickListener(v -> {
+            m_currentForm.matchNumber--;
             Intent intent = new Intent(RestoreActivity.this, MatchActivity.class);
             intent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(intent);

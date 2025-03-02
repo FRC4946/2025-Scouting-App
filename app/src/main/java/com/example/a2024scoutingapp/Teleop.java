@@ -22,7 +22,7 @@ public class Teleop extends AppCompatActivity {
     private static final String DIRECTORY_NAME = "Logs";
 
     private ScoutingForm m_currentForm;
-    private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, exit, endgame;
+    private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, endgame;
     private CheckBox deleteMode, disabled;
     private TextView matchNum, teamNum;
 
@@ -31,6 +31,9 @@ public class Teleop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teleop);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        if (m_currentForm == null) {
+            m_currentForm = new ScoutingForm();
+        }
         teleopL4 = findViewById(R.id.teleopL4Coral);
         teleopL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));
         teleopL3 = findViewById(R.id.teleopL3Coral);
@@ -134,7 +137,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL1Coral = Math.max(m_currentForm.teleopL1Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL1Coral++;
+                    m_currentForm.teleopL1Coral = Math.min(m_currentForm.teleopL1Coral+1, 50);;
                 }
                 teleopL1.setText("L1 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL1Coral)));
             }
@@ -158,7 +161,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopProcessor = Math.max(m_currentForm.teleopProcessor - 1, 0);
                 } else {
-                    m_currentForm.teleopProcessor++;
+                    m_currentForm.teleopProcessor = Math.min(m_currentForm.teleopProcessor+1, 50);
                 }
                 teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
             }
