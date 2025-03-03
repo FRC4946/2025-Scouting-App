@@ -27,6 +27,7 @@ Java Code:<br/>
 Save file code - Every UI logic java file<br/> 
 Send screen & Load screen button code - MatchActivity.java<br/> 
 Main button (Becomes "Exit without save" or "Discard changes") - Match files<br/> 
+IMPORTANT: IF USERS CAN INPUT A COMMA, ENSURE TO FILTER IT OUT. DATA IS SAVED AS CSV FILES, YOU WILL LOSE DATA IF YOU DO NOT DO THIS<br/> 
 <br/> 
 UI Files: <br/> 
 activity_load.xml<br/> 

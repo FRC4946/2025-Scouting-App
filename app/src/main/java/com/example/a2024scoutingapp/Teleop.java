@@ -71,9 +71,6 @@ public class Teleop extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     m_currentForm.disabled = disabled.isChecked();
-                    if (!MainActivity.loaded){
-                        m_currentForm.matchNumber--;
-                    }
                     MainActivity.loaded = false;
                     Intent intent = new Intent(Teleop.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -86,9 +83,6 @@ public class Teleop extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     m_currentForm.disabled = disabled.isChecked();
-                    if (!MainActivity.loaded){
-                        m_currentForm.matchNumber--;
-                    }
                     Intent intent = new Intent(Teleop.this, MatchActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);

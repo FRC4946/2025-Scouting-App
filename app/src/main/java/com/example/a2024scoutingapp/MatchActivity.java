@@ -26,7 +26,6 @@ public class MatchActivity extends AppCompatActivity {
     public static File loadedFile;
     private static final String TAG = "MatchActivity";
     private static final String DIRECTORY_NAME = "Logs";
-    private String m_loadName;
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
     private Button red, blue, m_sendButton, load;
 
@@ -36,7 +35,6 @@ public class MatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        m_loadName = intent.getStringExtra(intent.EXTRA_TEXT);
         m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
@@ -47,9 +45,6 @@ public class MatchActivity extends AppCompatActivity {
         m_sendButton = findViewById(R.id.exitbutton);
         load = findViewById(R.id.loadButton);
         m_scoutName.setText(m_currentForm.scoutName);
-        if (!MainActivity.loaded){
-            m_currentForm.matchNumber++;
-        }
         m_matchNumber.setText("" + (m_currentForm.matchNumber));
 
         red = findViewById(R.id.red);

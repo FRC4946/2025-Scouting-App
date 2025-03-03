@@ -80,7 +80,6 @@ public class RestoreActivity extends AppCompatActivity {
         });
 
         backButton.setOnClickListener(v -> {
-            m_currentForm.matchNumber--;
             Intent intent = new Intent(RestoreActivity.this, MatchActivity.class);
             intent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(intent);

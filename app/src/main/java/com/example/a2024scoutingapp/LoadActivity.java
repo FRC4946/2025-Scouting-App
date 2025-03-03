@@ -105,13 +105,6 @@ public class LoadActivity extends AppCompatActivity {
         });
 
         exit.setOnClickListener(v -> {
-            if (!MainActivity.loaded){
-                try {
-                    m_currentForm.matchNumber--;
-                } catch (Exception e) {
-
-                }
-            }
             Intent intent = new Intent(LoadActivity.this, MatchActivity.class);
             intent.putExtra("SCOUTING_FORM", m_currentForm);
             startActivity(intent);

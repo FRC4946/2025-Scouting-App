@@ -68,9 +68,6 @@ public class Endgame extends AppCompatActivity {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!MainActivity.loaded){
-                        m_currentForm.matchNumber--;
-                    }
                     MainActivity.loaded = false;
                     Intent intent = new Intent(Endgame.this, MainActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
@@ -82,9 +79,6 @@ public class Endgame extends AppCompatActivity {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!MainActivity.loaded){
-                        m_currentForm.matchNumber--;
-                    }
                     Intent intent = new Intent(Endgame.this, MatchActivity.class);
                     intent.putExtra("SCOUTING_FORM", m_currentForm);
                     startActivity(intent);
@@ -202,7 +196,7 @@ public class Endgame extends AppCompatActivity {
 
         send.setOnClickListener(v -> {
             MainActivity.loaded = false;
-            m_currentForm.notes = notes.getText().toString().replace(",", "").replace(".", "") + ".";
+            m_currentForm.notes = notes.getText().toString().replace(",", "") + ".";
             saveFormToFile();
             Intent intent = new Intent(Endgame.this, MainActivity.class);
             intent.putExtra("SCOUTING_FORM", m_currentForm);

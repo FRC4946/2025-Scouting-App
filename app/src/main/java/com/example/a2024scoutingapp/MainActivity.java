@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ScoutingForm m_currentForm = new ScoutingForm();
-    private String m_loadName, scoutName;
+    private String  scoutName;
     int matchNumber = 0;
 
     public static boolean loaded = false;
@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
-            m_loadName = intent.getStringExtra(Intent.EXTRA_TEXT);
             if (intent.hasExtra("SCOUTING_FORM")) {
                 m_currentForm = (ScoutingForm) intent.getSerializableExtra("SCOUTING_FORM");
                 Log.d(TAG, "Received ScoutingForm from intent: " + m_currentForm.toString());
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             matchNumber = m_currentForm.matchNumber;
             m_currentForm = new ScoutingForm();
             m_currentForm.scoutName = scoutName;
-            m_currentForm.matchNumber = matchNumber++;
+            m_currentForm.matchNumber = matchNumber+1;
         }
         Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
         matchIntent.putExtra("SCOUTING_FORM", m_currentForm);

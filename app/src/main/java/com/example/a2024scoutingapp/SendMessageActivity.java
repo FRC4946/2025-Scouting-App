@@ -64,6 +64,7 @@ public class SendMessageActivity extends AppCompatActivity {
         macInput.setText(computerAddress);
         // Button listeners
         sendButton.setOnClickListener(v -> {
+            connectionStatus.setText("Sending initiatied");
             if (checkBluetoothPermissions()) {
                 sendFiles();
                 sendButton.setEnabled(false); // Disable button
@@ -72,10 +73,7 @@ public class SendMessageActivity extends AppCompatActivity {
         });
 
         exitButton.setOnClickListener(v -> {
-            if (!MainActivity.loaded) {
-                form.matchNumber--;
-            }
-            Intent intent = new Intent(SendMessageActivity.this, MainActivity.class);
+            Intent intent = new Intent(SendMessageActivity.this, MatchActivity.class);
             intent.putExtra("SCOUTING_FORM", form);
             startActivity(intent);
         });
@@ -97,7 +95,7 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     private void sendFiles() {
-        connectionStatus.setText("Sending files");
+        connectionStatus.setText("Validating mac address...");
         String macAddress = macInput.getText().toString().trim();
         if (macAddress.isEmpty()) {
             Toast.makeText(this, "Please enter a valid MAC address", Toast.LENGTH_SHORT).show();
@@ -109,6 +107,7 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     private boolean connectToHost(String macAddress) {
+        connectionStatus.setText("Checking host connection...");
         if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             Toast.makeText(this, "Bluetooth is not enabled", Toast.LENGTH_SHORT).show();
             return false;
@@ -154,15 +153,14 @@ public class SendMessageActivity extends AppCompatActivity {
             return false;
         }
     }
-    private void sendAllFiles() {
+    private void   sendAllFiles() {
+        connectionStatus.setText("Sending files...");
         File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
             return;
         }
-
         File logFile = new File(logsDir, "DeadInside.log");
-
         if (!logsDir.exists() || !logsDir.isDirectory()) {
             Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
             return;
@@ -171,7 +169,7 @@ public class SendMessageActivity extends AppCompatActivity {
         File[] files = logsDir.listFiles();
         if (files != null) {
             try (FileWriter writer = new FileWriter(logFile)) {
-                writer.write("NO ONE EXPECTS THE SPANISH INQUISITION");
+                writer.write("THE SPANISH INQUISITION");
                 System.out.println("THE SPANISH INQUISITION HAS ARRIVED");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -181,7 +179,7 @@ public class SendMessageActivity extends AppCompatActivity {
             if (logFile.exists()) {
                 sendFile(logFile);
             }
-
+            logFile.delete();
             // Send the rest of the files, excluding DeadInside.log
             for (File file : files) {
                 if (!file.getName().equals("DeadInside.log")) {
@@ -192,6 +190,7 @@ public class SendMessageActivity extends AppCompatActivity {
             Toast.makeText(this, "All files sent successfully", Toast.LENGTH_SHORT).show();
             wipeFiles("Backups");
             moveBackup();
+            connectionStatus.setText("Sending complete");
         } else {
             Toast.makeText(this, "No files available to send", Toast.LENGTH_SHORT).show();
         }
@@ -202,7 +201,6 @@ public class SendMessageActivity extends AppCompatActivity {
             Toast.makeText(this, "File does not exist or is invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
