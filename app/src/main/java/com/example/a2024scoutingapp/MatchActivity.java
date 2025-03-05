@@ -118,6 +118,7 @@ public class MatchActivity extends AppCompatActivity {
                             startActivity(intent);
                         })
                         .setNegativeButton("No", (dialog, which) -> {
+                            quickSave();
                             Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
                             intent.putExtra("SCOUTING_FORM", m_currentForm);
                             startActivity(intent);
@@ -146,6 +147,7 @@ public class MatchActivity extends AppCompatActivity {
                             startActivity(intent);
                         })
                         .setNegativeButton("No", (dialog, which) -> {
+                            quickSave();
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
                             intent.putExtra("SCOUTING_FORM", m_currentForm);
                             startActivity(intent);
@@ -162,6 +164,29 @@ public class MatchActivity extends AppCompatActivity {
             Log.e(TAG, "Failed to delete old file: " + loadedFile.getName());
         }
         saveFormToFile();
+    }
+    private void quickSave(){
+        try {
+            // Validate scout name
+            String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
+            if (!scoutName.isEmpty()) {
+                m_currentForm.scoutName = scoutName;
+            }
+
+            // Validate and parse team number
+            String teamNumberInput = m_teamNumber.getText().toString().trim().replace(",", "");
+            if (!teamNumberInput.isEmpty()) {
+                m_currentForm.teamNumber = Integer.parseInt(teamNumberInput);
+            }
+
+            // Validate and parse match number
+            String matchNumberInput = m_matchNumber.getText().toString().trim().replace(",", "");
+            if (!matchNumberInput.isEmpty()) {
+                m_currentForm.matchNumber = Integer.parseInt(matchNumberInput);
+            }
+        } catch (Exception e) {
+
+        }
     }
     private boolean checkSave(){
         try {
