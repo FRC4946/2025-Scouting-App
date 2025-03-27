@@ -20,10 +20,11 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
     private ScoutingForm m_currentForm = new ScoutingForm();
-    private String  scoutName;
+    private String scoutName;
     int matchNumber = 0;
+    public static String MAIN_DIRECTORY_NAME = "Logs";
+    public static String BACKUP_DIRECTORY_NAME = "Backups";
 
     public static boolean loaded = false;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             matchNumber = m_currentForm.matchNumber;
             m_currentForm = new ScoutingForm();
             m_currentForm.scoutName = scoutName;
-            m_currentForm.matchNumber = matchNumber+1;
+            m_currentForm.matchNumber = matchNumber + 1;
         }
         Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
         matchIntent.putExtra("SCOUTING_FORM", m_currentForm);

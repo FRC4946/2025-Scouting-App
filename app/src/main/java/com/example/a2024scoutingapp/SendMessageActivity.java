@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -31,18 +33,16 @@ import java.util.UUID;
 
 public class SendMessageActivity extends AppCompatActivity {
     private static final String TAG = "SendMessageActivity";
-    private static final String DIRECTORY_NAME = "Logs";
     private static final int BLUETOOTH_PERMISSION_REQUEST_CODE = 101;
-
     private EditText macInput;
     private TextView connectionStatus, connectionInfo;
     private Button sendButton, exitButton;
     private ScoutingForm form;
-    String computerAddress ="00:24:D6:F3:F2:A9"; //"B8:1E:A4:CF:BA:54";
+    String computerAddress = "00:24:D6:F3:F2:A9"; //"B8:1E:A4:CF:BA:54";
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private BluetoothDevice hostDevice;
-    private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     private static final UUID CONNECT_UUID = UUID.fromString("39675b0d-6dd8-4622-847f-3e5acc607e27");
 
@@ -60,7 +60,7 @@ public class SendMessageActivity extends AppCompatActivity {
         connectionInfo = findViewById(R.id.EsablishingConnection);
         sendButton = findViewById(R.id.SendButton);
         exitButton = findViewById(R.id.exitbutton);
-        macInput = (EditText) findViewById(R.id.MacText);
+        macInput = findViewById(R.id.MacText);
         macInput.setText(computerAddress);
         // Button listeners
         sendButton.setOnClickListener(v -> {
@@ -84,11 +84,7 @@ public class SendMessageActivity extends AppCompatActivity {
         connectionStatus.setText("Checking Bluetooth...");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             // Request Bluetooth permission
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.BLUETOOTH},
-                    BLUETOOTH_PERMISSION_REQUEST_CODE
-            );
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH}, BLUETOOTH_PERMISSION_REQUEST_CODE);
             return false;
         }
         return true;
@@ -102,7 +98,7 @@ public class SendMessageActivity extends AppCompatActivity {
             return;
         }
         if (connectToHost(macAddress)) {
-                sendAllFiles();
+            sendAllFiles();
         }
     }
 
@@ -116,11 +112,7 @@ public class SendMessageActivity extends AppCompatActivity {
         try {
             // Check for permissions on Android 12+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{Manifest.permission.BLUETOOTH},
-                        BLUETOOTH_PERMISSION_REQUEST_CODE
-                );
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH}, BLUETOOTH_PERMISSION_REQUEST_CODE);
                 return false;
             }
 
@@ -153,9 +145,10 @@ public class SendMessageActivity extends AppCompatActivity {
             return false;
         }
     }
-    private void   sendAllFiles() {
+
+    private void sendAllFiles() {
         connectionStatus.setText("Sending files...");
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
             return;
@@ -225,7 +218,8 @@ public class SendMessageActivity extends AppCompatActivity {
             outputStream.write(data.getBytes());
         }
     }
-    private void wipeFiles(String directory){
+
+    private void wipeFiles(String directory) {
         File backupDir = new File(getExternalFilesDir(null), directory);
         if (backupDir.exists() && backupDir.isDirectory()) {
             File[] files = backupDir.listFiles();
@@ -241,6 +235,7 @@ public class SendMessageActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == BLUETOOTH_PERMISSION_REQUEST_CODE) {
@@ -254,9 +249,10 @@ public class SendMessageActivity extends AppCompatActivity {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
     private void moveBackup() {
         try {
-            File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+            File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
             File backupDir = new File(getExternalFilesDir(null), "Backups");
 
             if (!backupDir.exists() && !backupDir.mkdirs()) {
@@ -284,6 +280,7 @@ public class SendMessageActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to delete all files, get Declan", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

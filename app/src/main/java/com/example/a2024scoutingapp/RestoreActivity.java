@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.a2024scoutingapp.MainActivity.BACKUP_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
 import java.io.BufferedReader;
@@ -22,11 +25,8 @@ import java.util.ArrayList;
 
 public class RestoreActivity extends AppCompatActivity {
     private static final String TAG = "RestoreActivity";
-    private static final String BACKUP_DIRECTORY_NAME = "Backups";
-    private static final String LOGS_DIRECTORY_NAME = "Logs";
-
     private RadioGroup backupsGroup;
-    private ArrayList<File> backupList = new ArrayList<>();
+    private final ArrayList<File> backupList = new ArrayList<>();
     private int selected = -1;
     private ScoutingForm m_currentForm;
 
@@ -54,7 +54,9 @@ public class RestoreActivity extends AppCompatActivity {
         backupsGroup.setOnCheckedChangeListener((group, checkedId) -> {
             selected = backupsGroup.indexOfChild(findViewById(checkedId));
         });
-        restoreAll.setOnClickListener(v -> {restoreAllFiles();});
+        restoreAll.setOnClickListener(v -> {
+            restoreAllFiles();
+        });
         restoreButton.setOnClickListener(v -> {
             if (selected >= 0 && selected < backupList.size()) {
                 restoreFile(backupList.get(selected));
@@ -116,7 +118,7 @@ public class RestoreActivity extends AppCompatActivity {
                     while ((line = reader.readLine()) != null) {
                         fileContent.append(line);
                     }
-                    System.out.println(fileContent.toString());
+                    System.out.println(fileContent);
                 } catch (IOException e) {
 
                 }
@@ -127,7 +129,7 @@ public class RestoreActivity extends AppCompatActivity {
     }
 
     private void restoreFile(File backupFile) {
-        File logsDir = new File(getExternalFilesDir(null), LOGS_DIRECTORY_NAME);
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
 
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
@@ -154,9 +156,10 @@ public class RestoreActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to delete file", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void restoreAllFiles() {
         try {
-            File logsDir = new File(getExternalFilesDir(null), LOGS_DIRECTORY_NAME);
+            File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
             File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
 
             if (!logsDir.exists() && !logsDir.mkdirs()) {
@@ -180,6 +183,7 @@ public class RestoreActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to delete all files, get Declan", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void deleteAllBackups() {
         File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
         if (backupDir.exists() && backupDir.isDirectory()) {

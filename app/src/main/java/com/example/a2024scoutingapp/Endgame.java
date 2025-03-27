@@ -9,8 +9,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import pl.droidsonroids.gif.GifImageView;
+
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,14 +23,12 @@ import java.util.Locale;
 
 public class Endgame extends AppCompatActivity {
     private static final String TAG = "EndgameActivity";
-    private static final String DIRECTORY_NAME = "Logs";
-
     private ScoutingForm m_currentForm;
     private Button teleop, send, main;
     private EditText notes;
     private GifImageView gifs;
     private Button defense0, defense1, defense2, defense3, defense4, defense5;
-    private int[] defensePercentages = {100, 80, 60, 40, 20, 0};
+    private final int[] defensePercentages = {100, 80, 60, 40, 20, 0};
     private Button fast, medium, slow, none;
     private TextView matchNum, teamNum;
 
@@ -63,7 +65,7 @@ public class Endgame extends AppCompatActivity {
         } else {
             notes.setText(m_currentForm.notes);
         }
-        if (MainActivity.loaded){
+        if (MainActivity.loaded) {
             main.setText("DISCARD CHANGES");
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -206,7 +208,7 @@ public class Endgame extends AppCompatActivity {
 
 
     private void saveFormToFile() {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
             return;

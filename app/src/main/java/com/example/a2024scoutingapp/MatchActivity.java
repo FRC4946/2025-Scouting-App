@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +27,6 @@ public class MatchActivity extends AppCompatActivity {
     private ScoutingForm m_currentForm;
     public static File loadedFile;
     private static final String TAG = "MatchActivity";
-    private static final String DIRECTORY_NAME = "Logs";
     private EditText m_teamNumber, m_matchNumber, m_scoutName;
     private Button red, blue, m_sendButton, load;
 
@@ -71,10 +72,10 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 m_currentForm.team = "RED";
-                if (!checkSave()){
+                if (!checkSave()) {
                     return;
                 }
-                if (MainActivity.loaded){
+                if (MainActivity.loaded) {
                     swapLoadFile();
                 }
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
@@ -86,10 +87,10 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 m_currentForm.team = "BLUE";
-                if (!checkSave()){
+                if (!checkSave()) {
                     return;
                 }
-                if (MainActivity.loaded){
+                if (MainActivity.loaded) {
                     swapLoadFile();
                 }
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
@@ -104,10 +105,10 @@ public class MatchActivity extends AppCompatActivity {
                 builder.setTitle("WARNING")
                         .setMessage("Do you want to save?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            if (!checkSave()){
+                            if (!checkSave()) {
                                 return;
                             }
-                            if (MainActivity.loaded){
+                            if (MainActivity.loaded) {
                                 swapLoadFile();
                             } else {
                                 saveFormToFile();
@@ -133,10 +134,10 @@ public class MatchActivity extends AppCompatActivity {
                 builder.setTitle("WARNING")
                         .setMessage("Do you want to save?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            if (!checkSave()){
+                            if (!checkSave()) {
                                 return;
                             }
-                            if (MainActivity.loaded){
+                            if (MainActivity.loaded) {
                                 swapLoadFile();
                             } else {
                                 saveFormToFile();
@@ -157,7 +158,8 @@ public class MatchActivity extends AppCompatActivity {
         });
 
     }
-    private void swapLoadFile(){
+
+    private void swapLoadFile() {
         if (loadedFile.delete()) {
             Log.i(TAG, "Old file deleted: " + loadedFile.getName());
         } else {
@@ -165,7 +167,8 @@ public class MatchActivity extends AppCompatActivity {
         }
         saveFormToFile();
     }
-    private void quickSave(){
+
+    private void quickSave() {
         try {
             // Validate scout name
             String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
@@ -188,7 +191,8 @@ public class MatchActivity extends AppCompatActivity {
 
         }
     }
-    private boolean checkSave(){
+
+    private boolean checkSave() {
         try {
             // Validate scout name
             String scoutName = m_scoutName.getText().toString().trim().replace(",", "");
@@ -220,8 +224,9 @@ public class MatchActivity extends AppCompatActivity {
             return false; // Stop further execution
         }
     }
-    private void saveFormToFile () {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+
+    private void saveFormToFile() {
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
             return;

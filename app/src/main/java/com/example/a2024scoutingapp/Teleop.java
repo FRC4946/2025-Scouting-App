@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
 import java.io.File;
@@ -19,10 +21,8 @@ import java.util.Locale;
 
 public class Teleop extends AppCompatActivity {
     private static final String TAG = "TeleopActivity";
-    private static final String DIRECTORY_NAME = "Logs";
-
     private ScoutingForm m_currentForm;
-    private Button teleopL4, main,  teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, endgame;
+    private Button teleopL4, main, teleopL3, teleopL2, teleopL1, teleopProcessor, teleopNet, auto, send, endgame;
     private CheckBox deleteMode, disabled;
     private TextView matchNum, teamNum;
 
@@ -65,7 +65,7 @@ public class Teleop extends AppCompatActivity {
                 Buttons[i].setBackgroundResource(R.drawable.redbutton);
             }
         }
-        if (MainActivity.loaded){
+        if (MainActivity.loaded) {
             main.setText("DISCARD CHANGES");
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +95,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL4Coral = Math.max(m_currentForm.teleopL4Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL4Coral = Math.min(m_currentForm.teleopL4Coral+1, 12);
+                    m_currentForm.teleopL4Coral = Math.min(m_currentForm.teleopL4Coral + 1, 12);
                 }
                 teleopL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL4Coral)));
             }
@@ -107,7 +107,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL3Coral = Math.max(m_currentForm.teleopL3Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL3Coral = Math.min(m_currentForm.teleopL3Coral+1, 12);
+                    m_currentForm.teleopL3Coral = Math.min(m_currentForm.teleopL3Coral + 1, 12);
                 }
                 teleopL3.setText("L3 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL3Coral)));
             }
@@ -119,7 +119,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL2Coral = Math.max(m_currentForm.teleopL2Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL2Coral = Math.min(m_currentForm.teleopL2Coral+1, 12);
+                    m_currentForm.teleopL2Coral = Math.min(m_currentForm.teleopL2Coral + 1, 12);
                 }
                 teleopL2.setText("L2 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL2Coral)));
             }
@@ -131,7 +131,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopL1Coral = Math.max(m_currentForm.teleopL1Coral - 1, 0);
                 } else {
-                    m_currentForm.teleopL1Coral = Math.min(m_currentForm.teleopL1Coral+1, 50);;
+                    m_currentForm.teleopL1Coral = Math.min(m_currentForm.teleopL1Coral + 1, 50);
                 }
                 teleopL1.setText("L1 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopL1Coral)));
             }
@@ -143,7 +143,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopNet = Math.max(m_currentForm.teleopNet - 1, 0);
                 } else {
-                    m_currentForm.teleopNet = Math.min(m_currentForm.teleopNet+1, 18);
+                    m_currentForm.teleopNet = Math.min(m_currentForm.teleopNet + 1, 18);
                 }
                 teleopNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopNet)));
             }
@@ -155,7 +155,7 @@ public class Teleop extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.teleopProcessor = Math.max(m_currentForm.teleopProcessor - 1, 0);
                 } else {
-                    m_currentForm.teleopProcessor = Math.min(m_currentForm.teleopProcessor+1, 50);
+                    m_currentForm.teleopProcessor = Math.min(m_currentForm.teleopProcessor + 1, 50);
                 }
                 teleopProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.teleopProcessor)));
             }
@@ -193,14 +193,13 @@ public class Teleop extends AppCompatActivity {
     }
 
     private void saveFormToFile() {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
             return;
         }
 
-        File logFile = new File(logsDir, String.format(Locale.getDefault(),
-                "match-%d-team-%d.log", m_currentForm.matchNumber, m_currentForm.teamNumber));
+        File logFile = new File(logsDir, String.format(Locale.getDefault(), "match-%d-team-%d.log", m_currentForm.matchNumber, m_currentForm.teamNumber));
 
         try (FileWriter writer = new FileWriter(logFile)) {
             writer.write(m_currentForm.toString());

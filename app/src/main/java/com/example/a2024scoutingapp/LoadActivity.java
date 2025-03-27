@@ -1,5 +1,8 @@
 package com.example.a2024scoutingapp;
 
+import static com.example.a2024scoutingapp.MainActivity.BACKUP_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,11 +28,8 @@ import java.util.ArrayList;
 
 public class LoadActivity extends AppCompatActivity {
     private static final String TAG = "LoadActivity";
-    private static final String DIRECTORY_NAME = "Logs";
-    private static final String BACKUP_DIRECTORY_NAME = "Backups";
-
     private RadioGroup filesGroup;
-    private ArrayList<File> fileList = new ArrayList<>();
+    private final ArrayList<File> fileList = new ArrayList<>();
     private int selected = -1;
     private ScoutingForm m_currentForm;
     private Button exit, deleteAll, delete, loadButton, restore;
@@ -51,7 +51,7 @@ public class LoadActivity extends AppCompatActivity {
 
         // Button listeners
         loadButton.setOnClickListener(v -> {
-            if (MainActivity.loaded){
+            if (MainActivity.loaded) {
                 Toast.makeText(this, "Already loaded", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -114,7 +114,7 @@ public class LoadActivity extends AppCompatActivity {
     }
 
     private void updateFiles() {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
 
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
@@ -130,14 +130,14 @@ public class LoadActivity extends AppCompatActivity {
                 File file = files[i];
                 fileList.add(file);
 
-                RadioButton button = new RadioButton(this);;
+                RadioButton button = new RadioButton(this);
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     StringBuilder fileContent = new StringBuilder();
                     String line;
                     while ((line = reader.readLine()) != null) {
                         fileContent.append(line);
                     }
-                    System.out.println(fileContent.toString());
+                    System.out.println(fileContent);
                 } catch (IOException e) {
 
                 }
@@ -159,7 +159,7 @@ public class LoadActivity extends AppCompatActivity {
             while ((line = reader.readLine()) != null) {
                 fileContent.append(line);
             }
-            System.out.println("File" + fileContent.toString());
+            System.out.println("File" + fileContent);
             ScoutingForm form = ScoutingForm.fromString(fileContent.toString());
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("SCOUTING_FORM", form);
@@ -172,8 +172,6 @@ public class LoadActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to load file", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 
     private void deleteFile(File file) {
@@ -200,36 +198,37 @@ public class LoadActivity extends AppCompatActivity {
 
     private void deleteAllFiles() {
         try {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
-        File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
+            File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
+            File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
 
-        if (!backupDir.exists() && !backupDir.mkdirs()) {
-            Log.e(TAG, "Failed to create backup directory.");
-            return;
-        }
-
-        File[] files = logsDir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                File backupFile = new File(backupDir, file.getName());
-                try {
-                    Files.move(file.toPath(), backupFile.toPath());
-                    Log.i(TAG, "Deleted " + backupFile.getName());
-                } catch (IOException e) {
-                    Log.e(TAG, "Could not delete: " + file.getName(), e);
-                }
+            if (!backupDir.exists() && !backupDir.mkdirs()) {
+                Log.e(TAG, "Failed to create backup directory.");
+                return;
             }
-            Toast.makeText(this, "All files deleted", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "No files to delete", Toast.LENGTH_SHORT).show();
-        }
 
-        updateFiles();
+            File[] files = logsDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    File backupFile = new File(backupDir, file.getName());
+                    try {
+                        Files.move(file.toPath(), backupFile.toPath());
+                        Log.i(TAG, "Deleted " + backupFile.getName());
+                    } catch (IOException e) {
+                        Log.e(TAG, "Could not delete: " + file.getName(), e);
+                    }
+                }
+                Toast.makeText(this, "All files deleted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No files to delete", Toast.LENGTH_SHORT).show();
+            }
+
+            updateFiles();
         } catch (Exception e) {
             Log.e(TAG, "Failed to delete all files", e);
             Toast.makeText(this, "Failed to delete all files, get Declan", Toast.LENGTH_SHORT).show();
         }
     }
+
     private ScoutingForm parseMatchData(String fileContent) {
         try {
             // Example: Parsing JSON data (adapt to your file format)

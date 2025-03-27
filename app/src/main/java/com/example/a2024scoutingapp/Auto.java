@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
+import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,8 +21,6 @@ import java.util.Locale;
 
 public class Auto extends AppCompatActivity {
     private static final String TAG = "AutoActivity";
-    private static final String DIRECTORY_NAME = "Logs";
-
     private ScoutingForm m_currentForm;
     private Button autoL4, autoL3, autoL2, autoL1, autoProcessor, autoNet, endgame, teleop, send, main;
     private CheckBox deleteMode, disabled;
@@ -65,7 +65,7 @@ public class Auto extends AppCompatActivity {
                 Buttons[i].setBackgroundResource(R.drawable.bluebutton);
             }
         }
-        if (MainActivity.loaded){
+        if (MainActivity.loaded) {
             main.setText("DISCARD CHANGES");
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +95,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL4Coral = Math.max(m_currentForm.autoL4Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL4Coral = Math.min(m_currentForm.autoL4Coral+1, 12);
+                    m_currentForm.autoL4Coral = Math.min(m_currentForm.autoL4Coral + 1, 12);
                 }
                 autoL4.setText("L4 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL4Coral)));
             }
@@ -107,7 +107,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL3Coral = Math.max(m_currentForm.autoL3Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL3Coral = Math.min(m_currentForm.autoL3Coral+1, 12);
+                    m_currentForm.autoL3Coral = Math.min(m_currentForm.autoL3Coral + 1, 12);
                 }
                 autoL3.setText("L3 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL3Coral)));
             }
@@ -119,7 +119,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL2Coral = Math.max(m_currentForm.autoL2Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL2Coral = Math.min(m_currentForm.autoL2Coral+1, 12);
+                    m_currentForm.autoL2Coral = Math.min(m_currentForm.autoL2Coral + 1, 12);
                 }
                 autoL2.setText("L2 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL2Coral)));
             }
@@ -131,7 +131,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoL1Coral = Math.max(m_currentForm.autoL1Coral - 1, 0);
                 } else {
-                    m_currentForm.autoL1Coral = Math.min(m_currentForm.autoL1Coral+1, 50);
+                    m_currentForm.autoL1Coral = Math.min(m_currentForm.autoL1Coral + 1, 50);
                 }
                 autoL1.setText("L1 Coral: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoL1Coral)));
             }
@@ -143,7 +143,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoNet = Math.max(m_currentForm.autoNet - 1, 0);
                 } else {
-                    m_currentForm.autoNet = Math.min(m_currentForm.autoNet+1, 18);
+                    m_currentForm.autoNet = Math.min(m_currentForm.autoNet + 1, 18);
                 }
                 autoNet.setText("Algae Net: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoNet)));
             }
@@ -155,7 +155,7 @@ public class Auto extends AppCompatActivity {
                 if (deleteMode.isChecked()) {
                     m_currentForm.autoProcessor = Math.max(m_currentForm.autoProcessor - 1, 0);
                 } else {
-                    m_currentForm.autoProcessor = Math.min(m_currentForm.autoProcessor+1, 50);
+                    m_currentForm.autoProcessor = Math.min(m_currentForm.autoProcessor + 1, 50);
                 }
                 autoProcessor.setText("Algae Processor: " + String.format(Locale.getDefault(), Integer.toString(m_currentForm.autoProcessor)));
             }
@@ -194,14 +194,13 @@ public class Auto extends AppCompatActivity {
     }
 
     private void saveFormToFile() {
-        File logsDir = new File(getExternalFilesDir(null), DIRECTORY_NAME);
+        File logsDir = new File(getExternalFilesDir(null), MAIN_DIRECTORY_NAME);
         if (!logsDir.exists() && !logsDir.mkdirs()) {
             Log.e(TAG, "Failed to create Logs directory.");
             return;
         }
 
-        File logFile = new File(logsDir, String.format(Locale.getDefault(),
-                "match-%d-team-%d.log", m_currentForm.matchNumber, m_currentForm.teamNumber));
+        File logFile = new File(logsDir, String.format(Locale.getDefault(), "match-%d-team-%d.log", m_currentForm.matchNumber, m_currentForm.teamNumber));
 
         try (FileWriter writer = new FileWriter(logFile)) {
             writer.write(m_currentForm.toString());
