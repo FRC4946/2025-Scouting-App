@@ -131,7 +131,16 @@ public class LoadActivity extends AppCompatActivity {
                 fileList.add(file);
 
                 RadioButton button = new RadioButton(this);;
-                System.out.println("Radio button form added: " + file.toString());
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    StringBuilder fileContent = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        fileContent.append(line);
+                    }
+                    System.out.println(fileContent.toString());
+                } catch (IOException e) {
+
+                }
                 button.setText(file.getName());
                 int finalI = i;
                 button.setOnClickListener(v -> selected = finalI);

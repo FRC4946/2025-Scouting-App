@@ -36,7 +36,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="Restore Selected File" />
-
+    <Button
+        android:id="@+id/RestoreAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Restore All Files" />
     <Button
         android:id="@+id/DeleteButton"
         android:layout_width="match_parent"

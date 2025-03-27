@@ -13,7 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class RestoreActivity extends AppCompatActivity {
@@ -26,7 +30,7 @@ public class RestoreActivity extends AppCompatActivity {
     private int selected = -1;
     private ScoutingForm m_currentForm;
 
-    private Button restoreButton, deleteButton, deleteAllButton, backButton;
+    private Button restoreButton, deleteButton, deleteAllButton, backButton, restoreAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class RestoreActivity extends AppCompatActivity {
         deleteButton = findViewById(R.id.DeleteButton);
         deleteAllButton = findViewById(R.id.DeleteAllButton);
         backButton = findViewById(R.id.BackButton);
+        restoreAll = findViewById(R.id.RestoreAll);
 
         // Populate backup list
         updateBackups();
@@ -49,7 +54,7 @@ public class RestoreActivity extends AppCompatActivity {
         backupsGroup.setOnCheckedChangeListener((group, checkedId) -> {
             selected = backupsGroup.indexOfChild(findViewById(checkedId));
         });
-
+        restoreAll.setOnClickListener(v -> {restoreAllFiles();});
         restoreButton.setOnClickListener(v -> {
             if (selected >= 0 && selected < backupList.size()) {
                 restoreFile(backupList.get(selected));
@@ -105,6 +110,16 @@ public class RestoreActivity extends AppCompatActivity {
                 RadioButton button = new RadioButton(this);
                 button.setText(file.getName());
                 backupsGroup.addView(button);
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    StringBuilder fileContent = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        fileContent.append(line);
+                    }
+                    System.out.println(fileContent.toString());
+                } catch (IOException e) {
+
+                }
             }
         } else {
             Toast.makeText(this, "No backup files found", Toast.LENGTH_SHORT).show();
@@ -139,7 +154,32 @@ public class RestoreActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to delete file", Toast.LENGTH_SHORT).show();
         }
     }
+    private void restoreAllFiles() {
+        try {
+            File logsDir = new File(getExternalFilesDir(null), LOGS_DIRECTORY_NAME);
+            File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
 
+            if (!logsDir.exists() && !logsDir.mkdirs()) {
+                Log.e(TAG, "Failed to create backup directory.");
+                return;
+            }
+
+            File[] files = backupDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    File backupFile = new File(backupDir, file.getName());
+                    restoreFile(backupFile);
+                }
+                updateBackups();
+                Toast.makeText(this, "All files restored", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No files to restore", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to delete all files", e);
+            Toast.makeText(this, "Failed to delete all files, get Declan", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void deleteAllBackups() {
         File backupDir = new File(getExternalFilesDir(null), BACKUP_DIRECTORY_NAME);
         if (backupDir.exists() && backupDir.isDirectory()) {
