@@ -52,7 +52,7 @@ The scouting form is used to save data, edit the variables storied inside it's c
 You can use arrays to shorten code, as once an OnClick listener is made it doesn't go away <br/> 
 This code is used to swap files and pass around the form: <br/> 
 Intent intent = new Intent(CurrentClass.this, TargetClass.class);<br/> 
-intent.putExtra("SCOUTING_FORM", form);<br/> 
+intent.putExtra(intentTag, form);<br/> 
 startActivity(intent);<br/> 
 OnClick listeners detect when the buttons are clicked (crazy I know) <br/> 
 Within the class, after defining each UI elements, ensure this code is used to store all your java code: <br/> 
