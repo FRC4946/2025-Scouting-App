@@ -53,7 +53,7 @@ public class ScoutingForm implements Serializable {
                 + teleopNet + ","
                 + defencePercent + ","
                 + climbSpeed + ","
-                + notes + ",";
+                + notes;
     }
 
     public static ScoutingForm fromString(String s) {

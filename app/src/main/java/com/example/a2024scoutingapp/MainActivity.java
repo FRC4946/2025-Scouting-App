@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     int matchNumber = 0;
     public static String MAIN_DIRECTORY_NAME = "Logs";
     public static String BACKUP_DIRECTORY_NAME = "Backups";
+    public static String intentTag = "SCOUTING_FORM";
 
     public static boolean loaded = false;
 
@@ -34,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (intent != null) {
-            if (intent.hasExtra("SCOUTING_FORM")) {
-                m_currentForm = (ScoutingForm) intent.getSerializableExtra("SCOUTING_FORM");
+            if (intent.hasExtra(intentTag)) {
+                m_currentForm = (ScoutingForm) intent.getSerializableExtra(intentTag);
                 Log.d(TAG, "Received ScoutingForm from intent: " + m_currentForm.toString());
             } else {
                 Log.d(TAG, "No ScoutingForm in intent, initializing a new form.");
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             m_currentForm.matchNumber = matchNumber + 1;
         }
         Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
-        matchIntent.putExtra("SCOUTING_FORM", m_currentForm);
+        matchIntent.putExtra(intentTag, m_currentForm);
         startActivity(matchIntent);
     }
 }

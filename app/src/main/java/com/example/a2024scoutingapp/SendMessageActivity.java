@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +51,7 @@ public class SendMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send);
-        form = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        form = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (form == null) {
             form = new ScoutingForm();
         }
@@ -74,7 +75,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
         exitButton.setOnClickListener(v -> {
             Intent intent = new Intent(SendMessageActivity.this, MatchActivity.class);
-            intent.putExtra("SCOUTING_FORM", form);
+            intent.putExtra(intentTag, form);
             startActivity(intent);
         });
     }

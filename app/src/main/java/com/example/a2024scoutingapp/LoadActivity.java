@@ -2,6 +2,7 @@ package com.example.a2024scoutingapp;
 
 import static com.example.a2024scoutingapp.MainActivity.BACKUP_DIRECTORY_NAME;
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class LoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
-        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
         }
@@ -106,7 +107,7 @@ public class LoadActivity extends AppCompatActivity {
 
         exit.setOnClickListener(v -> {
             Intent intent = new Intent(LoadActivity.this, MatchActivity.class);
-            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            intent.putExtra(intentTag, m_currentForm);
             startActivity(intent);
         });
 
@@ -162,7 +163,7 @@ public class LoadActivity extends AppCompatActivity {
             System.out.println("File" + fileContent);
             ScoutingForm form = ScoutingForm.fromString(fileContent.toString());
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("SCOUTING_FORM", form);
+            intent.putExtra(intentTag, form);
 
             MatchActivity.loadedFile = file;
 
@@ -242,7 +243,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private void navigateToRestoreView() {
         Intent intent = new Intent(LoadActivity.this, RestoreActivity.class);
-        intent.putExtra("SCOUTING_FORM", m_currentForm);
+        intent.putExtra(intentTag, m_currentForm);
         startActivity(intent);
     }
 }

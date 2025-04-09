@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,8 +36,7 @@ public class MatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
         }
@@ -79,7 +79,7 @@ public class MatchActivity extends AppCompatActivity {
                     swapLoadFile();
                 }
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });
@@ -94,7 +94,7 @@ public class MatchActivity extends AppCompatActivity {
                     swapLoadFile();
                 }
                 Intent intent = new Intent(MatchActivity.this, Auto.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });
@@ -115,13 +115,13 @@ public class MatchActivity extends AppCompatActivity {
                                 m_currentForm.matchNumber++;
                             }
                             Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
-                            intent.putExtra("SCOUTING_FORM", m_currentForm);
+                            intent.putExtra(intentTag, m_currentForm);
                             startActivity(intent);
                         })
                         .setNegativeButton("No", (dialog, which) -> {
                             quickSave();
                             Intent intent = new Intent(MatchActivity.this, SendMessageActivity.class);
-                            intent.putExtra("SCOUTING_FORM", m_currentForm);
+                            intent.putExtra(intentTag, m_currentForm);
                             startActivity(intent);
                         });
                 builder.create().show();
@@ -144,13 +144,13 @@ public class MatchActivity extends AppCompatActivity {
                                 m_currentForm.matchNumber++;
                             }
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
-                            intent.putExtra("SCOUTING_FORM", m_currentForm);
+                            intent.putExtra(intentTag, m_currentForm);
                             startActivity(intent);
                         })
                         .setNegativeButton("No", (dialog, which) -> {
                             quickSave();
                             Intent intent = new Intent(MatchActivity.this, LoadActivity.class);
-                            intent.putExtra("SCOUTING_FORM", m_currentForm);
+                            intent.putExtra(intentTag, m_currentForm);
                             startActivity(intent);
                         });
                 builder.create().show();

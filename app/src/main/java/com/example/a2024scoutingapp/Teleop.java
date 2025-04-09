@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
@@ -30,7 +31,7 @@ public class Teleop extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teleop);
-        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
         }
@@ -73,7 +74,7 @@ public class Teleop extends AppCompatActivity {
                     m_currentForm.disabled = disabled.isChecked();
                     MainActivity.loaded = false;
                     Intent intent = new Intent(Teleop.this, MainActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    intent.putExtra(intentTag, m_currentForm);
                     startActivity(intent);
                 }
             });
@@ -84,7 +85,7 @@ public class Teleop extends AppCompatActivity {
                 public void onClick(View v) {
                     m_currentForm.disabled = disabled.isChecked();
                     Intent intent = new Intent(Teleop.this, MatchActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    intent.putExtra(intentTag, m_currentForm);
                     startActivity(intent);
                 }
             });
@@ -166,7 +167,7 @@ public class Teleop extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, Auto.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });
@@ -175,7 +176,7 @@ public class Teleop extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Teleop.this, Endgame.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });
@@ -186,7 +187,7 @@ public class Teleop extends AppCompatActivity {
                 m_currentForm.disabled = disabled.isChecked();
                 saveFormToFile();
                 Intent intent = new Intent(Teleop.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });

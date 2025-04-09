@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -30,7 +31,7 @@ public class Auto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auto);
-        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
         }
@@ -73,7 +74,7 @@ public class Auto extends AppCompatActivity {
                     m_currentForm.disabled = disabled.isChecked();
                     MainActivity.loaded = false;
                     Intent intent = new Intent(Auto.this, MainActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    intent.putExtra(intentTag, m_currentForm);
                     startActivity(intent);
                 }
             });
@@ -84,7 +85,7 @@ public class Auto extends AppCompatActivity {
                 public void onClick(View v) {
                     m_currentForm.disabled = disabled.isChecked();
                     Intent intent = new Intent(Auto.this, MatchActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    intent.putExtra(intentTag, m_currentForm);
                     startActivity(intent);
                 }
             });
@@ -165,7 +166,7 @@ public class Auto extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Auto.this, Endgame.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });
@@ -175,7 +176,7 @@ public class Auto extends AppCompatActivity {
             public void onClick(View v) {
                 m_currentForm.disabled = disabled.isChecked();
                 Intent intent = new Intent(Auto.this, Teleop.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });
@@ -187,7 +188,7 @@ public class Auto extends AppCompatActivity {
                 m_currentForm.disabled = disabled.isChecked();
                 saveFormToFile();
                 Intent intent = new Intent(Auto.this, MainActivity.class);
-                intent.putExtra("SCOUTING_FORM", m_currentForm);
+                intent.putExtra(intentTag, m_currentForm);
                 startActivity(intent);
             }
         });

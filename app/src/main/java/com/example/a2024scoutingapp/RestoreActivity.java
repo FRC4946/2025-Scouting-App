@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.a2024scoutingapp.MainActivity.BACKUP_DIRECTORY_NAME;
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import com.example.a2024scoutingapp.forms.ScoutingForm;
 
@@ -36,7 +37,7 @@ public class RestoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore);
-        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
         }
@@ -88,7 +89,7 @@ public class RestoreActivity extends AppCompatActivity {
 
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(RestoreActivity.this, MatchActivity.class);
-            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            intent.putExtra(intentTag, m_currentForm);
             startActivity(intent);
         });
     }

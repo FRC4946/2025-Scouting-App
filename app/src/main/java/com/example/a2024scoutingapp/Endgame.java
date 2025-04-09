@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import pl.droidsonroids.gif.GifImageView;
 
 import static com.example.a2024scoutingapp.MainActivity.MAIN_DIRECTORY_NAME;
+import static com.example.a2024scoutingapp.MainActivity.intentTag;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -36,7 +37,7 @@ public class Endgame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame);
-        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra("SCOUTING_FORM");
+        m_currentForm = (ScoutingForm) getIntent().getSerializableExtra(intentTag);
         if (m_currentForm == null) {
             m_currentForm = new ScoutingForm();
         }
@@ -72,7 +73,7 @@ public class Endgame extends AppCompatActivity {
                 public void onClick(View v) {
                     MainActivity.loaded = false;
                     Intent intent = new Intent(Endgame.this, MainActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    intent.putExtra(intentTag, m_currentForm);
                     startActivity(intent);
                 }
             });
@@ -82,7 +83,7 @@ public class Endgame extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Endgame.this, MatchActivity.class);
-                    intent.putExtra("SCOUTING_FORM", m_currentForm);
+                    intent.putExtra(intentTag, m_currentForm);
                     startActivity(intent);
                 }
             });
@@ -191,7 +192,7 @@ public class Endgame extends AppCompatActivity {
         teleop.setOnClickListener(v -> {
             m_currentForm.notes = notes.getText().toString().replace(",", "");
             Intent intent = new Intent(Endgame.this, Teleop.class);
-            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            intent.putExtra(intentTag, m_currentForm);
             startActivity(intent);
         });
 
@@ -201,7 +202,7 @@ public class Endgame extends AppCompatActivity {
             m_currentForm.notes = notes.getText().toString().replace(",", "") + ".";
             saveFormToFile();
             Intent intent = new Intent(Endgame.this, MainActivity.class);
-            intent.putExtra("SCOUTING_FORM", m_currentForm);
+            intent.putExtra(intentTag, m_currentForm);
             startActivity(intent);
         });
     }
